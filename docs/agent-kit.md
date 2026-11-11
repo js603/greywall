@@ -22,17 +22,16 @@ Files listed under `studio.local` in `tools/agent-kit.json` belong to this proje
 overwritten: `.claude/docs/technical-preferences.md`, `.claude/docs/directory-structure.md`, and
 `.claude/settings.json`.
 
-## Not done yet: `.claude/settings.json`
+## `.claude/settings.json`
 
-The Studio hooks (session start/stop, commit and asset validation, status line) only run once
-`.claude/settings.json` wires them up. Writing that file was blocked by the session's permission
-classifier (it changes Claude's own configuration), so it is left to you:
+Added by hand through the GitHub web editor (commit `d26a859`), identical to the Studio's
+settings. Claude cannot write this file itself: the session's permission classifier blocks it as
+self-modification. It wires the status line and the Studio hooks (session start/stop, gap
+detection, commit/push/asset validation, pre-compact, subagent log); every hook was pipe-tested in
+this repository and exits 0.
 
-```bash
-cp vendor/Claude-Code-Game-Studios/.claude/settings.json .claude/settings.json
-```
-
-Optionally add `"Bash(npm test*)"` and `"Bash(npm run build*)"` to `permissions.allow`.
+Hooks load only in a Claude Code session whose project root is this repository. Optional extra
+allow rules for this project: `"Bash(npm test*)"`, `"Bash(npm run build*)"`, `"Bash(npm run sim*)"`.
 
 ## Art provenance
 
