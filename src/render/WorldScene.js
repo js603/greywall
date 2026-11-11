@@ -58,16 +58,10 @@ class WorldScene extends Phaser.Scene {
       this.load.atlas(e, t.png, t.json);
     }
     for (let [e, t] of Object.entries(ASSETS.fx)) {
-      this.load.image(`fx_` + e, t);
+      this.load.atlas(`fx_` + e, t.png, t.json);
     }
   }
   create() {
-    for (let [e, t] of Object.entries(FX_DEFS)) {
-      let n = this.textures.get(`fx_` + e);
-      t.rects.forEach((e, r) => {
-        return n.add(r, 0, e[0], e[1], t.w, t.h);
-      });
-    }
     for (let e of [`props_tall`, `props_small`]) {
       let t = this.textures.get(e).getSourceImage();
       let n = document.createElement(`canvas`);
