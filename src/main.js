@@ -10,6 +10,7 @@ import { applySave, exportSave, importSave, parseSave, saveFileName, saveKeys, w
 import { downloadText, pickTextFile } from "./ui/files.js";
 import { World } from "./sim/World.js";
 import { UI } from "./ui/UI.js";
+import { store } from "./storage.js";
 import { loadIcons } from "./ui/icons.js";
 
 const params = new URLSearchParams(location.search);
@@ -71,33 +72,46 @@ function debounceDir(e) {
     ? null
     : ((lastDir = e), (pendingDir = null), e);
 }
+/** In-game yes/no box; the browser's own dialog is blocked in sandboxed frames. Resolves true on yes. */
+function ask(message, yes) {
+  return new Promise((resolve) => {
+    ui.confirmBox(message, yes, () => resolve(true));
+    const box = document.querySelector(`#confirm`);
+    const closed = () => {
+      if (box.style.display !== `none`) return; // a click inside the box that did not close it
+      box.removeEventListener(`click`, closed);
+      resolve(false); // no-op after a yes
+    };
+    box.addEventListener(`click`, closed);
+  });
+}
 function saveGame() {
   return world.player.dead || !world.map
     ? false
-    : writeSave(localStorage, world);
+    : writeSave(store, world);
 }
 /** Saves now and downloads the save as a file. Returns false when there is nothing to export. */
 function exportSaveFile() {
   saveGame();
-  const text = exportSave(localStorage, DEV);
+  const text = exportSave(store, DEV);
   if (!text) return false;
   downloadText(saveFileName(parseSave(text).data?.level ?? 1), text);
   return true;
 }
 /** In-game import: replaces the current progress with a save file. Resolves with a message, or null when cancelled. */
 async function importSaveFile() {
-  if (!confirm(`저장 파일을 불러오면 지금 진행이 그 파일로 바뀝니다. (지금 진행은 이전 저장본으로 보관됩니다) 계속할까요?`)) return null;
+  if (!(await ask(`저장 파일을 불러오면 지금 진행이 그 파일로 바뀝니다. (지금 진행은 이전 저장본으로 보관됩니다) 계속할까요?`, `불러오기`))) return null;
   saveGame();
   const text = await pickTextFile();
   if (text === null) return null;
-  const r = importSave(localStorage, DEV, text);
+  const r = importSave(store, DEV, text);
   if (!r.ok) return `불러오지 못했습니다: ${r.error}`;
   ui.close();
   startGame(`continue`);
   return `저장 파일을 불러왔습니다 (Lv ${r.data.level})`;
 }
 function continueLabel() {
-  let e = parseSave(localStorage.getItem(saveKeys(DEV).main));
+  let e = parseSave(store.getItem(saveKeys(DEV).main));
   return e.ok
     ? `Lv ${e.data.level} · ${
 MAP_NAMES[e.data.map]
@@ -106,7 +120,7 @@ MAP_NAMES[e.data.map]
 }
 function showStartScreen(e) {
   let t = continueLabel();
-  let n = !!localStorage.getItem(saveKeys(DEV).main);
+  let n = !!store.getItem(saveKeys(DEV).main);
   let r = document.createElement(`div`);
   r.id = `start`;
 
@@ -143,13 +157,8 @@ function showStartScreen(e) {
     };
   };
 
-  r.querySelector(`#b-new`).addEventListener(`click`, () => {
-    if (
-      !t ||
-      confirm(
-        `저장된 진행이 있습니다. 새 게임을 시작하면 덮어씁니다. 계속할까요?`
-      )
-    ) {
+  r.querySelector(`#b-new`).addEventListener(`click`, async () => {
+    if (!t || (await ask(`저장된 진행이 있습니다. 새 게임을 시작하면 덮어씁니다. 계속할까요?`, `새 게임`))) {
       i(() => {
         return startGame(null);
       })();
@@ -170,8 +179,8 @@ function showStartScreen(e) {
   r.querySelector(`#b-import`).addEventListener(`click`, async () => {
     const text = await pickTextFile();
     if (text === null) return;
-    if (t && !confirm(`저장된 진행(${t})을 이 파일로 바꿀까요? 지금 진행은 이전 저장본으로 보관됩니다.`)) return;
-    const res = importSave(localStorage, DEV, text);
+    if (t && !(await ask(`저장된 진행(${t})을 이 파일로 바꿀까요? 지금 진행은 이전 저장본으로 보관됩니다.`, `바꾸기`))) return;
+    const res = importSave(store, DEV, text);
     if (!res.ok) {
       r.remove();
       showStartScreen(`저장 파일을 불러오지 못했습니다: ${res.error}`);
@@ -199,8 +208,8 @@ function showStartScreen(e) {
 }
 function showRecovery(e) {
   let t = saveKeys(DEV);
-  let n = parseSave(localStorage.getItem(t.main));
-  let r = parseSave(localStorage.getItem(t.backup));
+  let n = parseSave(store.getItem(t.main));
+  let r = parseSave(store.getItem(t.backup));
   let i = e.querySelector(`.note`);
 
   i.innerHTML = `<div class="bad">저장 데이터를 불러오지 못했습니다: ${
@@ -213,7 +222,7 @@ function showRecovery(e) {
     }`;
 
   i.querySelector(`#b-bak`)?.addEventListener(`click`, () => {
-    localStorage.setItem(t.main, localStorage.getItem(t.backup));
+    store.setItem(t.main, store.getItem(t.backup));
     e.remove();
     startGame(`continue`);
   });
@@ -223,7 +232,7 @@ function startGame(e) {
   world.dev = DEV;
 
   if (e === `continue`) {
-    let e = parseSave(localStorage.getItem(saveKeys(DEV).main));
+    let e = parseSave(store.getItem(saveKeys(DEV).main));
     if (!e.ok) {
       showStartScreen(e.error);
       return;

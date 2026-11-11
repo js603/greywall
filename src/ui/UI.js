@@ -8,6 +8,7 @@ import { SHOPS } from "../data/shops.js";
 import { SKILLS } from "../data/skills.js";
 import { CLASSES } from "../data/classes.js";
 import { pwa } from "../pwa.js";
+import { store } from "../storage.js";
 import { ENCHANT_SAFE } from "../sim/constants.js";
 import { escapeHtml, qs } from "./dom.js";
 import { iconHtml } from "./icons.js";
@@ -99,7 +100,7 @@ class UI {
     try {
       Object.assign(
         this.settings,
-        JSON.parse(localStorage.getItem(`greywall.settings`) ?? `{}`)
+        JSON.parse(store.getItem(`greywall.settings`) ?? `{}`)
       );
     } catch {}
     audio.setVolume(`master`, this.settings.master);
@@ -111,7 +112,7 @@ class UI {
     return this.host.world();
   }
   saveSettings() {
-    localStorage.setItem(`greywall.settings`, JSON.stringify(this.settings));
+    store.setItem(`greywall.settings`, JSON.stringify(this.settings));
   }
   applyTouch() {
     let e = matchMedia(`(pointer: coarse)`).matches || `ontouchstart` in window;

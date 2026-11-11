@@ -9,7 +9,8 @@
     "build": "vite build && node tools/gen_sw.mjs",
     "preview": "vite preview",
     "sim": "node tools/balance-sim.mjs",
-    "test": "node --test \"tests/**/*.test.js\""
+    "test": "node --test \"tests/**/*.test.js\"",
+    "build:single": "vite build --mode single && node tools/inline-html.mjs"
   },
   "dependencies": {
     "phaser": "3.90.0"
