@@ -959,13 +959,181 @@
     "x": 0.5,
     "y": 0.7142857142857143
    }
+  },
+  "mist_blade": {
+   "frame": {
+    "x": 0,
+    "y": 46,
+    "w": 20,
+    "h": 17
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 3,
+    "y": 6,
+    "w": 20,
+    "h": 17
+   },
+   "sourceSize": {
+    "w": 28,
+    "h": 28
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7142857142857143
+   }
+  },
+  "bog_scale": {
+   "frame": {
+    "x": 0,
+    "y": 65,
+    "w": 16,
+    "h": 21
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 6,
+    "y": 1,
+    "w": 16,
+    "h": 21
+   },
+   "sourceSize": {
+    "w": 28,
+    "h": 28
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7142857142857143
+   }
+  },
+  "witch_charm": {
+   "frame": {
+    "x": 0,
+    "y": 88,
+    "w": 13,
+    "h": 18
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 8,
+    "y": 3,
+    "w": 13,
+    "h": 18
+   },
+   "sourceSize": {
+    "w": 28,
+    "h": 28
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7142857142857143
+   }
+  },
+  "bog_mud": {
+   "frame": {
+    "x": 0,
+    "y": 108,
+    "w": 14,
+    "h": 13
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 7,
+    "y": 10,
+    "w": 14,
+    "h": 13
+   },
+   "sourceSize": {
+    "w": 28,
+    "h": 28
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7142857142857143
+   }
+  },
+  "marsh_venom": {
+   "frame": {
+    "x": 0,
+    "y": 123,
+    "w": 14,
+    "h": 14
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 7,
+    "y": 9,
+    "w": 14,
+    "h": 14
+   },
+   "sourceSize": {
+    "w": 28,
+    "h": 28
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7142857142857143
+   }
+  },
+  "mist_essence": {
+   "frame": {
+    "x": 0,
+    "y": 139,
+    "w": 14,
+    "h": 13
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 7,
+    "y": 10,
+    "w": 14,
+    "h": 13
+   },
+   "sourceSize": {
+    "w": 28,
+    "h": 28
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7142857142857143
+   }
+  },
+  "troll_hide": {
+   "frame": {
+    "x": 0,
+    "y": 154,
+    "w": 26,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 1,
+    "y": 11,
+    "w": 26,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 28,
+    "h": 28
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7142857142857143
+   }
   }
  },
  "meta": {
   "image": "icons.png",
   "size": {
    "w": 512,
-   "h": 44
+   "h": 170
   },
   "scale": "1",
   "app": "greywall tools/build_assets.py"

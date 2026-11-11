@@ -43,7 +43,7 @@
 | 단계 | 내용 | 쓰는 도구 |
 |---|---|---|
 | 0 기반 (✅ 대부분 완료) | 소스 복원, 데이터 분리, 시뮬레이터, 메모리·번들, 저장 내보내기 | restore 도구, `npm test`, `npm run sim` |
-| 1 2막 「성벽 너머」 Lv16→30 | 신규 지역 4곳(안개 늪, 무너진 감시탑, 얼어붙은 고개, 고대 수로), 지역당 몬스터 4~5종 + 네임드 1 | `codeart2d`(기존 팔레트 기반 PixelSpec, 변종은 팔레트 교체), `pixelfx` ice·lightning·shadow·weather·status, `level-designer`·`team-level` |
+| 1 2막 「성벽 너머」 Lv16→30 (🟡 1/4: 안개 늪 완료) | 신규 지역 4곳(안개 늪, 무너진 감시탑, 얼어붙은 고개, 고대 수로), 지역당 몬스터 4~5종 + 네임드 1 | `codeart2d`(기존 팔레트 기반 PixelSpec, 변종은 팔레트 교체), `pixelfx` ice·lightning·shadow·weather·status, `level-designer`·`team-level` |
 | 2 성장 축 | 직업 3개(검사·순례자·탐색자), 직업별 스킬 6~8개, 장비 접두사·세트, 재료 제작, 성향 분기 퀘스트 | `systems-designer`, `economy-designer`, `rpg`·`game-feel` 스킬, `balance-check` |
 | 3 엔드게임 | 시드 기반 무작위 던전 「심연 회랑」, 강화판 보스 재도전, 주간 시드, 업적 | `procedural-gen` 스킬, 기존 시드 맵 빌더, 시뮬레이터로 층별 난이도 검증 |
 

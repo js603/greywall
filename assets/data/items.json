@@ -469,5 +469,87 @@
     "price": 400,
     "desc": "칼날에 잠시 빛을 깃들이는 기도문. 레벨 6 이상 학습 가능.",
     "weight": 8
+  },
+  "mist_blade": {
+    "id": "mist_blade",
+    "name": "안개서린 검",
+    "icon": "mist_blade",
+    "type": "equip",
+    "slot": "weapon",
+    "dmg": [
+      7,
+      14
+    ],
+    "interval": 1.65,
+    "acc": 3,
+    "price": 1800,
+    "reqLevel": 16,
+    "desc": "칼날에 늘 옅은 안개가 맺힌 검. 가볍고 정확하다.",
+    "weight": 55
+  },
+  "bog_scale": {
+    "id": "bog_scale",
+    "name": "늪비늘 갑옷",
+    "icon": "bog_scale",
+    "type": "equip",
+    "slot": "armor",
+    "ac": 9,
+    "price": 2200,
+    "reqLevel": 17,
+    "desc": "늪 트롤의 비늘 같은 가죽을 덧댄 갑옷. 판금보다 가볍고 단단하다.",
+    "weight": 150
+  },
+  "witch_charm": {
+    "id": "witch_charm",
+    "name": "안개 마녀의 부적",
+    "icon": "witch_charm",
+    "type": "equip",
+    "slot": "accessory",
+    "str": 2,
+    "hit": 2,
+    "hp": 10,
+    "price": 2500,
+    "desc": "푸른 안개가 갇힌 부적. 공격력 +2, 명중 +2, 최대 체력 +10.",
+    "weight": 2
+  },
+  "bog_mud": {
+    "id": "bog_mud",
+    "name": "늪 진흙",
+    "icon": "bog_mud",
+    "type": "material",
+    "price": 10,
+    "stack": true,
+    "desc": "끈적한 늪 진흙. 경비병 브람이 늪의 깊이를 가늠하려 모은다.",
+    "weight": 2
+  },
+  "marsh_venom": {
+    "id": "marsh_venom",
+    "name": "독늪 독샘",
+    "icon": "marsh_venom",
+    "type": "material",
+    "price": 18,
+    "stack": true,
+    "desc": "거미의 독샘. 연금술사 미라가 해독제 재료로 쓴다.",
+    "weight": 2
+  },
+  "mist_essence": {
+    "id": "mist_essence",
+    "name": "안개 정수",
+    "icon": "mist_essence",
+    "type": "material",
+    "price": 22,
+    "stack": true,
+    "desc": "망령이 흩어질 때 남는 차가운 안개 덩어리.",
+    "weight": 2
+  },
+  "troll_hide": {
+    "id": "troll_hide",
+    "name": "늪 트롤 가죽",
+    "icon": "troll_hide",
+    "type": "material",
+    "price": 30,
+    "stack": true,
+    "desc": "두껍고 축축한 가죽. 무겁다.",
+    "weight": 4
   }
 }

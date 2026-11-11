@@ -232,5 +232,124 @@
     ],
     "rewardCoins": 120,
     "rewardXp": 120
+  },
+  {
+    "id": "q_marsh",
+    "name": "안개 늪 정찰",
+    "giver": "guard",
+    "minLevel": 14,
+    "after": "q_chief",
+    "summary": "오크 영지 서쪽 너머 안개 늪의 늪 진흙덩이 10마리를 처치한다.",
+    "hint": "오크 영지 남쪽 풀밭에서 서쪽 끝으로 가면 늪으로 이어지는 둑길이 있다. 안개 속에서는 적이 늦게 보인다.",
+    "kill": {
+      "monster": "bog_slime",
+      "count": 10
+    },
+    "rewardItems": [
+      {
+        "item": "potion_clear",
+        "count": 5
+      }
+    ],
+    "rewardCoins": 300,
+    "rewardXp": 900
+  },
+  {
+    "id": "q_venom",
+    "name": "독늪의 독샘",
+    "giver": "alchemist",
+    "minLevel": 15,
+    "after": "q_silk",
+    "summary": "독늪 거미에게서 독샘 8개를 모아 연금술사 미라에게 가져간다.",
+    "hint": "거미는 늪 한가운데 웅덩이 사이에 산다. 해독제를 넉넉히.",
+    "bring": [
+      {
+        "item": "marsh_venom",
+        "count": 8
+      }
+    ],
+    "rewardItems": [
+      {
+        "item": "potion_haste",
+        "count": 3
+      },
+      {
+        "item": "antidote",
+        "count": 5
+      }
+    ],
+    "rewardCoins": 400,
+    "rewardXp": 1200
+  },
+  {
+    "id": "q_mist",
+    "name": "안개 속 망령",
+    "giver": "priest",
+    "minLevel": 16,
+    "after": "q_lich",
+    "summary": "안개 늪을 떠도는 안개 망령 10구를 잠재운다.",
+    "hint": "망령은 잘 피한다. 무기 축복으로 명중을 올리고 싸워라.",
+    "kill": {
+      "monster": "mist_wraith",
+      "count": 10
+    },
+    "rewardItems": [
+      {
+        "item": "holy_water",
+        "count": 3
+      },
+      {
+        "item": "scroll_ench_a",
+        "count": 1
+      }
+    ],
+    "rewardCoins": 450,
+    "rewardXp": 1600
+  },
+  {
+    "id": "q_troll",
+    "name": "늪 트롤 사냥",
+    "giver": "trainer",
+    "minLevel": 17,
+    "after": "q_marsh",
+    "summary": "늪 남서쪽의 늪 트롤 6마리를 쓰러뜨린다.",
+    "hint": "트롤은 체력이 많고 한 방이 무겁다. 맑은 물약과 투지의 물약을 챙겨라.",
+    "kill": {
+      "monster": "bog_troll",
+      "count": 6
+    },
+    "rewardItems": [
+      {
+        "item": "scroll_ench_w",
+        "count": 1
+      }
+    ],
+    "rewardCoins": 500,
+    "rewardXp": 2000
+  },
+  {
+    "id": "q_witch",
+    "name": "안개 마녀 베일라",
+    "giver": "priest",
+    "minLevel": 20,
+    "after": "q_mist",
+    "summary": "늪 서쪽 끝 섬의 안개 마녀 베일라를 쓰러뜨린다.",
+    "hint": "마녀는 계단 위 섬에서 멀리 탄환을 쏜다. 돌과 나무로 시야를 끊으며 다가가라.",
+    "kill": {
+      "monster": "fog_witch",
+      "count": 1
+    },
+    "rewardItems": [
+      {
+        "item": "scroll_ench_w",
+        "count": 2
+      },
+      {
+        "item": "scroll_ench_a",
+        "count": 2
+      }
+    ],
+    "rewardCoins": 1200,
+    "rewardXp": 4000
   }
 ]

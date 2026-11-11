@@ -1343,13 +1343,397 @@
     "x": 0.5,
     "y": 0.5
    }
+  },
+  "bog_0": {
+   "frame": {
+    "x": 0,
+    "y": 68,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "bog_1": {
+   "frame": {
+    "x": 66,
+    "y": 68,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "bog_2": {
+   "frame": {
+    "x": 132,
+    "y": 68,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "bog_3": {
+   "frame": {
+    "x": 198,
+    "y": 68,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "ov_bog_NW": {
+   "frame": {
+    "x": 264,
+    "y": 68,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "ov_bog_NE": {
+   "frame": {
+    "x": 330,
+    "y": 68,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "ov_bog_SE": {
+   "frame": {
+    "x": 396,
+    "y": 68,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "ov_bog_SW": {
+   "frame": {
+    "x": 462,
+    "y": 68,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "water_0": {
+   "frame": {
+    "x": 0,
+    "y": 102,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "water_1": {
+   "frame": {
+    "x": 66,
+    "y": 102,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "water_2": {
+   "frame": {
+    "x": 132,
+    "y": 102,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "water_3": {
+   "frame": {
+    "x": 198,
+    "y": 102,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "ov_water_NW": {
+   "frame": {
+    "x": 264,
+    "y": 102,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "ov_water_NE": {
+   "frame": {
+    "x": 330,
+    "y": 102,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "ov_water_SE": {
+   "frame": {
+    "x": 396,
+    "y": 102,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "ov_water_SW": {
+   "frame": {
+    "x": 462,
+    "y": 102,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
   }
  },
  "meta": {
   "image": "tiles.png",
   "size": {
    "w": 2048,
-   "h": 66
+   "h": 134
   },
   "scale": "1",
   "app": "greywall tools/build_assets.py"

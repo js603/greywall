@@ -2,5 +2,7 @@
 import data from '../../assets/data/xp_table.json' with { type: 'json' };
 
 const XP_TABLE = data;
+/** Highest reachable level: the last index of the XP table. */
+const MAX_LEVEL = data.length - 1;
 
-export { XP_TABLE };
+export { XP_TABLE, MAX_LEVEL };

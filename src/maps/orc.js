@@ -107,6 +107,17 @@ function buildOrcLands() {
       fx: `torch`,
     });
   }
+  // act 2: the road west to the Fog Marsh (design/gdd/act2-fog-marsh.md)
+  paintPath(
+    t,
+    [
+      [20, 38],
+      [8, 37],
+      [0, 37],
+    ],
+    `dirt`,
+    2
+  );
   for (let n = 0; n < t.h; n++) {
     for (let r = 0; r < t.w; r++) {
       let i = t.idx(r, n);
@@ -143,7 +154,9 @@ function buildOrcLands() {
       tx: 25,
       ty: 2,
       label: `솔바람 숲길`,
-    }
+    },
+    { x: 0, y: 37, to: `marsh`, tx: 54, ty: 26, label: `안개 늪` },
+    { x: 0, y: 38, to: `marsh`, tx: 54, ty: 27, label: `안개 늪` }
   );
   for (let e of t.exits) {
     t.block[t.idx(e.x, e.y)] = 0;

@@ -6,6 +6,8 @@ import { ANIMS, ASSETS, FX_DEFS } from "./assets.js";
 import { Monster, Npc } from "../sim/entities.js";
 
 const GROUND_ROWS = {
+  water: -2,
+  bog: -1,
   mine: 0,
   forest: 1,
   grave: 2,
@@ -1392,8 +1394,11 @@ class WorldScene extends Phaser.Scene {
     let t = this.cameras.main.worldView;
     let n = 1 - e.daylight();
     let r = e.map.id.startsWith(`mine`);
+    let amb = e.map.ambient;
     let i = r
       ? 0.5 + n * 0.06
+      : amb
+      ? Math.min(0.85, amb.alpha + n * amb.night)
       : n * (e.map.safe ? 0.62 : 0.74);
     for (let t of this.fires) {
       t.glow.setAlpha(
@@ -1413,7 +1418,13 @@ class WorldScene extends Phaser.Scene {
     }
 
     this.dark.setVisible(true).setPosition(Math.floor(t.x), Math.floor(t.y));
-    let s = !r && n > 0 && n < 0.7 ? 2758192 : 461596;
+    let s = amb
+      ? n > 0.5
+        ? amb.nightColor
+        : amb.color
+      : !r && n > 0 && n < 0.7
+      ? 2758192
+      : 461596;
     this.dark.clear();
     this.dark.fill(s, i);
     let c = e.time;

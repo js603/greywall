@@ -1,0 +1,750 @@
+{
+ "name": "bog_slime",
+ "frameSize": [
+  56,
+  48
+ ],
+ "anchor": [
+  28,
+  36
+ ],
+ "clips": {
+  "idle_S": {
+   "frames": [
+    0,
+    1,
+    0,
+    2
+   ],
+   "durations": [
+    240,
+    240,
+    240,
+    240
+   ],
+   "loop": true,
+   "events": []
+  },
+  "idle_SW": {
+   "frames": [
+    3,
+    4,
+    3,
+    5
+   ],
+   "durations": [
+    240,
+    240,
+    240,
+    240
+   ],
+   "loop": true,
+   "events": []
+  },
+  "idle_W": {
+   "frames": [
+    6,
+    7,
+    6,
+    8
+   ],
+   "durations": [
+    240,
+    240,
+    240,
+    240
+   ],
+   "loop": true,
+   "events": []
+  },
+  "idle_NW": {
+   "frames": [
+    9,
+    10,
+    9,
+    11
+   ],
+   "durations": [
+    240,
+    240,
+    240,
+    240
+   ],
+   "loop": true,
+   "events": []
+  },
+  "idle_N": {
+   "frames": [
+    12,
+    13,
+    12,
+    14
+   ],
+   "durations": [
+    240,
+    240,
+    240,
+    240
+   ],
+   "loop": true,
+   "events": []
+  },
+  "idle_NE": {
+   "frames": [
+    15,
+    16,
+    15,
+    17
+   ],
+   "durations": [
+    240,
+    240,
+    240,
+    240
+   ],
+   "loop": true,
+   "events": []
+  },
+  "idle_E": {
+   "frames": [
+    18,
+    19,
+    18,
+    20
+   ],
+   "durations": [
+    240,
+    240,
+    240,
+    240
+   ],
+   "loop": true,
+   "events": []
+  },
+  "idle_SE": {
+   "frames": [
+    21,
+    22,
+    21,
+    23
+   ],
+   "durations": [
+    240,
+    240,
+    240,
+    240
+   ],
+   "loop": true,
+   "events": []
+  },
+  "walk_S": {
+   "frames": [
+    24,
+    25,
+    26,
+    27,
+    28,
+    29
+   ],
+   "durations": [
+    75,
+    75,
+    75,
+    75,
+    75,
+    75
+   ],
+   "loop": true,
+   "events": []
+  },
+  "walk_SW": {
+   "frames": [
+    30,
+    31,
+    32,
+    33,
+    34,
+    35
+   ],
+   "durations": [
+    75,
+    75,
+    75,
+    75,
+    75,
+    75
+   ],
+   "loop": true,
+   "events": []
+  },
+  "walk_W": {
+   "frames": [
+    36,
+    37,
+    38,
+    39,
+    40,
+    41
+   ],
+   "durations": [
+    75,
+    75,
+    75,
+    75,
+    75,
+    75
+   ],
+   "loop": true,
+   "events": []
+  },
+  "walk_NW": {
+   "frames": [
+    42,
+    43,
+    44,
+    45,
+    46,
+    47
+   ],
+   "durations": [
+    75,
+    75,
+    75,
+    75,
+    75,
+    75
+   ],
+   "loop": true,
+   "events": []
+  },
+  "walk_N": {
+   "frames": [
+    48,
+    49,
+    50,
+    51,
+    52,
+    53
+   ],
+   "durations": [
+    75,
+    75,
+    75,
+    75,
+    75,
+    75
+   ],
+   "loop": true,
+   "events": []
+  },
+  "walk_NE": {
+   "frames": [
+    54,
+    55,
+    56,
+    57,
+    58,
+    59
+   ],
+   "durations": [
+    75,
+    75,
+    75,
+    75,
+    75,
+    75
+   ],
+   "loop": true,
+   "events": []
+  },
+  "walk_E": {
+   "frames": [
+    60,
+    61,
+    62,
+    63,
+    64,
+    65
+   ],
+   "durations": [
+    75,
+    75,
+    75,
+    75,
+    75,
+    75
+   ],
+   "loop": true,
+   "events": []
+  },
+  "walk_SE": {
+   "frames": [
+    66,
+    67,
+    68,
+    69,
+    70,
+    71
+   ],
+   "durations": [
+    75,
+    75,
+    75,
+    75,
+    75,
+    75
+   ],
+   "loop": true,
+   "events": []
+  },
+  "attack_S": {
+   "frames": [
+    72,
+    73,
+    74,
+    75,
+    76,
+    77
+   ],
+   "durations": [
+    140,
+    170,
+    190,
+    100,
+    170,
+    230
+   ],
+   "loop": false,
+   "events": [
+    {
+     "name": "hit",
+     "atMs": 500,
+     "at": 3
+    }
+   ]
+  },
+  "attack_SW": {
+   "frames": [
+    78,
+    79,
+    80,
+    81,
+    82,
+    83
+   ],
+   "durations": [
+    140,
+    170,
+    190,
+    100,
+    170,
+    230
+   ],
+   "loop": false,
+   "events": [
+    {
+     "name": "hit",
+     "atMs": 500,
+     "at": 3
+    }
+   ]
+  },
+  "attack_W": {
+   "frames": [
+    84,
+    85,
+    86,
+    87,
+    88,
+    89
+   ],
+   "durations": [
+    140,
+    170,
+    190,
+    100,
+    170,
+    230
+   ],
+   "loop": false,
+   "events": [
+    {
+     "name": "hit",
+     "atMs": 500,
+     "at": 3
+    }
+   ]
+  },
+  "attack_NW": {
+   "frames": [
+    90,
+    91,
+    92,
+    93,
+    94,
+    95
+   ],
+   "durations": [
+    140,
+    170,
+    190,
+    100,
+    170,
+    230
+   ],
+   "loop": false,
+   "events": [
+    {
+     "name": "hit",
+     "atMs": 500,
+     "at": 3
+    }
+   ]
+  },
+  "attack_N": {
+   "frames": [
+    96,
+    97,
+    98,
+    99,
+    100,
+    101
+   ],
+   "durations": [
+    140,
+    170,
+    190,
+    100,
+    170,
+    230
+   ],
+   "loop": false,
+   "events": [
+    {
+     "name": "hit",
+     "atMs": 500,
+     "at": 3
+    }
+   ]
+  },
+  "attack_NE": {
+   "frames": [
+    102,
+    103,
+    104,
+    105,
+    106,
+    107
+   ],
+   "durations": [
+    140,
+    170,
+    190,
+    100,
+    170,
+    230
+   ],
+   "loop": false,
+   "events": [
+    {
+     "name": "hit",
+     "atMs": 500,
+     "at": 3
+    }
+   ]
+  },
+  "attack_E": {
+   "frames": [
+    108,
+    109,
+    110,
+    111,
+    112,
+    113
+   ],
+   "durations": [
+    140,
+    170,
+    190,
+    100,
+    170,
+    230
+   ],
+   "loop": false,
+   "events": [
+    {
+     "name": "hit",
+     "atMs": 500,
+     "at": 3
+    }
+   ]
+  },
+  "attack_SE": {
+   "frames": [
+    114,
+    115,
+    116,
+    117,
+    118,
+    119
+   ],
+   "durations": [
+    140,
+    170,
+    190,
+    100,
+    170,
+    230
+   ],
+   "loop": false,
+   "events": [
+    {
+     "name": "hit",
+     "atMs": 500,
+     "at": 3
+    }
+   ]
+  },
+  "hurt_S": {
+   "frames": [
+    120,
+    121
+   ],
+   "durations": [
+    110,
+    170
+   ],
+   "loop": false,
+   "events": []
+  },
+  "hurt_SW": {
+   "frames": [
+    122,
+    123
+   ],
+   "durations": [
+    110,
+    170
+   ],
+   "loop": false,
+   "events": []
+  },
+  "hurt_W": {
+   "frames": [
+    124,
+    125
+   ],
+   "durations": [
+    110,
+    170
+   ],
+   "loop": false,
+   "events": []
+  },
+  "hurt_NW": {
+   "frames": [
+    126,
+    127
+   ],
+   "durations": [
+    110,
+    170
+   ],
+   "loop": false,
+   "events": []
+  },
+  "hurt_N": {
+   "frames": [
+    128,
+    129
+   ],
+   "durations": [
+    110,
+    170
+   ],
+   "loop": false,
+   "events": []
+  },
+  "hurt_NE": {
+   "frames": [
+    130,
+    131
+   ],
+   "durations": [
+    110,
+    170
+   ],
+   "loop": false,
+   "events": []
+  },
+  "hurt_E": {
+   "frames": [
+    132,
+    133
+   ],
+   "durations": [
+    110,
+    170
+   ],
+   "loop": false,
+   "events": []
+  },
+  "hurt_SE": {
+   "frames": [
+    134,
+    135
+   ],
+   "durations": [
+    110,
+    170
+   ],
+   "loop": false,
+   "events": []
+  },
+  "death_S": {
+   "frames": [
+    136,
+    137,
+    138,
+    139,
+    140
+   ],
+   "durations": [
+    130,
+    130,
+    140,
+    150,
+    500
+   ],
+   "loop": false,
+   "events": []
+  },
+  "death_SW": {
+   "frames": [
+    141,
+    142,
+    143,
+    144,
+    145
+   ],
+   "durations": [
+    130,
+    130,
+    140,
+    150,
+    500
+   ],
+   "loop": false,
+   "events": []
+  },
+  "death_W": {
+   "frames": [
+    146,
+    147,
+    148,
+    149,
+    150
+   ],
+   "durations": [
+    130,
+    130,
+    140,
+    150,
+    500
+   ],
+   "loop": false,
+   "events": []
+  },
+  "death_NW": {
+   "frames": [
+    151,
+    152,
+    153,
+    154,
+    155
+   ],
+   "durations": [
+    130,
+    130,
+    140,
+    150,
+    500
+   ],
+   "loop": false,
+   "events": []
+  },
+  "death_N": {
+   "frames": [
+    156,
+    157,
+    158,
+    159,
+    140
+   ],
+   "durations": [
+    130,
+    130,
+    140,
+    150,
+    500
+   ],
+   "loop": false,
+   "events": []
+  },
+  "death_NE": {
+   "frames": [
+    160,
+    161,
+    162,
+    163,
+    145
+   ],
+   "durations": [
+    130,
+    130,
+    140,
+    150,
+    500
+   ],
+   "loop": false,
+   "events": []
+  },
+  "death_E": {
+   "frames": [
+    164,
+    165,
+    166,
+    167,
+    150
+   ],
+   "durations": [
+    130,
+    130,
+    140,
+    150,
+    500
+   ],
+   "loop": false,
+   "events": []
+  },
+  "death_SE": {
+   "frames": [
+    168,
+    169,
+    170,
+    171,
+    155
+   ],
+   "durations": [
+    130,
+    130,
+    140,
+    150,
+    500
+   ],
+   "loop": false,
+   "events": []
+  }
+ },
+ "artSource": "code (agent-sprite-forge codeart2d PixelSpec; no image model); palette variant of slime via tools/recolor.mjs {\"hue\":48,\"sat\":0.75,\"val\":0.72,\"keepDark\":0.12}"
+}

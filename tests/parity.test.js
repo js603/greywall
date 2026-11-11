@@ -4,7 +4,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { MAP_BUILDERS, huntRun, mapHash } from './helpers.js';
 
-const GOLDEN_MAPS = { town: '683262f5', forest: '3740ef5d', mine: 'dc4dbd8c', orc: 'eeaf1cee', mine2: '9d0fb253' };
+// orc changed on purpose in act 2: the road and exits west to the Fog Marsh (original: 'eeaf1cee').
+const GOLDEN_MAPS = { town: '683262f5', forest: '3740ef5d', mine: 'dc4dbd8c', orc: 'c0dd85cc', mine2: '9d0fb253' };
 
 test('map generation matches the original build', () => {
   for (const [id, hash] of Object.entries(GOLDEN_MAPS)) assert.equal(mapHash(MAP_BUILDERS[id]()), hash, id);

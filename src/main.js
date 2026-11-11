@@ -3,7 +3,7 @@ import Phaser from "phaser";
 import { audio } from "./audio.js";
 import { createBotDriver } from "./bot/Bot.js";
 import { ITEMS } from "./data/items.js";
-import { MAP_BUILDERS } from "./maps/index.js";
+import { MAP_BUILDERS, MAP_NAMES } from "./maps/index.js";
 import { initPwa, pwa } from "./pwa.js";
 import { WorldScene } from "./render/WorldScene.js";
 import { applySave, exportSave, importSave, parseSave, saveFileName, saveKeys, writeSave } from "./save.js";
@@ -100,13 +100,7 @@ function continueLabel() {
   let e = parseSave(localStorage.getItem(saveKeys(DEV).main));
   return e.ok
     ? `Lv ${e.data.level} · ${
-        {
-          town: `그레이월`,
-          forest: `솔바람 숲길`,
-          mine: `버려진 은광`,
-          orc: `붉은엄니 오크 영지`,
-          mine2: `은광 심부`,
-        }[e.data.map]
+MAP_NAMES[e.data.map]
       } · 동전 ${e.data.coins}`
     : null;
 }

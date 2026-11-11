@@ -12,6 +12,8 @@ const GROUND_COLORS = {
   plaza: '#7a7369',
   grave: '#4a4a3f',
   mine: '#4a4440',
+  bog: '#4a4a2c',
+  water: '#23413f',
 };
 const BLOCK_COLOR = '#1b1917';
 const SCALE = 3; // canvas pixels per tile before rotation

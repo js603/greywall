@@ -589,5 +589,270 @@
         "max": 2
       }
     ]
+  },
+  "bog_slime": {
+    "id": "bog_slime",
+    "name": "늪 진흙덩이",
+    "sprite": "bog_slime",
+    "level": 14,
+    "hp": 150,
+    "dmg": [
+      6,
+      11
+    ],
+    "acc": 7,
+    "eva": -2,
+    "ac": 5,
+    "interval": 2.4,
+    "windup": 0.5,
+    "step": 0.62,
+    "aggro": 4,
+    "xp": 80,
+    "coins": [
+      14,
+      30
+    ],
+    "respawn": 30,
+    "lawful": 3,
+    "drops": [
+      {
+        "item": "bog_mud",
+        "chance": 0.5
+      },
+      {
+        "item": "potion_clear",
+        "chance": 0.08
+      }
+    ]
+  },
+  "marsh_spider": {
+    "id": "marsh_spider",
+    "name": "독늪 거미",
+    "sprite": "marsh_spider",
+    "level": 15,
+    "hp": 120,
+    "dmg": [
+      7,
+      12
+    ],
+    "acc": 8,
+    "eva": 4,
+    "ac": 2,
+    "interval": 1.8,
+    "windup": 0.5,
+    "step": 0.36,
+    "aggro": 6,
+    "xp": 95,
+    "coins": [
+      16,
+      32
+    ],
+    "respawn": 30,
+    "poison": 0.35,
+    "lawful": 3,
+    "drops": [
+      {
+        "item": "marsh_venom",
+        "chance": 0.5
+      },
+      {
+        "item": "antidote",
+        "chance": 0.2
+      },
+      {
+        "item": "scroll_ench_a",
+        "chance": 0.015
+      }
+    ]
+  },
+  "mist_wraith": {
+    "id": "mist_wraith",
+    "name": "안개 망령",
+    "sprite": "mist_wraith",
+    "level": 16,
+    "hp": 140,
+    "dmg": [
+      8,
+      13
+    ],
+    "acc": 9,
+    "eva": 6,
+    "ac": 3,
+    "interval": 2.1,
+    "windup": 0.5,
+    "step": 0.48,
+    "aggro": 6,
+    "xp": 115,
+    "coins": [
+      20,
+      40
+    ],
+    "respawn": 35,
+    "lawful": 4,
+    "drops": [
+      {
+        "item": "mist_essence",
+        "chance": 0.45
+      },
+      {
+        "item": "potion_clear",
+        "chance": 0.12
+      },
+      {
+        "item": "mist_blade",
+        "chance": 0.006
+      },
+      {
+        "item": "scroll_ench_w",
+        "chance": 0.012
+      }
+    ]
+  },
+  "bog_ghoul": {
+    "id": "bog_ghoul",
+    "name": "늪 구울",
+    "sprite": "bog_ghoul",
+    "level": 17,
+    "hp": 190,
+    "dmg": [
+      8,
+      14
+    ],
+    "acc": 9,
+    "eva": 1,
+    "ac": 4,
+    "interval": 2.3,
+    "windup": 0.5,
+    "step": 0.55,
+    "aggro": 5,
+    "xp": 135,
+    "coins": [
+      22,
+      44
+    ],
+    "respawn": 35,
+    "poison": 0.3,
+    "lawful": 4,
+    "drops": [
+      {
+        "item": "ghoul_fang",
+        "chance": 0.4
+      },
+      {
+        "item": "bog_mud",
+        "chance": 0.3
+      },
+      {
+        "item": "potion_clear",
+        "chance": 0.1
+      },
+      {
+        "item": "amulet_guard",
+        "chance": 0.01
+      },
+      {
+        "item": "scroll_ench_a",
+        "chance": 0.02
+      }
+    ]
+  },
+  "bog_troll": {
+    "id": "bog_troll",
+    "name": "늪 트롤",
+    "sprite": "bog_troll",
+    "level": 19,
+    "hp": 300,
+    "dmg": [
+      10,
+      17
+    ],
+    "acc": 10,
+    "eva": 0,
+    "ac": 6,
+    "interval": 2.5,
+    "windup": 0.5,
+    "step": 0.5,
+    "aggro": 5,
+    "xp": 190,
+    "coins": [
+      30,
+      60
+    ],
+    "respawn": 45,
+    "lawful": 5,
+    "drops": [
+      {
+        "item": "troll_hide",
+        "chance": 0.5
+      },
+      {
+        "item": "potion_clear",
+        "chance": 0.15
+      },
+      {
+        "item": "bog_scale",
+        "chance": 0.008
+      },
+      {
+        "item": "scroll_ench_a",
+        "chance": 0.025
+      }
+    ]
+  },
+  "fog_witch": {
+    "id": "fog_witch",
+    "name": "안개 마녀 베일라",
+    "sprite": "fog_witch",
+    "level": 22,
+    "hp": 1100,
+    "dmg": [
+      11,
+      19
+    ],
+    "acc": 12,
+    "eva": 3,
+    "ac": 6,
+    "interval": 2.6,
+    "windup": 0.32,
+    "step": 0.55,
+    "aggro": 7,
+    "xp": 2400,
+    "coins": [
+      400,
+      600
+    ],
+    "respawn": 900,
+    "named": true,
+    "range": 5,
+    "projectile": "bolt",
+    "lawful": 120,
+    "drops": [
+      {
+        "item": "witch_charm",
+        "chance": 0.4
+      },
+      {
+        "item": "mist_blade",
+        "chance": 0.25
+      },
+      {
+        "item": "scroll_ench_w",
+        "chance": 1,
+        "min": 2,
+        "max": 3
+      },
+      {
+        "item": "scroll_ench_a",
+        "chance": 1,
+        "min": 1,
+        "max": 2
+      },
+      {
+        "item": "potion_clear",
+        "chance": 1,
+        "min": 2,
+        "max": 4
+      }
+    ]
   }
 }

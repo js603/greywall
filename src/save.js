@@ -1,3 +1,5 @@
+import { MAP_BUILDERS } from "./maps/index.js";
+import { MAX_LEVEL } from "./data/progression.js";
 import { ITEMS } from "./data/items.js";
 import { QUESTS } from "./data/quests.js";
 import { SKILLS } from "./data/skills.js";
@@ -125,21 +127,22 @@ function parseSave(e) {
   };
 
   for (let e of QUESTS) {
-    if (n && !r.quests[e.id]) {
+    // quests added in later releases start locked in older saves
+    if (r.quests && !r.quests[e.id]) {
       r.quests[e.id] = {
         state: `locked`,
         progress: 0,
       };
     }
   }
-  if (![`town`, `forest`, `mine`, `orc`, `mine2`].includes(r.map)) {
+  if (!(r.map in MAP_BUILDERS)) {
     return {
       ok: false,
       error: `알 수 없는 지역입니다.`,
     };
   }
   if (
-    !i(r.level, 1, 16) ||
+    !i(r.level, 1, MAX_LEVEL) ||
     !i(r.xp, 0, 10000000) ||
     !i(r.coins, 0, 10000000) ||
     !i(r.hp, 0, 10000) ||

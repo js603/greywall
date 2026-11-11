@@ -2,7 +2,7 @@ import { audio } from "../audio.js";
 import { ITEMS } from "../data/items.js";
 import { MONSTERS } from "../data/monsters.js";
 import { NPC_GREETINGS } from "../data/npcLines.js";
-import { XP_TABLE } from "../data/progression.js";
+import { MAX_LEVEL, XP_TABLE } from "../data/progression.js";
 import { QUESTS } from "../data/quests.js";
 import { SHOPS } from "../data/shops.js";
 import { SKILLS } from "../data/skills.js";
@@ -248,9 +248,9 @@ class UI {
     let e = this.w;
     this.minimap?.draw(e);
     let t = e.player;
-    let n = XP_TABLE[Math.min(16, t.level + 1)] - XP_TABLE[t.level];
+    let n = XP_TABLE[Math.min(MAX_LEVEL, t.level + 1)] - XP_TABLE[t.level];
     let r = t.xp - XP_TABLE[t.level];
-    let i = t.level >= 16 ? 100 : Math.max(0, Math.min(100, (r / n) * 100));
+    let i = t.level >= MAX_LEVEL ? 100 : Math.max(0, Math.min(100, (r / n) * 100));
     let a = `${Math.ceil(t.hp)}|${t.maxHp}|${t.mp}|${t.maxMp}|${i.toFixed(1)}|${
       t.level
     }|${t.coins}|${e.map.id}|${!!t.poison}|${e.time < t.blessUntil}|${
@@ -1141,7 +1141,7 @@ class UI {
       .join(``);
 
     let i = e.pDmgBonus();
-    let a = XP_TABLE[Math.min(16, t.level + 1)];
+    let a = XP_TABLE[Math.min(MAX_LEVEL, t.level + 1)];
     return `<div class="equip">${r}</div><div class="kv">
       <span class="dim">레벨</span><span>${t.level} (경험치 ${
       t.xp

@@ -3,7 +3,7 @@ import { findPath } from "../core/pathfind.js";
 import { createRng, randInt } from "../core/rng.js";
 import { ITEMS } from "../data/items.js";
 import { MONSTERS } from "../data/monsters.js";
-import { XP_TABLE } from "../data/progression.js";
+import { MAX_LEVEL, XP_TABLE } from "../data/progression.js";
 import { QUESTS } from "../data/quests.js";
 import { SHOPS } from "../data/shops.js";
 import { SKILLS } from "../data/skills.js";
@@ -1022,7 +1022,7 @@ class World {
     if (!e.dead) {
       return;
     }
-    let t = XP_TABLE[Math.min(16, e.level + 1)] - XP_TABLE[e.level];
+    let t = XP_TABLE[Math.min(MAX_LEVEL, e.level + 1)] - XP_TABLE[e.level];
     let n = Math.min(e.xp - XP_TABLE[e.level], Math.floor(t * 0.08));
     e.xp -= Math.max(0, n);
     e.dead = false;
@@ -1041,7 +1041,7 @@ class World {
   }
   gainXp(e) {
     let t = this.player;
-    for (t.xp += e; t.level < 16 && t.xp >= XP_TABLE[t.level + 1]; ) {
+    for (t.xp += e; t.level < MAX_LEVEL && t.xp >= XP_TABLE[t.level + 1]; ) {
       t.level++;
       let e = {
         hp: t.maxHp,

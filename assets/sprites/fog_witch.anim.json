@@ -1,0 +1,798 @@
+{
+ "name": "fog_witch",
+ "frameSize": [
+  128,
+  128
+ ],
+ "anchor": [
+  64,
+  98
+ ],
+ "clips": {
+  "idle_S": {
+   "frames": [
+    0,
+    1,
+    0,
+    2
+   ],
+   "durations": [
+    240,
+    240,
+    240,
+    240
+   ],
+   "loop": true,
+   "events": []
+  },
+  "idle_SW": {
+   "frames": [
+    3,
+    4,
+    3,
+    5
+   ],
+   "durations": [
+    240,
+    240,
+    240,
+    240
+   ],
+   "loop": true,
+   "events": []
+  },
+  "idle_W": {
+   "frames": [
+    6,
+    7,
+    6,
+    8
+   ],
+   "durations": [
+    240,
+    240,
+    240,
+    240
+   ],
+   "loop": true,
+   "events": []
+  },
+  "idle_NW": {
+   "frames": [
+    9,
+    10,
+    9,
+    11
+   ],
+   "durations": [
+    240,
+    240,
+    240,
+    240
+   ],
+   "loop": true,
+   "events": []
+  },
+  "idle_N": {
+   "frames": [
+    12,
+    13,
+    12,
+    14
+   ],
+   "durations": [
+    240,
+    240,
+    240,
+    240
+   ],
+   "loop": true,
+   "events": []
+  },
+  "idle_NE": {
+   "frames": [
+    15,
+    16,
+    15,
+    17
+   ],
+   "durations": [
+    240,
+    240,
+    240,
+    240
+   ],
+   "loop": true,
+   "events": []
+  },
+  "idle_E": {
+   "frames": [
+    18,
+    19,
+    18,
+    20
+   ],
+   "durations": [
+    240,
+    240,
+    240,
+    240
+   ],
+   "loop": true,
+   "events": []
+  },
+  "idle_SE": {
+   "frames": [
+    21,
+    22,
+    21,
+    23
+   ],
+   "durations": [
+    240,
+    240,
+    240,
+    240
+   ],
+   "loop": true,
+   "events": []
+  },
+  "walk_S": {
+   "frames": [
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31
+   ],
+   "durations": [
+    75,
+    75,
+    75,
+    75,
+    75,
+    75,
+    75,
+    75
+   ],
+   "loop": true,
+   "events": []
+  },
+  "walk_SW": {
+   "frames": [
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39
+   ],
+   "durations": [
+    75,
+    75,
+    75,
+    75,
+    75,
+    75,
+    75,
+    75
+   ],
+   "loop": true,
+   "events": []
+  },
+  "walk_W": {
+   "frames": [
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47
+   ],
+   "durations": [
+    75,
+    75,
+    75,
+    75,
+    75,
+    75,
+    75,
+    75
+   ],
+   "loop": true,
+   "events": []
+  },
+  "walk_NW": {
+   "frames": [
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55
+   ],
+   "durations": [
+    75,
+    75,
+    75,
+    75,
+    75,
+    75,
+    75,
+    75
+   ],
+   "loop": true,
+   "events": []
+  },
+  "walk_N": {
+   "frames": [
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63
+   ],
+   "durations": [
+    75,
+    75,
+    75,
+    75,
+    75,
+    75,
+    75,
+    75
+   ],
+   "loop": true,
+   "events": []
+  },
+  "walk_NE": {
+   "frames": [
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71
+   ],
+   "durations": [
+    75,
+    75,
+    75,
+    75,
+    75,
+    75,
+    75,
+    75
+   ],
+   "loop": true,
+   "events": []
+  },
+  "walk_E": {
+   "frames": [
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79
+   ],
+   "durations": [
+    75,
+    75,
+    75,
+    75,
+    75,
+    75,
+    75,
+    75
+   ],
+   "loop": true,
+   "events": []
+  },
+  "walk_SE": {
+   "frames": [
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87
+   ],
+   "durations": [
+    75,
+    75,
+    75,
+    75,
+    75,
+    75,
+    75,
+    75
+   ],
+   "loop": true,
+   "events": []
+  },
+  "attack_S": {
+   "frames": [
+    88,
+    89,
+    90,
+    91,
+    91,
+    92
+   ],
+   "durations": [
+    140,
+    170,
+    190,
+    100,
+    170,
+    230
+   ],
+   "loop": false,
+   "events": [
+    {
+     "name": "hit",
+     "atMs": 500,
+     "at": 3
+    }
+   ]
+  },
+  "attack_SW": {
+   "frames": [
+    93,
+    94,
+    95,
+    96,
+    96,
+    97
+   ],
+   "durations": [
+    140,
+    170,
+    190,
+    100,
+    170,
+    230
+   ],
+   "loop": false,
+   "events": [
+    {
+     "name": "hit",
+     "atMs": 500,
+     "at": 3
+    }
+   ]
+  },
+  "attack_W": {
+   "frames": [
+    98,
+    99,
+    100,
+    101,
+    101,
+    102
+   ],
+   "durations": [
+    140,
+    170,
+    190,
+    100,
+    170,
+    230
+   ],
+   "loop": false,
+   "events": [
+    {
+     "name": "hit",
+     "atMs": 500,
+     "at": 3
+    }
+   ]
+  },
+  "attack_NW": {
+   "frames": [
+    103,
+    104,
+    105,
+    106,
+    106,
+    107
+   ],
+   "durations": [
+    140,
+    170,
+    190,
+    100,
+    170,
+    230
+   ],
+   "loop": false,
+   "events": [
+    {
+     "name": "hit",
+     "atMs": 500,
+     "at": 3
+    }
+   ]
+  },
+  "attack_N": {
+   "frames": [
+    108,
+    109,
+    110,
+    111,
+    111,
+    112
+   ],
+   "durations": [
+    140,
+    170,
+    190,
+    100,
+    170,
+    230
+   ],
+   "loop": false,
+   "events": [
+    {
+     "name": "hit",
+     "atMs": 500,
+     "at": 3
+    }
+   ]
+  },
+  "attack_NE": {
+   "frames": [
+    113,
+    114,
+    115,
+    116,
+    116,
+    117
+   ],
+   "durations": [
+    140,
+    170,
+    190,
+    100,
+    170,
+    230
+   ],
+   "loop": false,
+   "events": [
+    {
+     "name": "hit",
+     "atMs": 500,
+     "at": 3
+    }
+   ]
+  },
+  "attack_E": {
+   "frames": [
+    118,
+    119,
+    120,
+    121,
+    121,
+    122
+   ],
+   "durations": [
+    140,
+    170,
+    190,
+    100,
+    170,
+    230
+   ],
+   "loop": false,
+   "events": [
+    {
+     "name": "hit",
+     "atMs": 500,
+     "at": 3
+    }
+   ]
+  },
+  "attack_SE": {
+   "frames": [
+    123,
+    124,
+    125,
+    126,
+    126,
+    127
+   ],
+   "durations": [
+    140,
+    170,
+    190,
+    100,
+    170,
+    230
+   ],
+   "loop": false,
+   "events": [
+    {
+     "name": "hit",
+     "atMs": 500,
+     "at": 3
+    }
+   ]
+  },
+  "hurt_S": {
+   "frames": [
+    128,
+    129
+   ],
+   "durations": [
+    110,
+    170
+   ],
+   "loop": false,
+   "events": []
+  },
+  "hurt_SW": {
+   "frames": [
+    130,
+    131
+   ],
+   "durations": [
+    110,
+    170
+   ],
+   "loop": false,
+   "events": []
+  },
+  "hurt_W": {
+   "frames": [
+    132,
+    133
+   ],
+   "durations": [
+    110,
+    170
+   ],
+   "loop": false,
+   "events": []
+  },
+  "hurt_NW": {
+   "frames": [
+    134,
+    135
+   ],
+   "durations": [
+    110,
+    170
+   ],
+   "loop": false,
+   "events": []
+  },
+  "hurt_N": {
+   "frames": [
+    136,
+    137
+   ],
+   "durations": [
+    110,
+    170
+   ],
+   "loop": false,
+   "events": []
+  },
+  "hurt_NE": {
+   "frames": [
+    138,
+    139
+   ],
+   "durations": [
+    110,
+    170
+   ],
+   "loop": false,
+   "events": []
+  },
+  "hurt_E": {
+   "frames": [
+    140,
+    141
+   ],
+   "durations": [
+    110,
+    170
+   ],
+   "loop": false,
+   "events": []
+  },
+  "hurt_SE": {
+   "frames": [
+    142,
+    143
+   ],
+   "durations": [
+    110,
+    170
+   ],
+   "loop": false,
+   "events": []
+  },
+  "death_S": {
+   "frames": [
+    144,
+    145,
+    146,
+    147,
+    148,
+    149
+   ],
+   "durations": [
+    130,
+    130,
+    140,
+    150,
+    170,
+    500
+   ],
+   "loop": false,
+   "events": []
+  },
+  "death_SW": {
+   "frames": [
+    150,
+    151,
+    152,
+    153,
+    154,
+    155
+   ],
+   "durations": [
+    130,
+    130,
+    140,
+    150,
+    170,
+    500
+   ],
+   "loop": false,
+   "events": []
+  },
+  "death_W": {
+   "frames": [
+    156,
+    157,
+    158,
+    159,
+    160,
+    161
+   ],
+   "durations": [
+    130,
+    130,
+    140,
+    150,
+    170,
+    500
+   ],
+   "loop": false,
+   "events": []
+  },
+  "death_NW": {
+   "frames": [
+    162,
+    163,
+    164,
+    165,
+    166,
+    167
+   ],
+   "durations": [
+    130,
+    130,
+    140,
+    150,
+    170,
+    500
+   ],
+   "loop": false,
+   "events": []
+  },
+  "death_N": {
+   "frames": [
+    168,
+    169,
+    170,
+    171,
+    172,
+    173
+   ],
+   "durations": [
+    130,
+    130,
+    140,
+    150,
+    170,
+    500
+   ],
+   "loop": false,
+   "events": []
+  },
+  "death_NE": {
+   "frames": [
+    174,
+    175,
+    176,
+    177,
+    178,
+    179
+   ],
+   "durations": [
+    130,
+    130,
+    140,
+    150,
+    170,
+    500
+   ],
+   "loop": false,
+   "events": []
+  },
+  "death_E": {
+   "frames": [
+    180,
+    181,
+    182,
+    183,
+    184,
+    185
+   ],
+   "durations": [
+    130,
+    130,
+    140,
+    150,
+    170,
+    500
+   ],
+   "loop": false,
+   "events": []
+  },
+  "death_SE": {
+   "frames": [
+    186,
+    187,
+    188,
+    189,
+    190,
+    191
+   ],
+   "durations": [
+    130,
+    130,
+    140,
+    150,
+    170,
+    500
+   ],
+   "loop": false,
+   "events": []
+  }
+ },
+ "artSource": "code (agent-sprite-forge codeart2d PixelSpec; no image model); palette variant of lich via tools/recolor.mjs {\"hueShift\":150,\"sat\":0.9,\"val\":1.05,\"keepDark\":0.1}"
+}

@@ -10,11 +10,14 @@ const seeds = Number(process.argv[3] ?? 3);
 const STARTER = [];
 const MID = ['iron_sword', 'leather_armor', 'leather_shield'];
 const LATE = ['knight_sword', 'chain_mail', 'iron_shield'];
+const ACT1_BEST = ['chief_axe', 'plate_armor', 'iron_shield', 'lord_ring'];
+const MARSH = ['mist_blade', 'bog_scale', 'iron_shield', 'witch_charm'];
 const CASES = [
   ['forest', 1, STARTER], ['forest', 3, STARTER], ['forest', 5, MID],
   ['mine', 6, MID], ['mine', 8, MID],
   ['orc', 7, MID], ['orc', 9, LATE],
   ['mine2', 10, LATE], ['mine2', 12, LATE],
+  ['marsh', 14, ACT1_BEST], ['marsh', 16, ACT1_BEST], ['marsh', 18, ACT1_BEST], ['marsh', 18, MARSH], ['marsh', 20, MARSH],
 ];
 
 const rows = [];
