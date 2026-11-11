@@ -1114,3 +1114,27 @@ body.touch #death .btn {
   min-width: 96px;
   min-height: 44px;
 }
+
+/* minimap (src/ui/Minimap.js) */
+#minimap {
+  position: fixed;
+  top: calc(58px + var(--safe-t));
+  right: 8px;
+  width: 176px;
+  height: 100px;
+  padding: 0;
+  image-rendering: pixelated;
+  pointer-events: none;
+  background: rgba(11, 10, 12, 0.72);
+}
+#minimap[hidden] {
+  display: none;
+}
+body.touch #minimap {
+  top: calc(64px + var(--safe-t));
+  width: 120px;
+  height: 68px;
+}
+#tip {
+  cursor: pointer;
+}

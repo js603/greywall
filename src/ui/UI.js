@@ -10,6 +10,7 @@ import { pwa } from "../pwa.js";
 import { ENCHANT_SAFE } from "../sim/constants.js";
 import { escapeHtml, qs } from "./dom.js";
 import { iconHtml } from "./icons.js";
+import { Minimap } from "./Minimap.js";
 
 const DEFAULT_QUICKSLOTS = [
   {
@@ -136,7 +137,14 @@ class UI {
         </div>
         <div id="bottom" class="frame iron"><div class="bars"><div class="bar hp"><i></i><span></span></div><div class="bar mp"><i></i><span></span></div><div class="bar xp"><i></i></div></div><div id="slots"></div></div>
       </div>
-      <div id="win"></div><div id="death"></div><div id="toast" class="frame"></div>`;
+      <div id="win"></div><div id="death"></div><div id="toast" class="frame"></div>
+      <canvas id="minimap" class="frame" width="176" height="100" title="미니맵 (N)"></canvas>`;
+    this.minimap = new Minimap(qs(`#minimap`));
+    this.applyMinimap();
+    // a tutorial tip can be dismissed early by clicking it
+    qs(`#tip`).addEventListener(`click`, () => {
+      this.tipUntil = 0;
+    });
 
     qs(`#slots`).innerHTML = DEFAULT_QUICKSLOTS.map((e, t) => {
       return `<button class="slot" data-slot="${t}"><span class="k">${
@@ -232,8 +240,13 @@ class UI {
     this.viewShift = Math.round(n / 2 - (i + a) / 2);
     return this.viewShift;
   }
+  /** Shows or hides the minimap according to the saved setting (default: shown). */
+  applyMinimap() {
+    qs(`#minimap`).hidden = this.settings.minimap === false;
+  }
   update() {
     let e = this.w;
+    this.minimap?.draw(e);
     let t = e.player;
     let n = XP_TABLE[Math.min(16, t.level + 1)] - XP_TABLE[t.level];
     let r = t.xp - XP_TABLE[t.level];
@@ -578,6 +591,11 @@ class UI {
       ? (t.pickupNearby(), true)
       : e === `KeyF`
       ? (t.attackNearest(), true)
+      : e === `KeyN`
+      ? ((this.settings.minimap = this.settings.minimap === false),
+        this.applyMinimap(),
+        this.saveSettings(),
+        true)
       : e === `KeyM`
       ? ((this.settings.muted = !this.settings.muted),
         audio.setMuted(this.settings.muted),
@@ -612,7 +630,7 @@ class UI {
   }
   onClick(e) {
     let t = e.target.closest(
-      `[data-act],[data-open],[data-slot],[data-cell],[data-eq],[data-buy],[data-sell],[data-q],[data-tab],[data-skill],[data-zoom],[data-touch]`
+      `[data-act],[data-open],[data-slot],[data-cell],[data-eq],[data-buy],[data-sell],[data-q],[data-tab],[data-skill],[data-zoom],[data-touch],[data-minimap]`
     );
     if (!t) {
       if (e.target.id === `win`) {
@@ -671,6 +689,12 @@ class UI {
         this.settings.zoom = Number(r.zoom);
         this.saveSettings();
         this.host.setZoom(this.settings.zoom);
+        return this.render();
+      }
+      if (r.minimap !== undefined) {
+        this.settings.minimap = r.minimap === `true`;
+        this.saveSettings();
+        this.applyMinimap();
         return this.render();
       }
       if (r.touch) {
@@ -1400,6 +1424,16 @@ class UI {
           }" data-zoom="${t}">${n}</button>`;
         })
         .join(``)}</div>
+      <p>미니맵</p><div class="row">${[
+        [true, `보이기`],
+        [false, `숨기기`],
+      ]
+        .map(([t, n]) => {
+          return `<button class="btn ${
+            (e.minimap !== false) === t ? `on` : ``
+          }" data-minimap="${t}">${n}</button>`;
+        })
+        .join(``)}</div>
       <p>터치 화면 구성(행동 버튼)</p><div class="row">${[
         [`auto`, `자동`],
         [`on`, `켜기`],
@@ -1431,7 +1465,7 @@ class UI {
       <span class="dim">이동</span><span>바닥 클릭 · 방향키/WASD (위=북, 위+오른쪽=북동 …)</span>
       <span class="dim">공격</span><span>몬스터 클릭 → 다가가 평타 반복. 바닥을 클릭하면 공격 취소</span>
       <span class="dim">퀵슬롯</span><span>1 빨간 물약 · 2 맑은 물약 · 3 해독제 · 4 귀환 주문서 · 5 강타 · 6 응급 치료 · 7 무기 축복</span>
-      <span class="dim">기타</span><span>F 가까운 적 공격 · G/Space 줍기 · R 휴식 · I 가방 · C 장비 · K 스킬 · J 의뢰 · L 기록 · M 음소거 · Esc 닫기</span>
+      <span class="dim">기타</span><span>F 가까운 적 공격 · N 미니맵 · G/Space 줍기 · R 휴식 · I 가방 · C 장비 · K 스킬 · J 의뢰 · L 기록 · M 음소거 · Esc 닫기</span>
       <b>모바일</b><span></span>
       <span class="dim">이동</span><span>바닥을 탭하면 그 자리로 걷습니다. 누른 채 끌면 손가락을 따라 계속 이동하고, 손을 떼면 마지막 지점에서 멈춥니다</span>
       <span class="dim">행동</span><span>상태창 위(가로 화면은 양옆)의 기록·휴식·줍기·강타·공격 버튼, 화면의 적·NPC·아이템을 탭</span></div>
