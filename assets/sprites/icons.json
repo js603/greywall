@@ -1415,13 +1415,181 @@
     "x": 0.5,
     "y": 0.7142857142857143
    }
+  },
+  "glacier_blade": {
+   "frame": {
+    "x": 0,
+    "y": 409,
+    "w": 16,
+    "h": 19
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 5,
+    "y": 2,
+    "w": 16,
+    "h": 19
+   },
+   "sourceSize": {
+    "w": 28,
+    "h": 28
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7142857142857143
+   }
+  },
+  "yeti_armor": {
+   "frame": {
+    "x": 0,
+    "y": 430,
+    "w": 16,
+    "h": 21
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 6,
+    "y": 1,
+    "w": 16,
+    "h": 21
+   },
+   "sourceSize": {
+    "w": 28,
+    "h": 28
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7142857142857143
+   }
+  },
+  "frost_ring": {
+   "frame": {
+    "x": 0,
+    "y": 453,
+    "w": 12,
+    "h": 13
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 8,
+    "y": 8,
+    "w": 12,
+    "h": 13
+   },
+   "sourceSize": {
+    "w": 28,
+    "h": 28
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7142857142857143
+   }
+  },
+  "snow_pelt": {
+   "frame": {
+    "x": 0,
+    "y": 468,
+    "w": 26,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 1,
+    "y": 11,
+    "w": 26,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 28,
+    "h": 28
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7142857142857143
+   }
+  },
+  "frost_shard": {
+   "frame": {
+    "x": 0,
+    "y": 486,
+    "w": 14,
+    "h": 14
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 7,
+    "y": 9,
+    "w": 14,
+    "h": 14
+   },
+   "sourceSize": {
+    "w": 28,
+    "h": 28
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7142857142857143
+   }
+  },
+  "yeti_fur": {
+   "frame": {
+    "x": 0,
+    "y": 502,
+    "w": 16,
+    "h": 12
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 6,
+    "y": 12,
+    "w": 16,
+    "h": 12
+   },
+   "sourceSize": {
+    "w": 28,
+    "h": 28
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7142857142857143
+   }
+  },
+  "golem_core": {
+   "frame": {
+    "x": 0,
+    "y": 516,
+    "w": 14,
+    "h": 10
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 6,
+    "y": 12,
+    "w": 14,
+    "h": 10
+   },
+   "sourceSize": {
+    "w": 28,
+    "h": 28
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7142857142857143
+   }
   }
  },
  "meta": {
   "image": "icons.png",
   "size": {
    "w": 512,
-   "h": 407
+   "h": 526
   },
   "scale": "1",
   "app": "greywall tools/build_assets.py"

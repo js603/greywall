@@ -623,5 +623,87 @@
     "stack": true,
     "desc": "역병에 걸린 수비병의 옷 조각. 함부로 만지지 말 것.",
     "weight": 2
+  },
+  "glacier_blade": {
+    "id": "glacier_blade",
+    "name": "빙하의 대검",
+    "icon": "glacier_blade",
+    "type": "equip",
+    "slot": "weapon",
+    "dmg": [
+      11,
+      20
+    ],
+    "interval": 1.75,
+    "acc": 4,
+    "price": 5200,
+    "reqLevel": 25,
+    "desc": "빙하 거인의 몸에서 떨어져 나온 얼음 칼날. 녹지 않는다.",
+    "weight": 72
+  },
+  "yeti_armor": {
+    "id": "yeti_armor",
+    "name": "설인 털갑옷",
+    "icon": "yeti_armor",
+    "type": "equip",
+    "slot": "armor",
+    "ac": 13,
+    "price": 5600,
+    "reqLevel": 25,
+    "desc": "설인의 두꺼운 털가죽을 겹쳐 댄 갑옷. 보기보다 가볍다.",
+    "weight": 120
+  },
+  "frost_ring": {
+    "id": "frost_ring",
+    "name": "서리 반지",
+    "icon": "frost_ring",
+    "type": "equip",
+    "slot": "accessory",
+    "str": 3,
+    "hit": 2,
+    "ac": 1,
+    "price": 4000,
+    "desc": "차가운 푸른 돌이 박힌 반지. 공격력 +3, 명중 +2, 방어 +1.",
+    "weight": 2
+  },
+  "snow_pelt": {
+    "id": "snow_pelt",
+    "name": "흰 늑대 가죽",
+    "icon": "snow_pelt",
+    "type": "material",
+    "price": 46,
+    "stack": true,
+    "desc": "눈 늑대의 희고 두꺼운 가죽.",
+    "weight": 4
+  },
+  "frost_shard": {
+    "id": "frost_shard",
+    "name": "서리 파편",
+    "icon": "frost_shard",
+    "type": "material",
+    "price": 52,
+    "stack": true,
+    "desc": "서리 정령이 흩어질 때 남는 차가운 결정. 연금술사 미라가 찾는다.",
+    "weight": 1
+  },
+  "yeti_fur": {
+    "id": "yeti_fur",
+    "name": "설인 털",
+    "icon": "yeti_fur",
+    "type": "material",
+    "price": 58,
+    "stack": true,
+    "desc": "뭉쳐진 설인의 털. 따뜻하다.",
+    "weight": 3
+  },
+  "golem_core": {
+    "id": "golem_core",
+    "name": "골렘의 심장석",
+    "icon": "golem_core",
+    "type": "material",
+    "price": 70,
+    "stack": true,
+    "desc": "얼음 골렘의 가슴에서 빛나던 돌.",
+    "weight": 5
   }
 }

@@ -13,6 +13,7 @@ const LATE = ['knight_sword', 'chain_mail', 'iron_shield'];
 const ACT1_BEST = ['chief_axe', 'plate_armor', 'iron_shield', 'lord_ring'];
 const MARSH = ['mist_blade', 'bog_scale', 'iron_shield', 'witch_charm'];
 const RUINS = ['captain_sword', 'garrison_mail', 'tower_shield', 'witch_charm'];
+const PASS = ['glacier_blade', 'yeti_armor', 'tower_shield', 'frost_ring'];
 const CASES = [
   ['forest', 1, STARTER], ['forest', 3, STARTER], ['forest', 5, MID],
   ['mine', 6, MID], ['mine', 8, MID],
@@ -22,6 +23,8 @@ const CASES = [
   ['ruins', 20, MARSH], ['ruins', 22, MARSH], ['ruins', 22, RUINS], ['ruins', 24, RUINS],
   ['ruins', 22, RUINS, 'knight'], ['ruins', 22, RUINS, 'berserker'], ['ruins', 22, RUINS, 'paladin'],
   ['ruins', 24, RUINS, 'knight'], ['ruins', 24, RUINS, 'berserker'], ['ruins', 24, RUINS, 'paladin'],
+  ['pass', 24, RUINS], ['pass', 24, RUINS, 'knight'], ['pass', 24, RUINS, 'berserker'], ['pass', 24, RUINS, 'paladin'],
+  ['pass', 27, PASS, 'knight'], ['pass', 27, PASS, 'berserker'], ['pass', 27, PASS, 'paladin'],
 ];
 
 const rows = [];

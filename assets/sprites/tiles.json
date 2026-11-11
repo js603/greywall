@@ -1727,13 +1727,397 @@
     "x": 0.5,
     "y": 0.5
    }
+  },
+  "snow_0": {
+   "frame": {
+    "x": 0,
+    "y": 136,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "snow_1": {
+   "frame": {
+    "x": 66,
+    "y": 136,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "snow_2": {
+   "frame": {
+    "x": 132,
+    "y": 136,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "snow_3": {
+   "frame": {
+    "x": 198,
+    "y": 136,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "ov_snow_NW": {
+   "frame": {
+    "x": 264,
+    "y": 136,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "ov_snow_NE": {
+   "frame": {
+    "x": 330,
+    "y": 136,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "ov_snow_SE": {
+   "frame": {
+    "x": 396,
+    "y": 136,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "ov_snow_SW": {
+   "frame": {
+    "x": 462,
+    "y": 136,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "ice_0": {
+   "frame": {
+    "x": 0,
+    "y": 170,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "ice_1": {
+   "frame": {
+    "x": 66,
+    "y": 170,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "ice_2": {
+   "frame": {
+    "x": 132,
+    "y": 170,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "ice_3": {
+   "frame": {
+    "x": 198,
+    "y": 170,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "ov_ice_NW": {
+   "frame": {
+    "x": 264,
+    "y": 170,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "ov_ice_NE": {
+   "frame": {
+    "x": 330,
+    "y": 170,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "ov_ice_SE": {
+   "frame": {
+    "x": 396,
+    "y": 170,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "ov_ice_SW": {
+   "frame": {
+    "x": 462,
+    "y": 170,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
   }
  },
  "meta": {
   "image": "tiles.png",
   "size": {
    "w": 2048,
-   "h": 134
+   "h": 202
   },
   "scale": "1",
   "app": "greywall tools/build_assets.py"

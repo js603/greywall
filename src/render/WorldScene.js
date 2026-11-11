@@ -9,6 +9,7 @@ import { Monster, Npc } from "../sim/entities.js";
 const bodyOf = (sprite) => ANIMS[sprite]?.base ?? ANIMS[sprite]?.sizeAs ?? sprite;
 
 const GROUND_ROWS = {
+  ice: -3,
   water: -2,
   bog: -1,
   mine: 0,
@@ -18,6 +19,7 @@ const GROUND_ROWS = {
   dirt: 4,
   road: 5,
   plaza: 6,
+  snow: 7,
 };
 const elevPx = (e) => {
   return e * 16;
@@ -166,6 +168,8 @@ class WorldScene extends Phaser.Scene {
     this.fitZoom();
   }
   clearMap() {
+    this.snowLayer?.destroy();
+    this.snowLayer = null;
     for (let e of this.ground) {
       e.destroy();
     }
@@ -214,9 +218,44 @@ class WorldScene extends Phaser.Scene {
     }
     this.floaters = [];
   }
+  /**
+   * Snowfall for maps with weather `snow`: a screen-space layer of flakes in three depths,
+   * drawn with one Graphics object (no textures). Deterministic flake set, wind sway.
+   */
+  makeSnow() {
+    const g = this.add.graphics().setDepth(10000000 - 3);
+    const flakes = [];
+    let seed = 7;
+    const rnd = () => ((seed = (seed * 1103515245 + 12345) >>> 0) / 4294967296);
+    for (let k = 0; k < 160; k++) {
+      const layer = k < 90 ? 0 : k < 140 ? 1 : 2;
+      flakes.push({ x: rnd(), y: rnd(), layer, phase: rnd() * 6.28, speed: [18, 34, 60][layer] * (0.8 + rnd() * 0.4) });
+    }
+    this.snowLayer = g;
+    this.snowFlakes = flakes;
+  }
+  updateSnow(dt) {
+    const g = this.snowLayer;
+    if (!g) return;
+    // drawn in world pixels over the camera's view, so flakes are crisp at any zoom
+    const view = this.cameras.main.worldView;
+    const W = view.width;
+    const H = view.height;
+    const t = this.world.time;
+    g.clear();
+    for (const f of this.snowFlakes) {
+      f.y += (f.speed * dt) / H;
+      if (f.y > 1.02) f.y -= 1.04;
+      const x = (((f.x * W + Math.sin(t * 0.8 + f.phase) * (4 + f.layer * 4) + t * (6 + f.layer * 6)) % W) + W) % W;
+      const size = f.layer === 2 ? 2 : 1;
+      g.fillStyle(f.layer === 0 ? 0xc8d6ea : 0xffffff, f.layer === 0 ? 0.55 : 0.85);
+      g.fillRect(Math.round(view.x + x), Math.round(view.y + f.y * H), size, size);
+    }
+  }
   buildMap() {
     this.clearMap();
     let e = this.world.map;
+    if (e.weather === `snow`) this.makeSnow();
     let t = -e.h * 32 - 64;
     let n = e.w * 32 + 64;
     let r = -160;
@@ -741,14 +780,15 @@ class WorldScene extends Phaser.Scene {
             let o = this.entScreen(n).x > a.s.x;
             let s = !!e.kind && e.kind !== `basic`;
 
+            const hfx = !s && n?.def?.hitFx;
             this.playFx(
-              s ? `strike` : `hit`,
+              s ? `strike` : hfx || `hit`,
               a.x,
               a.y,
               elevPx(r.px + r.py) + 9,
               {
                 flip: o,
-                scale: 1,
+                scale: hfx === `frostnova` ? 0.45 : hfx ? 0.6 : 1,
               }
             );
 
@@ -979,6 +1019,11 @@ class WorldScene extends Phaser.Scene {
           this.playFx(`enchant`, n.s.x, n.s.y, 0, { follow: 0, scale: 0.6, dy: 2 });
           this.floatText(n.x, n.y - 34, `전직!`, `#f4dc8a`, 16);
           audio.play(`levelup`);
+          break;
+        }
+        case `chill`: {
+          this.chillFx?.spr.destroy();
+          this.chillFx = this.playFx(`frozen`, 0, 0, 0, { follow: 0, scale: 0.7, loop: true, until: e.until, dy: 2 });
           break;
         }
         case `stun`: {
@@ -1331,6 +1376,7 @@ class WorldScene extends Phaser.Scene {
     }
 
     this.updateHold();
+    this.updateSnow(i);
     for (let e = i; e > 0.000001 /* 1e-6 */; e -= 0.05) {
       n.update(Math.min(0.05, e));
     }

@@ -1091,5 +1091,236 @@
         "max": 5
       }
     ]
+  },
+  "snow_wolf": {
+    "id": "snow_wolf",
+    "name": "눈 늑대",
+    "sprite": "snow_wolf",
+    "level": 24,
+    "hp": 240,
+    "dmg": [
+      8,
+      13
+    ],
+    "acc": 11,
+    "eva": 7,
+    "ac": 5,
+    "interval": 1.8,
+    "windup": 0.5,
+    "step": 0.36,
+    "aggro": 5,
+    "xp": 210,
+    "coins": [
+      24,
+      46
+    ],
+    "respawn": 30,
+    "lawful": 5,
+    "drops": [
+      {
+        "item": "snow_pelt",
+        "chance": 0.5
+      },
+      {
+        "item": "potion_clear",
+        "chance": 0.12
+      }
+    ]
+  },
+  "frost_wisp": {
+    "id": "frost_wisp",
+    "name": "서리 정령",
+    "sprite": "frost_wisp",
+    "level": 25,
+    "hp": 200,
+    "dmg": [
+      8,
+      13
+    ],
+    "acc": 12,
+    "eva": 9,
+    "ac": 3,
+    "interval": 2.6,
+    "windup": 0.5,
+    "step": 0.45,
+    "aggro": 6,
+    "xp": 240,
+    "coins": [
+      26,
+      50
+    ],
+    "respawn": 35,
+    "range": 4,
+    "projectile": "bolt",
+    "chill": {
+      "chance": 0.35,
+      "dur": 4,
+      "interval": 1.2
+    },
+    "lawful": 6,
+    "drops": [
+      {
+        "item": "frost_shard",
+        "chance": 0.5
+      },
+      {
+        "item": "potion_clear",
+        "chance": 0.12
+      },
+      {
+        "item": "frost_ring",
+        "chance": 0.004
+      },
+      {
+        "item": "scroll_ench_a",
+        "chance": 0.025
+      }
+    ]
+  },
+  "yeti": {
+    "id": "yeti",
+    "name": "고개의 설인",
+    "sprite": "yeti",
+    "level": 26,
+    "hp": 340,
+    "dmg": [
+      9,
+      15
+    ],
+    "acc": 12,
+    "eva": 3,
+    "ac": 6,
+    "interval": 2.3,
+    "windup": 0.5,
+    "step": 0.5,
+    "aggro": 5,
+    "xp": 280,
+    "coins": [
+      30,
+      60
+    ],
+    "respawn": 40,
+    "hitFx": "shatter",
+    "lawful": 6,
+    "drops": [
+      {
+        "item": "yeti_fur",
+        "chance": 0.5
+      },
+      {
+        "item": "potion_clear",
+        "chance": 0.15
+      },
+      {
+        "item": "yeti_armor",
+        "chance": 0.006
+      },
+      {
+        "item": "scroll_ench_w",
+        "chance": 0.02
+      }
+    ]
+  },
+  "frost_golem": {
+    "id": "frost_golem",
+    "name": "얼음 골렘",
+    "sprite": "frost_golem",
+    "level": 27,
+    "hp": 420,
+    "dmg": [
+      10,
+      16
+    ],
+    "acc": 12,
+    "eva": 0,
+    "ac": 10,
+    "interval": 2.7,
+    "windup": 0.5,
+    "step": 0.62,
+    "aggro": 4,
+    "xp": 325,
+    "coins": [
+      34,
+      70
+    ],
+    "respawn": 45,
+    "block": 0.1,
+    "hitFx": "shatter",
+    "lawful": 7,
+    "drops": [
+      {
+        "item": "golem_core",
+        "chance": 0.45
+      },
+      {
+        "item": "potion_clear",
+        "chance": 0.15
+      },
+      {
+        "item": "scroll_ench_a",
+        "chance": 0.03
+      }
+    ]
+  },
+  "glacier_titan": {
+    "id": "glacier_titan",
+    "name": "빙하 거인 하임",
+    "sprite": "glacier_titan",
+    "level": 30,
+    "hp": 2600,
+    "dmg": [
+      13,
+      22
+    ],
+    "acc": 15,
+    "eva": 2,
+    "ac": 12,
+    "interval": 2.8,
+    "windup": 0.5,
+    "step": 0.6,
+    "aggro": 7,
+    "xp": 6000,
+    "coins": [
+      900,
+      1300
+    ],
+    "respawn": 900,
+    "named": true,
+    "block": 0.15,
+    "hitFx": "frostnova",
+    "chill": {
+      "chance": 0.5,
+      "dur": 5,
+      "interval": 1.25
+    },
+    "lawful": 180,
+    "drops": [
+      {
+        "item": "glacier_blade",
+        "chance": 0.3
+      },
+      {
+        "item": "frost_ring",
+        "chance": 0.3
+      },
+      {
+        "item": "scroll_ench_w",
+        "chance": 1,
+        "min": 2,
+        "max": 3
+      },
+      {
+        "item": "scroll_ench_a",
+        "chance": 1,
+        "min": 2,
+        "max": 3
+      },
+      {
+        "item": "potion_clear",
+        "chance": 1,
+        "min": 3,
+        "max": 5
+      }
+    ]
   }
 }

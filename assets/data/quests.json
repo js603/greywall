@@ -496,5 +496,124 @@
     "coins": 1000,
     "rewardItems": [],
     "rewardXp": 1500
+  },
+  {
+    "id": "q_pass",
+    "name": "얼어붙은 고개",
+    "giver": "guard",
+    "minLevel": 23,
+    "after": "q_ruins",
+    "summary": "감시탑 북쪽 너머 얼어붙은 고개 입구의 눈 늑대 10마리를 처치한다.",
+    "hint": "감시탑 안뜰 동쪽, 북쪽 성벽의 쪽문으로 나가면 고개로 오르는 길이 있다.",
+    "kill": {
+      "monster": "snow_wolf",
+      "count": 10
+    },
+    "rewardItems": [
+      {
+        "item": "potion_clear",
+        "count": 8
+      }
+    ],
+    "rewardCoins": 900,
+    "rewardXp": 4800
+  },
+  {
+    "id": "q_shards",
+    "name": "서리 파편",
+    "giver": "alchemist",
+    "minLevel": 24,
+    "after": "q_venom",
+    "summary": "서리 정령에게서 서리 파편 8개를 모아 연금술사 미라에게 가져간다.",
+    "hint": "정령은 얼어붙은 호수 위를 떠다닌다. 맞으면 몸이 얼어 공격이 느려진다.",
+    "bring": [
+      {
+        "item": "frost_shard",
+        "count": 8
+      }
+    ],
+    "rewardItems": [
+      {
+        "item": "potion_haste",
+        "count": 4
+      },
+      {
+        "item": "potion_brave",
+        "count": 2
+      }
+    ],
+    "rewardCoins": 1000,
+    "rewardXp": 5400
+  },
+  {
+    "id": "q_yeti",
+    "name": "고개의 설인",
+    "giver": "trainer",
+    "minLevel": 25,
+    "after": "q_captain",
+    "summary": "고개 서쪽 바위굴 근처의 설인 8마리를 쓰러뜨린다.",
+    "hint": "설인은 한 방이 무겁다. 빙판 위에서는 서로 미끄러지니 거리를 잘 재라.",
+    "kill": {
+      "monster": "yeti",
+      "count": 8
+    },
+    "rewardItems": [
+      {
+        "item": "scroll_ench_w",
+        "count": 1
+      },
+      {
+        "item": "scroll_ench_a",
+        "count": 1
+      }
+    ],
+    "rewardCoins": 1100,
+    "rewardXp": 6200
+  },
+  {
+    "id": "q_golem",
+    "name": "얼음 골렘",
+    "giver": "guard",
+    "minLevel": 26,
+    "after": "q_garrison",
+    "summary": "고개 동쪽 비탈을 지키는 얼음 골렘 8기를 부순다.",
+    "hint": "골렘은 단단하고 방패처럼 막는다. 기술로 밀어붙여라.",
+    "kill": {
+      "monster": "frost_golem",
+      "count": 8
+    },
+    "rewardItems": [
+      {
+        "item": "scroll_ench_a",
+        "count": 2
+      }
+    ],
+    "rewardCoins": 1200,
+    "rewardXp": 7000
+  },
+  {
+    "id": "q_titan",
+    "name": "빙하 거인 하임",
+    "giver": "priest",
+    "minLevel": 28,
+    "after": "q_plague",
+    "summary": "고개 꼭대기 빙하 위의 빙하 거인 하임을 쓰러뜨린다.",
+    "hint": "하임의 내려찍기는 몸을 얼린다. 해독제로는 풀리지 않으니 물러섰다가 다시 붙어라.",
+    "kill": {
+      "monster": "glacier_titan",
+      "count": 1
+    },
+    "rewardItems": [
+      {
+        "item": "scroll_ench_w",
+        "count": 2
+      },
+      {
+        "item": "scroll_ench_a",
+        "count": 2
+      }
+    ],
+    "rewardCoins": 3000,
+    "rewardXp": 12000
   }
 ]

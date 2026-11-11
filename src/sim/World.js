@@ -380,6 +380,8 @@ class World {
         (e.stepDur =
           e.stepBase *
           stepCost(t - e.fx, n - e.fy) *
+          // ice: everyone slides across it faster
+          (this.map.ground[this.map.idx(t, n)] === `ice` ? 0.7 : 1) *
           (e === this.player && this.time < this.player.hasteUntil
             ? 0.75
             : 1)),
@@ -807,6 +809,12 @@ class World {
 
     if (!r && e.def.poison && this.rng() < e.def.poison) {
       this.applyPoison();
+    }
+    // frost (wisps, the titan): the player's swings slow down for a few seconds
+    if (!r && t === this.player && e.def.chill && this.rng() < e.def.chill.chance) {
+      const c = e.def.chill;
+      this.player.buffs.chill = { until: this.time + c.dur, interval: c.interval };
+      this.emit({ type: `chill`, until: this.time + c.dur });
     }
 
     this.onDamaged(t, e, d);

@@ -9,6 +9,8 @@ import { GameMap } from "../sim/GameMap.js";
 
 const WALL = { x0: 10, x1: 43, y0: 8, y1: 38 };
 const GATE = [25, 26, 27, 28];
+/** Act 2 area 3: a postern in the north wall towards the Frozen Pass (design/gdd/act2-frozen-pass.md). */
+const NORTH_GATE = [39, 40];
 
 /** Builds the ruins deterministically (seed 77). */
 function buildRuins() {
@@ -20,6 +22,7 @@ function buildRuins() {
   for (const [x, y, rx, ry] of [[18, 28, 5, 4], [35, 28, 5, 4], [26, 31, 4, 3]]) fillBlob(m, x, y, rx, ry, `road`, rng, 0.3);
   for (const [x, y, rx, ry] of [[6, 44, 5, 4], [47, 44, 5, 4], [48, 12, 4, 5], [5, 15, 4, 5]]) fillBlob(m, x, y, rx, ry, `forest`, rng, 0.2);
   paintPath(m, [[26, 49], [26, 39], [26, 20]], `road`, 2);
+  paintPath(m, [[37, 25], [39, 14], [39, 0]], `road`, 2);
 
   // the keep: raised plaza x 20..33, y 10..18, stair at (26, 19) going north
   for (let y = 10; y <= 18; y++)
@@ -40,6 +43,7 @@ function buildRuins() {
       const onWall = x === WALL.x0 || x === WALL.x1 || y === WALL.y0 || y === WALL.y1;
       if (!onWall) continue;
       if (y === WALL.y1 && GATE.includes(x)) continue;
+      if (y === WALL.y0 && NORTH_GATE.includes(x)) continue;
       const corner = (x === WALL.x0 || x === WALL.x1) && (y === WALL.y0 || y === WALL.y1);
       const r = rng();
       if (corner) placeProp(m, `tower`, x, y);
@@ -67,6 +71,8 @@ function buildRuins() {
   m.exits.push(
     { x: 26, y: 49, to: `marsh`, tx: 31, ty: 1, label: `안개 늪` },
     { x: 27, y: 49, to: `marsh`, tx: 32, ty: 1, label: `안개 늪` },
+    { x: 39, y: 0, to: `pass`, tx: 24, ty: 54, label: `얼어붙은 고개` },
+    { x: 40, y: 0, to: `pass`, tx: 25, ty: 54, label: `얼어붙은 고개` },
   );
   for (const e of m.exits) {
     m.block[m.idx(e.x, e.y)] = 0;

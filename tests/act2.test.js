@@ -7,8 +7,8 @@ import { MONSTERS } from '../src/data/monsters.js';
 import { fnv1a, parseSave, serializeSave } from '../src/save.js';
 import { findPath } from '../src/core/pathfind.js';
 
-// marsh was 'bd7063ba' before the north road to the ruins was added
-const PINNED = { marsh: 'a61f63a5', ruins: 'c8c78717' };
+// marsh was 'bd7063ba' before the north road to the ruins was added; ruins 'c8c78717' before the north postern to the pass
+const PINNED = { marsh: 'a61f63a5', ruins: 'b710aa04', pass: '7cf5b518' };
 
 test('act 2 maps are deterministic and pinned', () => {
   for (const [id, hash] of Object.entries(PINNED)) {
@@ -38,7 +38,7 @@ test('marsh and orc lands link both ways onto walkable tiles', () => {
   for (const e of toOrc) assert.ok(orc.walkable(e.tx, e.ty), `orc ${e.tx},${e.ty}`);
 });
 
-for (const area of ['marsh', 'ruins'])
+for (const area of ['marsh', 'ruins', 'pass'])
 test(`every ${area} spawn has its monster, fills up, and is reachable on foot from the entrance`, () => {
   const w = new World(MAP_BUILDERS, 9);
   w.loadMap(area);
@@ -70,7 +70,7 @@ test('saves at level 30 in the marsh load; old saves without act 2 quests still 
   const ow = new World(MAP_BUILDERS, 3);
   ow.loadMap('town');
   const old = serializeSave(ow);
-  for (const id of ['q_marsh', 'q_venom', 'q_mist', 'q_troll', 'q_witch', 'q_ruins', 'q_insignia', 'q_plague', 'q_garrison', 'q_captain']) delete old.data.quests[id];
+  for (const id of ['q_marsh', 'q_venom', 'q_mist', 'q_troll', 'q_witch', 'q_ruins', 'q_insignia', 'q_plague', 'q_garrison', 'q_captain', 'q_class', 'q_pass', 'q_shards', 'q_yeti', 'q_golem', 'q_titan']) delete old.data.quests[id];
   old.checksum = fnv1a(JSON.stringify(old.data)); // signed like the act 1 build would have
   const r = parseSave(JSON.stringify(old));
   assert.equal(r.ok, true, r.error);
@@ -100,4 +100,26 @@ test('NPC quest markers: ! for a quest to accept, ? for one to turn in, none oth
   w.quests.q_slime.state = 'done';
   w.refreshQuests();
   assert.equal(w.npcQuestMarker('guard'), null); // q_wolf needs level 2
+});
+
+test('ice: stepping onto ice is 30% quicker', () => {
+  const w = new World(MAP_BUILDERS, 12);
+  w.loadMap('pass');
+  const m = w.map, p = w.player;
+  const at = (g) => { for (let y = 1; y < m.h - 1; y++) for (let x = 1; x < m.w - 1; x++) if (m.ground[m.idx(x, y)] === g && m.walkable(x, y) && !w.isOccupied(x, y) && m.walkable(x + 1, y) && !w.isOccupied(x + 1, y) && m.ground[m.idx(x + 1, y)] === g && !m.elev[m.idx(x, y)] && !m.elev[m.idx(x + 1, y)]) return [x, y]; };
+  const step = (g) => { const [x, y] = at(g); p.x = p.fx = x; p.y = p.fy = y; p.moving = false; w.tryStep(p, x + 1, y); return p.stepDur; };
+  assert.ok(Math.abs(step('ice') - step('snow') * 0.7) < 1e-9);
+});
+
+test('frost: a wisp hit can chill the player, slowing swings until it wears off', () => {
+  const w = new World(MAP_BUILDERS, 13);
+  w.loadMap('pass');
+  const wisp = w.monsters.find((m) => m.def.id === 'frost_wisp');
+  const before = w.pInterval();
+  w.rng = () => 0.1; // hit, no block, chill roll succeeds
+  w.landHit(wisp, w.player, 'basic');
+  assert.ok(w.buffActive('chill'));
+  assert.equal(w.pInterval(), Math.round(before * 1.2 * 100) / 100);
+  w.time += 5;
+  assert.equal(w.pInterval(), before);
 });

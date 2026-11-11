@@ -21,11 +21,18 @@
 | ruins | 22 | captain_sword, garrison_mail, tower_shield, witch_charm | 2.5 | 528 | 112 | 0.0 | 5.6 | 26.7 |
 | ruins | 24 | captain_sword, garrison_mail, tower_shield, witch_charm | 2.8 | 577 | 125 | 0.0 | 6.8 | 32.9 |
 | ruins | 22 | [knight] captain_sword, garrison_mail, tower_shield, witch_charm | 2.6 | 543 | 120 | 0.0 | 4.1 | 26.0 |
-| ruins | 22 | [berserker] captain_sword, garrison_mail, tower_shield, witch_charm | 3.3 | 666 | 140 | 0.0 | 6.8 | 21.2 |
+| ruins | 22 | [berserker] captain_sword, garrison_mail, tower_shield, witch_charm | 3.3 | 680 | 150 | 0.0 | 7.6 | 20.8 |
 | ruins | 22 | [paladin] captain_sword, garrison_mail, tower_shield, witch_charm | 3.2 | 665 | 139 | 0.0 | 6.9 | 21.2 |
 | ruins | 24 | [knight] captain_sword, garrison_mail, tower_shield, witch_charm | 2.8 | 642 | 127 | 0.0 | 3.9 | 29.6 |
-| ruins | 24 | [berserker] captain_sword, garrison_mail, tower_shield, witch_charm | 3.5 | 777 | 163 | 0.0 | 6.6 | 24.4 |
+| ruins | 24 | [berserker] captain_sword, garrison_mail, tower_shield, witch_charm | 3.6 | 734 | 157 | 0.0 | 7.3 | 25.9 |
 | ruins | 24 | [paladin] captain_sword, garrison_mail, tower_shield, witch_charm | 3.5 | 708 | 154 | 0.0 | 8.1 | 26.9 |
+| pass | 24 | captain_sword, garrison_mail, tower_shield, witch_charm | 3.3 | 748 | 101 | 0.0 | 7.4 | 25.4 |
+| pass | 24 | [knight] captain_sword, garrison_mail, tower_shield, witch_charm | 3.1 | 727 | 113 | 0.0 | 4.6 | 26.1 |
+| pass | 24 | [berserker] captain_sword, garrison_mail, tower_shield, witch_charm | 3.8 | 925 | 108 | 0.0 | 7.3 | 20.5 |
+| pass | 24 | [paladin] captain_sword, garrison_mail, tower_shield, witch_charm | 3.2 | 753 | 105 | 0.0 | 8.2 | 25.2 |
+| pass | 27 | [knight] glacier_blade, yeti_armor, tower_shield, frost_ring | 3.8 | 908 | 114 | 0.0 | 3.8 | 32.5 |
+| pass | 27 | [berserker] glacier_blade, yeti_armor, tower_shield, frost_ring | 4.3 | 1060 | 128 | 0.0 | 5.5 | 27.8 |
+| pass | 27 | [paladin] glacier_blade, yeti_armor, tower_shield, frost_ring | 3.5 | 872 | 107 | 0.0 | 6.0 | 33.8 |
 
 Driver limits: it never runs away, drinks only red potions (30 HP, 25 coins) and gets 5 free ones
 whenever it runs out, so "Deaths" understates risk and "Potions/min" reads as red-potion
@@ -40,3 +47,7 @@ Classes (design/gdd/class-change.md, acceptance 2): at Lv22 in the ruins every c
 adventurer (knight 543, berserker 666, paladin 665 vs 528 XP/min) and the classes sit within ±10%
 of their mean. The knight trades speed for safety (4.1 potions/min against 6.8–6.9). In class
 runs the driver also uses the class attack skill on cooldown and the buff below 70% HP.
+
+Frozen Pass (design/gdd/act2-frozen-pass.md, acceptance 2): with the pass's own gear at Lv27 every
+class stays at or under 6 potions/min and 28–34 min per level; the berserker leads by 12% over the
+class mean (whirlwind on wolf packs, multiplier lowered from 1.4 to 1.3 after the first pass).

@@ -5,6 +5,7 @@ import { buildOrcLands } from "./orc.js";
 import { buildTown } from "./town.js";
 import { buildMarsh } from "./marsh.js";
 import { buildRuins } from "./ruins.js";
+import { buildPass } from "./pass.js";
 
 const MAP_BUILDERS = {
   town: buildTown,
@@ -14,6 +15,7 @@ const MAP_BUILDERS = {
   mine2: buildDeepMine,
   marsh: buildMarsh,
   ruins: buildRuins,
+  pass: buildPass,
 };
 
 /** Display names for the start screen and save labels, without building the maps. */
@@ -25,6 +27,7 @@ const MAP_NAMES = {
   mine2: `은광 심부`,
   marsh: `안개 늪`,
   ruins: `무너진 감시탑`,
+  pass: `얼어붙은 고개`,
 };
 
 export { MAP_BUILDERS, MAP_NAMES };

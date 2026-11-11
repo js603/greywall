@@ -14,6 +14,8 @@ const GROUND_COLORS = {
   mine: '#4a4440',
   bog: '#4a4a2c',
   water: '#23413f',
+  snow: '#dfe8f2',
+  ice: '#a9dbe6',
 };
 const BLOCK_COLOR = '#1b1917';
 const SCALE = 3; // canvas pixels per tile before rotation
