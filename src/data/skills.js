@@ -1,29 +1,6 @@
-const SKILLS = {
-  strike: {
-    id: `strike`,
-    name: `강타`,
-    book: `book_strike`,
-    mp: 5,
-    cooldown: 8,
-    desc: `단일 대상에게 무기 피해의 2.2배 + 2. 명중 +15%. 평타 공격 대기에 영향을 준다.`,
-  },
-  heal: {
-    id: `heal`,
-    name: `응급 치료`,
-    book: `book_heal`,
-    mp: 8,
-    cooldown: 40,
-    desc: `최대 체력의 30% + 10 회복. 재사용 대기 40초.`,
-  },
-  bless: {
-    id: `bless`,
-    name: `무기 축복`,
-    book: `book_bless`,
-    mp: 6,
-    cooldown: 60,
-    consumes: `holy_water`,
-    desc: `성수 1개 소모. 25초 동안 평타 피해 +2, 명중 +8%.`,
-  },
-};
+/** Learnable skills keyed by id. Values live in assets/data/skills.json (edit there; run npm test after balance changes). */
+import data from '../../assets/data/skills.json' with { type: 'json' };
+
+const SKILLS = data;
 
 export { SKILLS };

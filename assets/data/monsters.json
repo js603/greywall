@@ -1,0 +1,593 @@
+{
+  "slime": {
+    "id": "slime",
+    "name": "이끼 슬라임",
+    "sprite": "slime",
+    "level": 1,
+    "hp": 16,
+    "dmg": [
+      1,
+      3
+    ],
+    "acc": 0,
+    "eva": -2,
+    "ac": 0,
+    "interval": 2.4,
+    "windup": 0.5,
+    "step": 0.62,
+    "aggro": 0,
+    "passive": true,
+    "xp": 5,
+    "coins": [
+      2,
+      5
+    ],
+    "respawn": 25,
+    "drops": [
+      {
+        "item": "jelly",
+        "chance": 0.5
+      },
+      {
+        "item": "potion_red",
+        "chance": 0.06
+      }
+    ]
+  },
+  "wolf": {
+    "id": "wolf",
+    "name": "회색 늑대",
+    "sprite": "wolf",
+    "level": 3,
+    "hp": 30,
+    "dmg": [
+      2,
+      5
+    ],
+    "acc": 2,
+    "eva": 1,
+    "ac": 0,
+    "interval": 2,
+    "windup": 0.5,
+    "step": 0.38,
+    "aggro": 4,
+    "xp": 13,
+    "coins": [
+      5,
+      12
+    ],
+    "respawn": 40,
+    "drops": [
+      {
+        "item": "wolf_pelt",
+        "chance": 0.45
+      },
+      {
+        "item": "potion_red",
+        "chance": 0.1
+      }
+    ]
+  },
+  "bandit": {
+    "id": "bandit",
+    "name": "숲길 도적",
+    "sprite": "bandit",
+    "level": 5,
+    "hp": 42,
+    "dmg": [
+      3,
+      6
+    ],
+    "acc": 3,
+    "eva": 2,
+    "ac": 1,
+    "interval": 1.9,
+    "windup": 0.5,
+    "step": 0.42,
+    "aggro": 4,
+    "xp": 21,
+    "coins": [
+      12,
+      26
+    ],
+    "respawn": 40,
+    "drops": [
+      {
+        "item": "bandit_badge",
+        "chance": 0.6
+      },
+      {
+        "item": "potion_red",
+        "chance": 0.18
+      },
+      {
+        "item": "scroll_return",
+        "chance": 0.05
+      },
+      {
+        "item": "leather_shield",
+        "chance": 0.02
+      },
+      {
+        "item": "book_strike",
+        "chance": 0.012
+      }
+    ]
+  },
+  "skeleton": {
+    "id": "skeleton",
+    "name": "해골 전사",
+    "sprite": "skeleton",
+    "level": 6,
+    "hp": 48,
+    "dmg": [
+      3,
+      7
+    ],
+    "acc": 3,
+    "eva": 0,
+    "ac": 2,
+    "block": 0.08,
+    "interval": 2.1,
+    "windup": 0.5,
+    "step": 0.5,
+    "aggro": 5,
+    "xp": 26,
+    "coins": [
+      8,
+      18
+    ],
+    "respawn": 45,
+    "drops": [
+      {
+        "item": "bone_dust",
+        "chance": 0.55
+      },
+      {
+        "item": "potion_red",
+        "chance": 0.12
+      },
+      {
+        "item": "ring_str",
+        "chance": 0.015
+      },
+      {
+        "item": "book_strike",
+        "chance": 0.012
+      }
+    ]
+  },
+  "ghoul": {
+    "id": "ghoul",
+    "name": "폐광 구울",
+    "sprite": "ghoul",
+    "level": 8,
+    "hp": 72,
+    "dmg": [
+      4,
+      8
+    ],
+    "acc": 4,
+    "eva": 1,
+    "ac": 1,
+    "interval": 2.3,
+    "windup": 0.5,
+    "step": 0.55,
+    "aggro": 4,
+    "xp": 42,
+    "coins": [
+      14,
+      30
+    ],
+    "respawn": 60,
+    "poison": 0.3,
+    "scale": 1,
+    "drops": [
+      {
+        "item": "ghoul_fang",
+        "chance": 0.5
+      },
+      {
+        "item": "potion_clear",
+        "chance": 0.1
+      },
+      {
+        "item": "antidote",
+        "chance": 0.15
+      },
+      {
+        "item": "amulet_guard",
+        "chance": 0.015
+      }
+    ]
+  },
+  "orc": {
+    "id": "orc",
+    "name": "붉은엄니 오크",
+    "sprite": "orc",
+    "level": 7,
+    "hp": 64,
+    "dmg": [
+      5,
+      10
+    ],
+    "acc": 5,
+    "eva": 1,
+    "ac": 2,
+    "interval": 2,
+    "windup": 0.5,
+    "step": 0.45,
+    "aggro": 5,
+    "xp": 34,
+    "coins": [
+      14,
+      30
+    ],
+    "respawn": 45,
+    "drops": [
+      {
+        "item": "orc_tusk",
+        "chance": 0.5
+      },
+      {
+        "item": "potion_red",
+        "chance": 0.15
+      },
+      {
+        "item": "scroll_teleport",
+        "chance": 0.05
+      },
+      {
+        "item": "orc_axe",
+        "chance": 0.02
+      },
+      {
+        "item": "scroll_ench_a",
+        "chance": 0.02
+      },
+      {
+        "item": "scroll_ench_w",
+        "chance": 0.015
+      }
+    ]
+  },
+  "orc_chief": {
+    "id": "orc_chief",
+    "name": "붉은엄니 족장 가르막",
+    "sprite": "orc_chief",
+    "level": 11,
+    "hp": 380,
+    "dmg": [
+      7,
+      14
+    ],
+    "acc": 7,
+    "eva": 2,
+    "ac": 5,
+    "block": 0.1,
+    "interval": 2.3,
+    "windup": 0.5,
+    "step": 0.48,
+    "aggro": 6,
+    "xp": 480,
+    "coins": [
+      120,
+      200
+    ],
+    "respawn": 480,
+    "named": true,
+    "lawful": 60,
+    "drops": [
+      {
+        "item": "scroll_ench_w",
+        "chance": 1,
+        "min": 1,
+        "max": 2
+      },
+      {
+        "item": "chief_axe",
+        "chance": 0.4
+      },
+      {
+        "item": "scroll_ench_a",
+        "chance": 0.6
+      },
+      {
+        "item": "potion_brave",
+        "chance": 0.6
+      },
+      {
+        "item": "potion_clear",
+        "chance": 0.7,
+        "min": 1,
+        "max": 3
+      }
+    ]
+  },
+  "orc_archer": {
+    "id": "orc_archer",
+    "name": "붉은엄니 궁수",
+    "sprite": "orc_archer",
+    "level": 8,
+    "hp": 46,
+    "dmg": [
+      4,
+      8
+    ],
+    "acc": 5,
+    "eva": 2,
+    "ac": 1,
+    "interval": 2.5,
+    "windup": 0.5,
+    "step": 0.45,
+    "aggro": 6,
+    "xp": 36,
+    "coins": [
+      12,
+      26
+    ],
+    "respawn": 50,
+    "range": 5,
+    "projectile": "arrow",
+    "lawful": 3,
+    "drops": [
+      {
+        "item": "orc_tusk",
+        "chance": 0.4
+      },
+      {
+        "item": "potion_haste",
+        "chance": 0.08
+      },
+      {
+        "item": "scroll_teleport",
+        "chance": 0.06
+      },
+      {
+        "item": "ring_hit",
+        "chance": 0.015
+      },
+      {
+        "item": "scroll_ench_a",
+        "chance": 0.02
+      }
+    ]
+  },
+  "spider": {
+    "id": "spider",
+    "name": "동굴 거미",
+    "sprite": "spider",
+    "level": 9,
+    "hp": 70,
+    "dmg": [
+      5,
+      9
+    ],
+    "acc": 5,
+    "eva": 3,
+    "ac": 1,
+    "interval": 1.9,
+    "windup": 0.5,
+    "step": 0.36,
+    "aggro": 5,
+    "xp": 46,
+    "coins": [
+      8,
+      20
+    ],
+    "respawn": 45,
+    "poison": 0.35,
+    "lawful": 2,
+    "drops": [
+      {
+        "item": "spider_silk",
+        "chance": 0.6
+      },
+      {
+        "item": "antidote",
+        "chance": 0.2
+      },
+      {
+        "item": "potion_clear",
+        "chance": 0.1
+      },
+      {
+        "item": "scroll_ench_a",
+        "chance": 0.02
+      }
+    ]
+  },
+  "wraith": {
+    "id": "wraith",
+    "name": "망령 광부",
+    "sprite": "wraith",
+    "level": 10,
+    "hp": 86,
+    "dmg": [
+      6,
+      11
+    ],
+    "acc": 6,
+    "eva": 1,
+    "ac": 3,
+    "block": 0.05,
+    "interval": 2.2,
+    "windup": 0.5,
+    "step": 0.5,
+    "aggro": 5,
+    "xp": 58,
+    "coins": [
+      16,
+      34
+    ],
+    "respawn": 50,
+    "lawful": 4,
+    "drops": [
+      {
+        "item": "wraith_ash",
+        "chance": 0.5
+      },
+      {
+        "item": "potion_clear",
+        "chance": 0.14
+      },
+      {
+        "item": "wraith_pick",
+        "chance": 0.02
+      },
+      {
+        "item": "scroll_ench_w",
+        "chance": 0.025
+      },
+      {
+        "item": "scroll_ench_a",
+        "chance": 0.025
+      }
+    ]
+  },
+  "lich": {
+    "id": "lich",
+    "name": "심부의 군주 모르가스",
+    "sprite": "lich",
+    "level": 14,
+    "hp": 520,
+    "dmg": [
+      8,
+      15
+    ],
+    "acc": 9,
+    "eva": 2,
+    "ac": 4,
+    "interval": 2.6,
+    "windup": 0.32,
+    "step": 0.55,
+    "aggro": 7,
+    "xp": 950,
+    "coins": [
+      200,
+      320
+    ],
+    "respawn": 600,
+    "named": true,
+    "range": 5,
+    "projectile": "bolt",
+    "lawful": 80,
+    "drops": [
+      {
+        "item": "lord_ring",
+        "chance": 0.5
+      },
+      {
+        "item": "scroll_ench_w",
+        "chance": 1,
+        "min": 2,
+        "max": 3
+      },
+      {
+        "item": "scroll_ench_a",
+        "chance": 1,
+        "min": 1,
+        "max": 2
+      },
+      {
+        "item": "potion_clear",
+        "chance": 1,
+        "min": 2,
+        "max": 4
+      },
+      {
+        "item": "potion_brave",
+        "chance": 0.7
+      }
+    ]
+  },
+  "zombie": {
+    "id": "zombie",
+    "name": "묘지의 망자",
+    "sprite": "zombie",
+    "level": 6,
+    "hp": 56,
+    "dmg": [
+      3,
+      7
+    ],
+    "acc": 2,
+    "eva": -2,
+    "ac": 1,
+    "interval": 2.4,
+    "windup": 0.5,
+    "step": 0.72,
+    "aggro": 5,
+    "xp": 30,
+    "coins": [
+      4,
+      12
+    ],
+    "respawn": 30,
+    "drops": [
+      {
+        "item": "rot_cloth",
+        "chance": 0.5
+      },
+      {
+        "item": "holy_water",
+        "chance": 0.08
+      },
+      {
+        "item": "scroll_ench_a",
+        "chance": 0.012
+      },
+      {
+        "item": "ring_hit",
+        "chance": 0.01
+      }
+    ]
+  },
+  "knight": {
+    "id": "knight",
+    "name": "녹슨 기사 오르덴",
+    "sprite": "knight",
+    "level": 10,
+    "hp": 260,
+    "dmg": [
+      6,
+      12
+    ],
+    "acc": 6,
+    "eva": 2,
+    "ac": 4,
+    "block": 0.15,
+    "interval": 2.4,
+    "windup": 0.5,
+    "step": 0.5,
+    "aggro": 6,
+    "xp": 320,
+    "coins": [
+      80,
+      140
+    ],
+    "respawn": 300,
+    "named": true,
+    "lawful": 50,
+    "drops": [
+      {
+        "item": "book_bless",
+        "chance": 1
+      },
+      {
+        "item": "knight_sword",
+        "chance": 0.35
+      },
+      {
+        "item": "scroll_ench_w",
+        "chance": 0.5
+      },
+      {
+        "item": "potion_clear",
+        "chance": 0.6,
+        "min": 1,
+        "max": 2
+      }
+    ]
+  }
+}

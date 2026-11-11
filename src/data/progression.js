@@ -1,6 +1,6 @@
-const XP_TABLE = [
-  0, 0, 60, 170, 350, 620, 1000, 1500, 2150, 3000, 4100,
-  5500, 7300, 9500, 12200, 15500, 19500,
-];
+/** Total XP needed for each level (index = level). Values live in assets/data/xp_table.json (edit there; run npm test after balance changes). */
+import data from '../../assets/data/xp_table.json' with { type: 'json' };
+
+const XP_TABLE = data;
 
 export { XP_TABLE };

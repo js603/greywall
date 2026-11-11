@@ -1,34 +1,6 @@
-const SHOPS = {
-  smith: {
-    id: `smith`,
-    title: `고른의 대장간`,
-    items: [
-      `iron_sword`,
-      `leather_shield`,
-      `iron_shield`,
-      `leather_armor`,
-      `chain_mail`,
-      `plate_armor`,
-    ],
-  },
-  alchemist: {
-    id: `alchemist`,
-    title: `미라의 약방`,
-    items: [
-      `potion_red`,
-      `potion_clear`,
-      `antidote`,
-      `potion_haste`,
-      `potion_brave`,
-      `scroll_return`,
-      `scroll_teleport`,
-    ],
-  },
-  temple: {
-    id: `temple`,
-    title: `새벽 신전`,
-    items: [`holy_water`, `book_heal`],
-  },
-};
+/** Shop inventories keyed by shop id. Values live in assets/data/shops.json (edit there; run npm test after balance changes). */
+import data from '../../assets/data/shops.json' with { type: 'json' };
+
+const SHOPS = data;
 
 export { SHOPS };
