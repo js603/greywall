@@ -6,7 +6,7 @@ import { ANIMS, ASSETS, FX_DEFS } from "./assets.js";
 import { Monster, Npc } from "../sim/entities.js";
 
 /** The original body a palette-variant sprite was made from (sizes shadows, labels, hit text). */
-const bodyOf = (sprite) => ANIMS[sprite]?.base ?? sprite;
+const bodyOf = (sprite) => ANIMS[sprite]?.base ?? ANIMS[sprite]?.sizeAs ?? sprite;
 
 const GROUND_ROWS = {
   water: -2,

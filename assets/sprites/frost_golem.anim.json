@@ -1,0 +1,751 @@
+{
+ "name": "frost_golem",
+ "frameSize": [
+  120,
+  120
+ ],
+ "anchor": [
+  60,
+  94
+ ],
+ "artSource": "code (agent-sprite-forge codeart2d PixelSpec via tools/codeart/monsters.py; no image model; spec sha256 bc7e29a0f483778e27f4d4b1cdd4b37247383b68fc9dcefeac0274a80fd77b1a)",
+ "clips": {
+  "idle_S": {
+   "frames": [
+    0,
+    1,
+    0,
+    2
+   ],
+   "durations": [
+    240,
+    240,
+    240,
+    240
+   ],
+   "loop": true,
+   "events": []
+  },
+  "idle_SW": {
+   "frames": [
+    3,
+    4,
+    3,
+    5
+   ],
+   "durations": [
+    240,
+    240,
+    240,
+    240
+   ],
+   "loop": true,
+   "events": []
+  },
+  "idle_W": {
+   "frames": [
+    6,
+    7,
+    6,
+    8
+   ],
+   "durations": [
+    240,
+    240,
+    240,
+    240
+   ],
+   "loop": true,
+   "events": []
+  },
+  "idle_NW": {
+   "frames": [
+    9,
+    10,
+    9,
+    11
+   ],
+   "durations": [
+    240,
+    240,
+    240,
+    240
+   ],
+   "loop": true,
+   "events": []
+  },
+  "idle_N": {
+   "frames": [
+    12,
+    13,
+    12,
+    14
+   ],
+   "durations": [
+    240,
+    240,
+    240,
+    240
+   ],
+   "loop": true,
+   "events": []
+  },
+  "idle_NE": {
+   "frames": [
+    15,
+    16,
+    15,
+    17
+   ],
+   "durations": [
+    240,
+    240,
+    240,
+    240
+   ],
+   "loop": true,
+   "events": []
+  },
+  "idle_E": {
+   "frames": [
+    18,
+    19,
+    18,
+    20
+   ],
+   "durations": [
+    240,
+    240,
+    240,
+    240
+   ],
+   "loop": true,
+   "events": []
+  },
+  "idle_SE": {
+   "frames": [
+    21,
+    22,
+    21,
+    23
+   ],
+   "durations": [
+    240,
+    240,
+    240,
+    240
+   ],
+   "loop": true,
+   "events": []
+  },
+  "walk_S": {
+   "frames": [
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31
+   ],
+   "durations": [
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80
+   ],
+   "loop": true,
+   "events": []
+  },
+  "walk_SW": {
+   "frames": [
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39
+   ],
+   "durations": [
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80
+   ],
+   "loop": true,
+   "events": []
+  },
+  "walk_W": {
+   "frames": [
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47
+   ],
+   "durations": [
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80
+   ],
+   "loop": true,
+   "events": []
+  },
+  "walk_NW": {
+   "frames": [
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55
+   ],
+   "durations": [
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80
+   ],
+   "loop": true,
+   "events": []
+  },
+  "walk_N": {
+   "frames": [
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63
+   ],
+   "durations": [
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80
+   ],
+   "loop": true,
+   "events": []
+  },
+  "walk_NE": {
+   "frames": [
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71
+   ],
+   "durations": [
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80
+   ],
+   "loop": true,
+   "events": []
+  },
+  "walk_E": {
+   "frames": [
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79
+   ],
+   "durations": [
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80
+   ],
+   "loop": true,
+   "events": []
+  },
+  "walk_SE": {
+   "frames": [
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87
+   ],
+   "durations": [
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80
+   ],
+   "loop": true,
+   "events": []
+  },
+  "attack_S": {
+   "frames": [
+    88,
+    89,
+    90,
+    91,
+    92,
+    93
+   ],
+   "durations": [
+    140,
+    170,
+    190,
+    100,
+    170,
+    230
+   ],
+   "loop": false,
+   "events": []
+  },
+  "attack_SW": {
+   "frames": [
+    94,
+    95,
+    96,
+    97,
+    98,
+    99
+   ],
+   "durations": [
+    140,
+    170,
+    190,
+    100,
+    170,
+    230
+   ],
+   "loop": false,
+   "events": []
+  },
+  "attack_W": {
+   "frames": [
+    100,
+    101,
+    102,
+    103,
+    104,
+    105
+   ],
+   "durations": [
+    140,
+    170,
+    190,
+    100,
+    170,
+    230
+   ],
+   "loop": false,
+   "events": []
+  },
+  "attack_NW": {
+   "frames": [
+    106,
+    107,
+    108,
+    109,
+    110,
+    111
+   ],
+   "durations": [
+    140,
+    170,
+    190,
+    100,
+    170,
+    230
+   ],
+   "loop": false,
+   "events": []
+  },
+  "attack_N": {
+   "frames": [
+    112,
+    113,
+    114,
+    115,
+    116,
+    117
+   ],
+   "durations": [
+    140,
+    170,
+    190,
+    100,
+    170,
+    230
+   ],
+   "loop": false,
+   "events": []
+  },
+  "attack_NE": {
+   "frames": [
+    118,
+    119,
+    120,
+    121,
+    122,
+    123
+   ],
+   "durations": [
+    140,
+    170,
+    190,
+    100,
+    170,
+    230
+   ],
+   "loop": false,
+   "events": []
+  },
+  "attack_E": {
+   "frames": [
+    124,
+    125,
+    126,
+    127,
+    128,
+    129
+   ],
+   "durations": [
+    140,
+    170,
+    190,
+    100,
+    170,
+    230
+   ],
+   "loop": false,
+   "events": []
+  },
+  "attack_SE": {
+   "frames": [
+    130,
+    131,
+    132,
+    133,
+    134,
+    135
+   ],
+   "durations": [
+    140,
+    170,
+    190,
+    100,
+    170,
+    230
+   ],
+   "loop": false,
+   "events": []
+  },
+  "hurt_S": {
+   "frames": [
+    136,
+    137
+   ],
+   "durations": [
+    110,
+    170
+   ],
+   "loop": false,
+   "events": []
+  },
+  "hurt_SW": {
+   "frames": [
+    138,
+    139
+   ],
+   "durations": [
+    110,
+    170
+   ],
+   "loop": false,
+   "events": []
+  },
+  "hurt_W": {
+   "frames": [
+    140,
+    141
+   ],
+   "durations": [
+    110,
+    170
+   ],
+   "loop": false,
+   "events": []
+  },
+  "hurt_NW": {
+   "frames": [
+    142,
+    143
+   ],
+   "durations": [
+    110,
+    170
+   ],
+   "loop": false,
+   "events": []
+  },
+  "hurt_N": {
+   "frames": [
+    144,
+    145
+   ],
+   "durations": [
+    110,
+    170
+   ],
+   "loop": false,
+   "events": []
+  },
+  "hurt_NE": {
+   "frames": [
+    146,
+    147
+   ],
+   "durations": [
+    110,
+    170
+   ],
+   "loop": false,
+   "events": []
+  },
+  "hurt_E": {
+   "frames": [
+    148,
+    149
+   ],
+   "durations": [
+    110,
+    170
+   ],
+   "loop": false,
+   "events": []
+  },
+  "hurt_SE": {
+   "frames": [
+    150,
+    151
+   ],
+   "durations": [
+    110,
+    170
+   ],
+   "loop": false,
+   "events": []
+  },
+  "death_S": {
+   "frames": [
+    152,
+    153,
+    154,
+    155,
+    156,
+    157
+   ],
+   "durations": [
+    130,
+    130,
+    140,
+    150,
+    170,
+    500
+   ],
+   "loop": false,
+   "events": []
+  },
+  "death_SW": {
+   "frames": [
+    158,
+    159,
+    160,
+    161,
+    162,
+    163
+   ],
+   "durations": [
+    130,
+    130,
+    140,
+    150,
+    170,
+    500
+   ],
+   "loop": false,
+   "events": []
+  },
+  "death_W": {
+   "frames": [
+    164,
+    165,
+    166,
+    167,
+    168,
+    169
+   ],
+   "durations": [
+    130,
+    130,
+    140,
+    150,
+    170,
+    500
+   ],
+   "loop": false,
+   "events": []
+  },
+  "death_NW": {
+   "frames": [
+    170,
+    171,
+    172,
+    173,
+    174,
+    175
+   ],
+   "durations": [
+    130,
+    130,
+    140,
+    150,
+    170,
+    500
+   ],
+   "loop": false,
+   "events": []
+  },
+  "death_N": {
+   "frames": [
+    176,
+    177,
+    178,
+    179,
+    180,
+    181
+   ],
+   "durations": [
+    130,
+    130,
+    140,
+    150,
+    170,
+    500
+   ],
+   "loop": false,
+   "events": []
+  },
+  "death_NE": {
+   "frames": [
+    182,
+    183,
+    184,
+    185,
+    186,
+    187
+   ],
+   "durations": [
+    130,
+    130,
+    140,
+    150,
+    170,
+    500
+   ],
+   "loop": false,
+   "events": []
+  },
+  "death_E": {
+   "frames": [
+    188,
+    189,
+    190,
+    191,
+    192,
+    193
+   ],
+   "durations": [
+    130,
+    130,
+    140,
+    150,
+    170,
+    500
+   ],
+   "loop": false,
+   "events": []
+  },
+  "death_SE": {
+   "frames": [
+    194,
+    195,
+    196,
+    197,
+    198,
+    199
+   ],
+   "durations": [
+    130,
+    130,
+    140,
+    150,
+    170,
+    500
+   ],
+   "loop": false,
+   "events": []
+  }
+ },
+ "sizeAs": "knight"
+}

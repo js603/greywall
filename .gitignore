@@ -3,3 +3,4 @@ dist/
 production/session-state/*.md
 production/session-logs/
 .DS_Store
+build/
