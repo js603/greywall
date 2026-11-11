@@ -6,7 +6,8 @@ import { ITEMS } from "./data/items.js";
 import { MAP_BUILDERS } from "./maps/index.js";
 import { initPwa, pwa } from "./pwa.js";
 import { WorldScene } from "./render/WorldScene.js";
-import { applySave, parseSave, saveKeys, writeSave } from "./save.js";
+import { applySave, exportSave, importSave, parseSave, saveFileName, saveKeys, writeSave } from "./save.js";
+import { downloadText, pickTextFile } from "./ui/files.js";
 import { World } from "./sim/World.js";
 import { UI } from "./ui/UI.js";
 import { loadIcons } from "./ui/icons.js";
@@ -38,6 +39,8 @@ const ui = new UI({
       scene.paused = e;
     }
   },
+  exportSave: () => exportSaveFile(),
+  importSave: () => importSaveFile(),
   revive: () => {
     world.revive();
     saveGame();
@@ -72,6 +75,26 @@ function saveGame() {
   return world.player.dead || !world.map
     ? false
     : writeSave(localStorage, world);
+}
+/** Saves now and downloads the save as a file. Returns false when there is nothing to export. */
+function exportSaveFile() {
+  saveGame();
+  const text = exportSave(localStorage, DEV);
+  if (!text) return false;
+  downloadText(saveFileName(parseSave(text).data?.level ?? 1), text);
+  return true;
+}
+/** In-game import: replaces the current progress with a save file. Resolves with a message, or null when cancelled. */
+async function importSaveFile() {
+  if (!confirm(`저장 파일을 불러오면 지금 진행이 그 파일로 바뀝니다. (지금 진행은 이전 저장본으로 보관됩니다) 계속할까요?`)) return null;
+  saveGame();
+  const text = await pickTextFile();
+  if (text === null) return null;
+  const r = importSave(localStorage, DEV, text);
+  if (!r.ok) return `불러오지 못했습니다: ${r.error}`;
+  ui.close();
+  startGame(`continue`);
+  return `저장 파일을 불러왔습니다 (Lv ${r.data.level})`;
 }
 function continueLabel() {
   let e = parseSave(localStorage.getItem(saveKeys(DEV).main));
@@ -108,6 +131,7 @@ function showStartScreen(e) {
       <button class="btn" id="b-install" ${
         pwa.enabled && !pwa.isStandalone() ? `` : `hidden`
       }>앱으로 설치</button>
+      <button class="btn" id="b-import">저장 파일 가져오기</button>
       <button class="btn" id="b-help">조작법</button></div>
     <div class="note" id="install-hint" hidden></div>
     ${e ? `<div class="bad">${e}</div>` : ``}
@@ -147,6 +171,19 @@ function showStartScreen(e) {
 
   r.querySelector(`#b-recover`)?.addEventListener(`click`, () => {
     return showRecovery(r);
+  });
+
+  r.querySelector(`#b-import`).addEventListener(`click`, async () => {
+    const text = await pickTextFile();
+    if (text === null) return;
+    if (t && !confirm(`저장된 진행(${t})을 이 파일로 바꿀까요? 지금 진행은 이전 저장본으로 보관됩니다.`)) return;
+    const res = importSave(localStorage, DEV, text);
+    if (!res.ok) {
+      r.remove();
+      showStartScreen(`저장 파일을 불러오지 못했습니다: ${res.error}`);
+      return;
+    }
+    i(() => startGame(`continue`))();
   });
 
   r.querySelector(`#b-help`).addEventListener(`click`, () => {

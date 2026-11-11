@@ -304,3 +304,37 @@ export {
   saveKeys,
   writeSave,
 };
+
+/**
+ * Returns the current save as a JSON string for a file download, or null when there is none.
+ * @param {Storage} storage
+ * @param {boolean} dev
+ */
+function exportSave(storage, dev) {
+  return storage.getItem(saveKeys(dev).main);
+}
+
+/**
+ * Validates a save file's text and, when it is valid, makes it the current save.
+ * The save it replaces is kept as the backup slot.
+ * @param {Storage} storage
+ * @param {boolean} dev
+ * @param {string} text
+ * @returns {{ok: true, data: object} | {ok: false, error: string}}
+ */
+function importSave(storage, dev, text) {
+  const parsed = parseSave(text);
+  if (!parsed.ok) return parsed;
+  const keys = saveKeys(dev);
+  const current = storage.getItem(keys.main);
+  if (current && parseSave(current).ok) storage.setItem(keys.backup, current);
+  storage.setItem(keys.main, text);
+  return parsed;
+}
+
+/** File name for an exported save, e.g. `greywall-lv7-2026-11-11.json`. */
+function saveFileName(level, date = new Date()) {
+  return `greywall-lv${level}-${date.toISOString().slice(0, 10)}.json`;
+}
+
+export { exportSave, importSave, saveFileName };

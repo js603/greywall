@@ -831,6 +831,16 @@ class UI {
           this.saveSettings();
           return this.render();
         }
+        case `export`: {
+          this.toast(this.host.exportSave() ? `저장 파일을 내보냈습니다` : `내보낼 저장 데이터가 없습니다`);
+          return;
+        }
+        case `import`: {
+          this.host.importSave().then((e) => {
+            if (e) this.toast(e);
+          });
+          return;
+        }
         case `newgame`: {
           this.confirmBox(
             `현재 진행을 버리고 새 게임을 시작할까요?<br><span class='bad'>저장 데이터가 덮어써집니다.</span>`,
@@ -1413,7 +1423,8 @@ class UI {
           : ``
       }
       <p>진행</p><div class="row"><button class="btn" data-act="save">지금 저장</button><button class="btn" data-act="newgame">새 게임</button></div>
-      <p class="dim">자동 저장: 지역 이동·의뢰 완료 시와 60초마다. 저장은 이 브라우저에만 보관됩니다.</p>`;
+      <div class="row"><button class="btn" data-act="export">저장 파일 내보내기</button><button class="btn" data-act="import">저장 파일 가져오기</button></div>
+      <p class="dim">자동 저장: 지역 이동·의뢰 완료 시와 60초마다. 저장은 이 브라우저에만 보관되니, 브라우저 데이터를 지우기 전이나 다른 기기로 옮길 때는 파일로 내보내 두세요.</p>`;
   }
   r_help() {
     return `<div class="kv"><b>PC</b><span></span>
