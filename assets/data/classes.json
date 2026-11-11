@@ -1,0 +1,64 @@
+{
+  "knight": {
+    "id": "knight",
+    "name": "기사",
+    "sprite": "player_knight",
+    "desc": "막아 내는 벽. 방어 +3, 막기 +5%, 최대 체력 +15%.",
+    "passive": {
+      "ac": 3,
+      "block": 0.05,
+      "hpMult": 1.15
+    },
+    "skills": [
+      {
+        "id": "shield_bash",
+        "level": 20
+      },
+      {
+        "id": "fortress",
+        "level": 24
+      }
+    ]
+  },
+  "berserker": {
+    "id": "berserker",
+    "name": "광전사",
+    "sprite": "player_berserker",
+    "desc": "쓰러질 때까지 휘두르는 칼. 공격력 +3, 공격 간격 -8%.",
+    "passive": {
+      "dmg": 3,
+      "intervalMult": 0.92
+    },
+    "skills": [
+      {
+        "id": "whirlwind",
+        "level": 20
+      },
+      {
+        "id": "bloodrage",
+        "level": 24
+      }
+    ]
+  },
+  "paladin": {
+    "id": "paladin",
+    "name": "성기사",
+    "sprite": "player_paladin",
+    "desc": "죽은 자를 정화하는 빛. 명중 +2, 최대 마나 +30%, 언데드에게 주는 피해 +20%.",
+    "passive": {
+      "acc": 2,
+      "mpMult": 1.3,
+      "undeadDmg": 1.2
+    },
+    "skills": [
+      {
+        "id": "holy_smite",
+        "level": 20
+      },
+      {
+        "id": "sacred_ward",
+        "level": 24
+      }
+    ]
+  }
+}

@@ -155,7 +155,8 @@
         "item": "book_strike",
         "chance": 0.012
       }
-    ]
+    ],
+    "undead": true
   },
   "ghoul": {
     "id": "ghoul",
@@ -199,7 +200,8 @@
         "item": "amulet_guard",
         "chance": 0.015
       }
-    ]
+    ],
+    "undead": true
   },
   "orc": {
     "id": "orc",
@@ -443,7 +445,8 @@
         "item": "scroll_ench_a",
         "chance": 0.025
       }
-    ]
+    ],
+    "undead": true
   },
   "lich": {
     "id": "lich",
@@ -499,7 +502,8 @@
         "item": "potion_brave",
         "chance": 0.7
       }
-    ]
+    ],
+    "undead": true
   },
   "zombie": {
     "id": "zombie",
@@ -541,7 +545,8 @@
         "item": "ring_hit",
         "chance": 0.01
       }
-    ]
+    ],
+    "undead": true
   },
   "knight": {
     "id": "knight",
@@ -588,7 +593,8 @@
         "min": 1,
         "max": 2
       }
-    ]
+    ],
+    "undead": true
   },
   "bog_slime": {
     "id": "bog_slime",
@@ -706,7 +712,8 @@
         "item": "scroll_ench_w",
         "chance": 0.012
       }
-    ]
+    ],
+    "undead": true
   },
   "bog_ghoul": {
     "id": "bog_ghoul",
@@ -754,7 +761,8 @@
         "item": "scroll_ench_a",
         "chance": 0.02
       }
-    ]
+    ],
+    "undead": true
   },
   "bog_troll": {
     "id": "bog_troll",
@@ -981,7 +989,8 @@
         "item": "scroll_ench_a",
         "chance": 0.025
       }
-    ]
+    ],
+    "undead": true
   },
   "garrison_skeleton": {
     "id": "garrison_skeleton",
@@ -1025,7 +1034,8 @@
         "item": "scroll_ench_w",
         "chance": 0.02
       }
-    ]
+    ],
+    "undead": true
   },
   "fallen_captain": {
     "id": "fallen_captain",

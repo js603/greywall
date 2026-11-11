@@ -794,5 +794,6 @@
    "events": []
   }
  },
- "artSource": "code (agent-sprite-forge codeart2d PixelSpec; no image model); palette variant of skeleton via tools/recolor.mjs {\"hue\":18,\"sat\":1.6,\"val\":0.72,\"keepDark\":0.1}"
+ "artSource": "code (agent-sprite-forge codeart2d PixelSpec; no image model); palette variant of skeleton via tools/recolor.mjs {\"hue\":18,\"sat\":1.6,\"val\":0.72,\"keepDark\":0.1}",
+ "base": "skeleton"
 }

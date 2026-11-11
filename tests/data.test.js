@@ -7,6 +7,7 @@ import { QUESTS } from '../src/data/quests.js';
 import { SHOPS } from '../src/data/shops.js';
 import { SKILLS } from '../src/data/skills.js';
 import { XP_TABLE } from '../src/data/progression.js';
+import { CLASSES } from '../src/data/classes.js';
 
 test('every item id matches its key and has a weight', () => {
   for (const [k, it] of Object.entries(ITEMS)) {
@@ -18,7 +19,8 @@ test('every item id matches its key and has a weight', () => {
 test('monster drops, shop stock, skill books and quest rewards point at real items', () => {
   for (const m of Object.values(MONSTERS)) for (const d of m.drops ?? []) assert.ok(ITEMS[d.item], `${m.id} drops ${d.item}`);
   for (const s of Object.values(SHOPS)) for (const i of s.items) assert.ok(ITEMS[i], `${s.id} sells ${i}`);
-  for (const s of Object.values(SKILLS)) assert.ok(ITEMS[s.book], `${s.id} book`);
+  for (const s of Object.values(SKILLS)) assert.ok(s.book ? ITEMS[s.book] : CLASSES[s.cls], `${s.id} book or class`);
+  for (const c of Object.values(CLASSES)) for (const k of c.skills) assert.equal(SKILLS[k.id]?.cls, c.id, `${c.id} skill ${k.id}`);
   for (const q of QUESTS) {
     for (const r of q.rewardItems ?? []) assert.ok(ITEMS[r.item], `${q.id} rewards ${r.item}`);
     for (const r of q.bring ?? []) assert.ok(ITEMS[r.item], `${q.id} asks for ${r.item}`);

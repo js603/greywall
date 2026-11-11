@@ -7,6 +7,7 @@ import { MAX_LEVEL, XP_TABLE } from "../data/progression.js";
 import { QUESTS } from "../data/quests.js";
 import { SHOPS } from "../data/shops.js";
 import { SKILLS } from "../data/skills.js";
+import { CLASSES } from "../data/classes.js";
 import {
   ACTION_TIMING,
   DAY_LENGTH,
@@ -143,12 +144,13 @@ class World {
       Math.floor(this.player.equipPlus.weapon / 2) +
       Math.floor((this.player.dex - 10) / 2) +
       Math.floor(this.player.level / 2) +
-      (this.time < this.player.blessUntil ? 3 : 0)
+      (this.time < this.player.blessUntil ? 3 : 0) +
+      this.passive(`acc`)
     );
   }
   pDmgBonus() {
     let e = this.player;
-    let t = Math.floor((e.str - 10) / 2) + Math.floor(e.level / 3);
+    let t = Math.floor((e.str - 10) / 2) + Math.floor(e.level / 3) + this.passive(`dmg`);
     for (let n of Object.values(e.equip)) {
       if (n && ITEMS[n].str) {
         t += ITEMS[n].str;
@@ -161,9 +163,23 @@ class World {
 
     return t + e.equipPlus.weapon;
   }
+  /** A passive value of the player's class, or `fallback` for an adventurer. */
+  passive(key, fallback = 0) {
+    return CLASSES[this.player.cls]?.passive?.[key] ?? fallback;
+  }
+  /** True while the timed buff `id` is running. */
+  buffActive(id) {
+    return (this.player.buffs[id]?.until ?? 0) > this.time;
+  }
+  /** Product of the damage-taken multipliers of the running buffs. */
+  dmgTakenMult() {
+    let m = 1;
+    for (const b of Object.values(this.player.buffs)) if (b.until > this.time && b.dmgTaken) m *= b.dmgTaken;
+    return m;
+  }
   pAC() {
     let e = this.player;
-    let t = e.equipPlus.armor + e.equipPlus.shield;
+    let t = e.equipPlus.armor + e.equipPlus.shield + this.passive(`ac`);
     for (let n of Object.values(e.equip)) {
       if (n) {
         t += ITEMS[n].ac ?? 0;
@@ -173,13 +189,16 @@ class World {
   }
   pBlock() {
     let e = this.player.equip.shield;
-    return e ? ITEMS[e].block ?? 0 : 0;
+    return (e ? ITEMS[e].block ?? 0 : 0) + this.passive(`block`);
   }
   pInterval() {
     let e = this.weapon()?.interval ?? 1.8;
-    return this.time < this.player.braveUntil
+    let t = this.time < this.player.braveUntil
       ? Math.round(e * 0.85 * 100) / 100
       : e;
+    let m = this.passive(`intervalMult`, 1);
+    for (const b of Object.values(this.player.buffs)) if (b.until > this.time && b.interval) m *= b.interval;
+    return m === 1 ? t : Math.round(t * m * 100) / 100;
   }
   isNight() {
     return this.daylight() < 0.35;
@@ -250,6 +269,10 @@ class World {
     }
     e.maxHp = 30 + 8 * (e.level - 1) + (e.con - 12) * 2 + t;
     e.maxMp = 8 + 3 * (e.level - 1);
+    if (e.cls) {
+      e.maxHp = Math.round(e.maxHp * this.passive(`hpMult`, 1));
+      e.maxMp = Math.round(e.maxMp * this.passive(`mpMult`, 1));
+    }
     e.hp = Math.min(e.hp, e.maxHp);
     e.mp = Math.min(e.mp, e.maxMp);
   }
@@ -640,7 +663,7 @@ class World {
     e.facing = dirTowards(e.lx, e.ly, t.lx, t.ly);
     this.restartAction(e, n === `basic` ? `attack` : `skill`);
     let i = e === this.player ? this.pInterval() : e.def.interval;
-    e.nextSwingAt = this.time + Math.max(i, n === `strike` ? 1.4 : i);
+    e.nextSwingAt = this.time + Math.max(i, n !== `basic` ? 1.4 : i);
 
     this.emit({
       type: `swing`,
@@ -659,7 +682,7 @@ class World {
         this.stats.basicSwings++;
         this.stats.swingLog.push([Math.round(this.stats.play), `basic`]);
       } else {
-        this.stats.swingLog.push([Math.round(this.stats.play), `strike`]);
+        this.stats.swingLog.push([Math.round(this.stats.play), t.kind]);
       }
     }
 
@@ -705,10 +728,11 @@ class World {
       }
     }
   }
-  landHit(e, t, n) {
+  landHit(e, t, n, splash = false) {
     let r = e === this.player;
-    let i = n === `strike`;
-    let a = r ? this.pAcc() + (i ? 5 : 0) : e.def.acc;
+    let i = n !== `basic`;
+    let sk = r && i ? SKILLS[n]?.attack : null;
+    let a = r ? this.pAcc() + (sk?.acc ?? 0) : e.def.acc;
     let o = t === this.player ? this.pEva() : t.def.eva;
     let s = Math.max(
       0.3,
@@ -741,15 +765,36 @@ class World {
     if (r) {
       let e = this.weapon();
       let t = randInt(this.rng, e?.dmg?.[0] ?? 1, e?.dmg?.[1] ?? 2);
-      d = i
-        ? Math.round(t * 2.2) + 2 + this.pDmgBonus() - u
+      d = sk
+        ? Math.round(t * sk.mult) + sk.add + this.pDmgBonus() - u
         : t + this.pDmgBonus() - u;
     } else {
       let t = e.def;
       d = randInt(this.rng, t.dmg[0], t.dmg[1]) - u;
     }
     d = Math.max(1, d);
+    if (r && t.def?.undead) {
+      if (sk?.undeadMult) d = Math.round(d * sk.undeadMult);
+      const ud = this.passive(`undeadDmg`, 1);
+      if (ud !== 1) d = Math.round(d * ud);
+    }
+    if (t === this.player) {
+      const m = this.dmgTakenMult();
+      if (m !== 1) d = Math.max(1, Math.round(d * m));
+      if (this.player.ward > 0 && this.buffActive(`ward`)) {
+        const absorbed = Math.min(this.player.ward, d);
+        this.player.ward -= absorbed;
+        d -= absorbed;
+        if (absorbed) this.emit({ type: `absorb`, amount: absorbed });
+      }
+    }
     t.hp -= d;
+    if (sk?.stun && !t.dead) {
+      t.stunUntil = this.time + sk.stun;
+      t.swing = null;
+      t.path = [];
+      this.emit({ type: `stun`, id: t.id });
+    }
 
     this.emit({
       type: `hit`,
@@ -765,6 +810,14 @@ class World {
     }
 
     this.onDamaged(t, e, d);
+
+    // area attacks (whirlwind): the same swing hits every other monster next to the player
+    if (sk?.area && !splash) {
+      for (const m of this.monsters) {
+        if (m === t || m.dead) continue;
+        if (Math.max(Math.abs(m.x - this.player.x), Math.abs(m.y - this.player.y)) <= sk.area) this.landHit(e, m, n, true);
+      }
+    }
   }
   inRange(e, t) {
     let n = e.def.range;
@@ -1039,6 +1092,49 @@ class World {
       type: `revive`,
     });
   }
+  /** Class skills the player's class grants up to their level; new ones go into free skill slots. */
+  grantClassSkills() {
+    const c = CLASSES[this.player.cls];
+    if (!c) return;
+    for (const k of c.skills) {
+      if (this.player.level >= k.level && !this.player.skills.includes(k.id)) {
+        this.grantSkill(k.id);
+        this.emit({ type: `learn`, skill: k.id });
+        this.msg(`${c.name}의 기술 「${SKILLS[k.id].name}」을(를) 익혔다!`, `level`);
+      }
+    }
+  }
+  /** Why the player cannot change class right now, or null when they can. */
+  classChangeBlocker() {
+    const p = this.player;
+    if (p.cls) return `이미 ${CLASSES[p.cls].name}(으)로 전직했다.`;
+    if (p.level < 20) return `레벨 20 이상이어야 한다.`;
+    if (this.quests.q_class?.state !== `done`) return `「전직의 시험」을 마쳐야 한다.`;
+    return null;
+  }
+  /**
+   * Changes the adventurer into class `id` (once, permanently): passives apply, the sprite changes,
+   * class skills up to the current level are learned. design/gdd/class-change.md
+   * @returns {boolean}
+   */
+  chooseClass(id) {
+    const c = CLASSES[id];
+    const why = this.classChangeBlocker();
+    if (!c || why) {
+      if (why) this.msg(why, `warn`);
+      return false;
+    }
+    const p = this.player;
+    p.cls = id;
+    p.sprite = c.sprite;
+    this.recalc();
+    p.hp = p.maxHp;
+    p.mp = p.maxMp;
+    this.emit({ type: `classchange`, cls: id });
+    this.msg(`${c.name}(으)로 전직했다! ${c.desc}`, `level`);
+    this.grantClassSkills();
+    return true;
+  }
   gainXp(e) {
     let t = this.player;
     for (t.xp += e; t.level < MAX_LEVEL && t.xp >= XP_TABLE[t.level + 1]; ) {
@@ -1074,6 +1170,7 @@ class World {
         `level`
       );
       this.refreshQuests();
+      this.grantClassSkills();
     }
   }
   count(e) {
@@ -1655,7 +1752,7 @@ class World {
 
     return {
       ok: false,
-      reason: `미습득 — ${ITEMS[n.book].name} 필요`,
+      reason: n.book ? `미습득 — ${ITEMS[n.book].name} 필요` : `미습득 — ${CLASSES[n.cls]?.name ?? ``} 전용`,
     };
   }
   useSkill(e) {
@@ -1663,18 +1760,18 @@ class World {
     let n = this.skillState(e);
 
     if (n.ok) {
-      if (e === `strike`) {
+      if (SKILLS[e].attack) {
         if (
           t.target !== null &&
           this.monsters.find((e) => {
             return e.id === t.target && !e.dead;
           })
         ) {
-          t.queuedSkill = `strike`;
+          t.queuedSkill = e;
           return true;
         }
 
-        this.msg(`강타: 먼저 공격할 대상을 지정하세요.`, `warn`);
+        this.msg(`${SKILLS[e].name}: 먼저 공격할 대상을 지정하세요.`, `warn`);
         return false;
       }
 
@@ -1746,6 +1843,14 @@ class World {
       });
 
       this.msg(`응급 치료: 체력 +${e}`, `good`);
+    }
+
+    if (n.buff) {
+      const b = n.buff;
+      t.buffs[b.id] = { until: this.time + b.dur, dmgTaken: b.dmgTaken, interval: b.interval };
+      if (b.absorbPct) t.ward = Math.round(t.maxHp * b.absorbPct);
+      this.emit({ type: `buff`, skill: e.skill, fx: n.fx, until: this.time + b.dur });
+      this.msg(`${n.name}! (${b.dur}초)`, `good`);
     }
 
     if (e.skill === `bless`) {
@@ -1953,20 +2058,21 @@ class World {
         t.path = [];
 
         if (!n && this.time >= t.nextSwingAt) {
-          if (t.queuedSkill === `strike` && this.skillState(`strike`).ok) {
-            let n = SKILLS.strike;
+          let q = t.queuedSkill;
+          if (q && this.skillState(q).ok) {
+            let n = SKILLS[q];
             t.mp -= n.mp;
-            t.cooldowns.strike = this.time + n.cooldown;
+            t.cooldowns[q] = this.time + n.cooldown;
             t.queuedSkill = null;
-            this.stats.strikeUses++;
+            if (q === `strike`) this.stats.strikeUses++;
 
             if (this.stats.firstSkillUseAt === null) {
               this.stats.firstSkillUseAt = this.stats.play;
             }
 
-            this.startSwing(t, e, `strike`);
+            this.startSwing(t, e, q);
           } else {
-            if (t.queuedSkill && !this.skillState(`strike`).ok) {
+            if (q && !this.skillState(q).ok) {
               t.queuedSkill = null;
             }
 
@@ -2093,6 +2199,8 @@ class World {
 
       return;
     }
+    // stunned (shield bash): no moving, no swinging
+    if (e.stunUntil > this.time) return;
 
     if (e.swing) {
       !e.swing.resolved && this.time >= e.swing.hitAt && this.resolveSwing(e);

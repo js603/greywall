@@ -1,3 +1,4 @@
+import { CLASSES } from "./data/classes.js";
 import { MAP_BUILDERS } from "./maps/index.js";
 import { MAX_LEVEL } from "./data/progression.js";
 import { ITEMS } from "./data/items.js";
@@ -40,6 +41,7 @@ function snapshotWorld(e) {
     },
     skills: [...t.skills],
     skillSlots: [...t.skillSlots],
+    cls: t.cls,
     quests: JSON.parse(JSON.stringify(e.quests)),
     stats: {
       ...e.stats,
@@ -201,6 +203,12 @@ function parseSave(e) {
       error: `스킬 데이터가 올바르지 않습니다.`,
     };
   }
+  if (r.cls !== undefined && r.cls !== null && !CLASSES[r.cls]) {
+    return {
+      ok: false,
+      error: `직업 데이터가 올바르지 않습니다.`,
+    };
+  }
   // skill slots arrived after save version 3 shipped: optional, four entries of null or a learned skill
   if (
     r.skillSlots !== undefined &&
@@ -265,6 +273,10 @@ function applySave(e, t) {
     skillSlots: t.skillSlots
       ? [...t.skillSlots]
       : [0, 1, 2, 3].map((i) => t.skills[i] ?? null),
+    cls: t.cls ?? null,
+    sprite: CLASSES[t.cls]?.sprite ?? `player`,
+    buffs: {},
+    ward: 0,
     dead: false,
     poison: null,
     blessUntil: 0,

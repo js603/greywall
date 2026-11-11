@@ -778,5 +778,6 @@
    "events": []
   }
  },
- "artSource": "code (agent-sprite-forge codeart2d PixelSpec; no image model); palette variant of wolf via tools/recolor.mjs {\"hue\":8,\"sat\":0.55,\"val\":0.5,\"keepDark\":0.08}"
+ "artSource": "code (agent-sprite-forge codeart2d PixelSpec; no image model); palette variant of wolf via tools/recolor.mjs {\"hue\":8,\"sat\":0.55,\"val\":0.5,\"keepDark\":0.08}",
+ "base": "wolf"
 }

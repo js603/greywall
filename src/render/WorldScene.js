@@ -5,6 +5,9 @@ import { ITEMS } from "../data/items.js";
 import { ANIMS, ASSETS, FX_DEFS } from "./assets.js";
 import { Monster, Npc } from "../sim/entities.js";
 
+/** The original body a palette-variant sprite was made from (sizes shadows, labels, hit text). */
+const bodyOf = (sprite) => ANIMS[sprite]?.base ?? sprite;
+
 const GROUND_ROWS = {
   water: -2,
   bog: -1,
@@ -429,15 +432,15 @@ class WorldScene extends Phaser.Scene {
       return t;
     }
     let n = this.add.sprite(0, 0, e.sprite, `f0`);
-    let r = [`knight`, `lich`, `orc_chief`].includes(e.sprite)
+    let r = [`knight`, `lich`, `orc_chief`].includes(bodyOf(e.sprite))
       ? 1.35
-      : e.sprite === `ghoul`
+      : bodyOf(e.sprite) === `ghoul`
       ? 1.15
-      : e.sprite === `slime`
+      : bodyOf(e.sprite) === `slime`
       ? 0.85
-      : e.sprite === `wolf`
+      : bodyOf(e.sprite) === `wolf`
       ? 1.2
-      : e.sprite === `spider`
+      : bodyOf(e.sprite) === `spider`
       ? 1.5
       : 1;
 
@@ -540,6 +543,8 @@ class WorldScene extends Phaser.Scene {
       return;
     }
 
+    // the player's sprite changes with the class change
+    if (n.spr.texture.key !== e.sprite) n.spr.setTexture(e.sprite);
     n.spr.setFrame(this.frameFor(e, n, t));
     n.spr.setPosition(Math.round(r.x), Math.round(r.y));
     let a = elevPx(e.px + e.py) + 8;
@@ -701,9 +706,9 @@ class WorldScene extends Phaser.Scene {
 
       let i = (e) => {
         let t = this.entScreen(e);
-        let n = [`knight`, `lich`, `orc_chief`].includes(e.sprite)
+        let n = [`knight`, `lich`, `orc_chief`].includes(bodyOf(e.sprite))
           ? 1.25
-          : [`wolf`, `slime`, `spider`].includes(e.sprite)
+          : [`wolf`, `slime`, `spider`].includes(bodyOf(e.sprite))
           ? 0.5
           : 1;
         return {
@@ -734,7 +739,7 @@ class WorldScene extends Phaser.Scene {
           if (r && n) {
             let a = i(r);
             let o = this.entScreen(n).x > a.s.x;
-            let s = e.kind === `strike`;
+            let s = !!e.kind && e.kind !== `basic`;
 
             this.playFx(
               s ? `strike` : `hit`,
@@ -962,6 +967,33 @@ class WorldScene extends Phaser.Scene {
           audio.play(`learn`);
           break;
         }
+        case `buff`: {
+          if (e.fx) {
+            this.playFx(e.fx, 0, 0, 0, { follow: 0, scale: 0.5, loop: true, until: e.until, dy: 2 });
+          }
+          audio.play(`bless`);
+          break;
+        }
+        case `classchange`: {
+          let n = i(t.player);
+          this.playFx(`enchant`, n.s.x, n.s.y, 0, { follow: 0, scale: 0.6, dy: 2 });
+          this.floatText(n.x, n.y - 34, `전직!`, `#f4dc8a`, 16);
+          audio.play(`levelup`);
+          break;
+        }
+        case `stun`: {
+          let n = t.entity(e.id);
+          if (n) {
+            let r = i(n);
+            this.floatText(r.x, r.y - 30, `기절`, `#c8d8ff`, 11);
+          }
+          break;
+        }
+        case `absorb`: {
+          let n = i(t.player);
+          this.floatText(n.x, n.y - 24, `흡수 ${e.amount}`, `#f4dc8a`, 11);
+          break;
+        }
         case `return`: {
           audio.play(`return`);
           break;
@@ -1155,20 +1187,20 @@ class WorldScene extends Phaser.Scene {
       if (!e.dead) {
         a(
           e,
-          [`wolf`, `spider`].includes(e.sprite)
+          [`wolf`, `spider`].includes(bodyOf(e.sprite))
             ? 36
-            : e.sprite === `slime`
+            : bodyOf(e.sprite) === `slime`
             ? 26
-            : [`knight`, `lich`, `orc_chief`].includes(e.sprite)
+            : [`knight`, `lich`, `orc_chief`].includes(bodyOf(e.sprite))
             ? 34
             : 26,
-          e.sprite === `wolf`
+          bodyOf(e.sprite) === `wolf`
             ? 30
-            : e.sprite === `spider`
+            : bodyOf(e.sprite) === `spider`
             ? 24
-            : e.sprite === `slime`
+            : bodyOf(e.sprite) === `slime`
             ? 22
-            : [`knight`, `lich`, `orc_chief`].includes(e.sprite)
+            : [`knight`, `lich`, `orc_chief`].includes(bodyOf(e.sprite))
             ? 62
             : 48
         );
@@ -1769,15 +1801,15 @@ class WorldScene extends Phaser.Scene {
         continue;
       }
       let t = this.entScreen(e);
-      let n = [`knight`, `lich`, `orc_chief`].includes(e.sprite)
+      let n = [`knight`, `lich`, `orc_chief`].includes(bodyOf(e.sprite))
         ? 76
-        : e.sprite === `wolf`
+        : bodyOf(e.sprite) === `wolf`
         ? 38
-        : e.sprite === `spider`
+        : bodyOf(e.sprite) === `spider`
         ? 30
-        : e.sprite === `slime`
+        : bodyOf(e.sprite) === `slime`
         ? 28
-        : e.sprite === `ghoul`
+        : bodyOf(e.sprite) === `ghoul`
         ? 60
         : 54;
       let r = Math.round(t.x - 13);

@@ -474,5 +474,27 @@
     ],
     "rewardCoins": 2000,
     "rewardXp": 7000
+  },
+  {
+    "id": "q_class",
+    "name": "전직의 시험",
+    "giver": "trainer",
+    "minLevel": 20,
+    "after": "q_chief",
+    "summary": "늪 트롤 가죽 5장, 안개 정수 5개, 1,000닢을 교관 하르덴에게 가져가 전직 자격을 증명한다.",
+    "hint": "완료하면 하르덴과 다시 대화해 기사·광전사·성기사 중 하나를 고른다. 전직은 되돌릴 수 없다.",
+    "bring": [
+      {
+        "item": "troll_hide",
+        "count": 5
+      },
+      {
+        "item": "mist_essence",
+        "count": 5
+      }
+    ],
+    "coins": 1000,
+    "rewardItems": [],
+    "rewardXp": 1500
   }
 ]

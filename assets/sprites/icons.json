@@ -1271,13 +1271,157 @@
     "x": 0.5,
     "y": 0.7142857142857143
    }
+  },
+  "skill_shield_bash": {
+   "frame": {
+    "x": 0,
+    "y": 280,
+    "w": 26,
+    "h": 20
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 1,
+    "y": 7,
+    "w": 26,
+    "h": 20
+   },
+   "sourceSize": {
+    "w": 28,
+    "h": 28
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7142857142857143
+   }
+  },
+  "skill_fortress": {
+   "frame": {
+    "x": 0,
+    "y": 302,
+    "w": 14,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 7,
+    "y": 5,
+    "w": 14,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 28,
+    "h": 28
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7142857142857143
+   }
+  },
+  "skill_whirlwind": {
+   "frame": {
+    "x": 0,
+    "y": 320,
+    "w": 26,
+    "h": 20
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 1,
+    "y": 7,
+    "w": 26,
+    "h": 20
+   },
+   "sourceSize": {
+    "w": 28,
+    "h": 28
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7142857142857143
+   }
+  },
+  "skill_bloodrage": {
+   "frame": {
+    "x": 0,
+    "y": 342,
+    "w": 10,
+    "h": 21
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 9,
+    "y": 2,
+    "w": 10,
+    "h": 21
+   },
+   "sourceSize": {
+    "w": 28,
+    "h": 28
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7142857142857143
+   }
+  },
+  "skill_holy_smite": {
+   "frame": {
+    "x": 0,
+    "y": 365,
+    "w": 26,
+    "h": 20
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 1,
+    "y": 7,
+    "w": 26,
+    "h": 20
+   },
+   "sourceSize": {
+    "w": 28,
+    "h": 28
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7142857142857143
+   }
+  },
+  "skill_sacred_ward": {
+   "frame": {
+    "x": 0,
+    "y": 387,
+    "w": 12,
+    "h": 20
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 8,
+    "y": 1,
+    "w": 12,
+    "h": 20
+   },
+   "sourceSize": {
+    "w": 28,
+    "h": 28
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7142857142857143
+   }
   }
  },
  "meta": {
   "image": "icons.png",
   "size": {
    "w": 512,
-   "h": 278
+   "h": 407
   },
   "scale": "1",
   "app": "greywall tools/build_assets.py"

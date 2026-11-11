@@ -794,5 +794,6 @@
    "events": []
   }
  },
- "artSource": "code (agent-sprite-forge codeart2d PixelSpec; no image model); palette variant of knight via tools/recolor.mjs {\"hueShift\":-30,\"sat\":1.3,\"val\":0.7,\"keepDark\":0.1}"
+ "artSource": "code (agent-sprite-forge codeart2d PixelSpec; no image model); palette variant of knight via tools/recolor.mjs {\"hueShift\":-30,\"sat\":1.3,\"val\":0.7,\"keepDark\":0.1}",
+ "base": "knight"
 }

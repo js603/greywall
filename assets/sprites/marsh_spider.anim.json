@@ -778,5 +778,6 @@
    "events": []
   }
  },
- "artSource": "code (agent-sprite-forge codeart2d PixelSpec; no image model); palette variant of spider via tools/recolor.mjs {\"hue\":72,\"sat\":0.9,\"val\":1,\"keepDark\":0.15}"
+ "artSource": "code (agent-sprite-forge codeart2d PixelSpec; no image model); palette variant of spider via tools/recolor.mjs {\"hue\":72,\"sat\":0.9,\"val\":1,\"keepDark\":0.15}",
+ "base": "spider"
 }

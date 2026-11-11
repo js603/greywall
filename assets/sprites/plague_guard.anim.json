@@ -794,5 +794,6 @@
    "events": []
   }
  },
- "artSource": "code (agent-sprite-forge codeart2d PixelSpec; no image model); palette variant of zombie via tools/recolor.mjs {\"hue\":55,\"sat\":0.55,\"val\":0.85,\"keepDark\":0.12}"
+ "artSource": "code (agent-sprite-forge codeart2d PixelSpec; no image model); palette variant of zombie via tools/recolor.mjs {\"hue\":55,\"sat\":0.55,\"val\":0.85,\"keepDark\":0.12}",
+ "base": "zombie"
 }

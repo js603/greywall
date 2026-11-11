@@ -89,6 +89,12 @@ class Player extends Entity {
     this.skills = [];
     /** Skill ids in the four assignable skill quickslots (5-8), null = empty. */
     this.skillSlots = [null, null, null, null];
+    /** Class id after the class change (design/gdd/class-change.md), null = adventurer. */
+    this.cls = null;
+    /** Timed buffs by id: { until, ...effect } (fortress, bloodrage, ward). */
+    this.buffs = {};
+    /** Damage the sacred ward can still absorb. */
+    this.ward = 0;
     this.cooldowns = {};
     this.target = null;
     this.targetKind = null;

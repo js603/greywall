@@ -5,7 +5,12 @@
     "book": "book_strike",
     "mp": 5,
     "cooldown": 8,
-    "desc": "단일 대상에게 무기 피해의 2.2배 + 2. 명중 +15%. 평타 공격 대기에 영향을 준다."
+    "desc": "단일 대상에게 무기 피해의 2.2배 + 2. 명중 +15%. 평타 공격 대기에 영향을 준다.",
+    "attack": {
+      "mult": 2.2,
+      "add": 2,
+      "acc": 5
+    }
   },
   "heal": {
     "id": "heal",
@@ -23,5 +28,96 @@
     "cooldown": 60,
     "consumes": "holy_water",
     "desc": "성수 1개 소모. 25초 동안 평타 피해 +2, 명중 +8%."
+  },
+  "shield_bash": {
+    "id": "shield_bash",
+    "name": "방패 강타",
+    "cls": "knight",
+    "icon": "skill_shield_bash",
+    "mp": 8,
+    "cooldown": 10,
+    "attack": {
+      "mult": 1.8,
+      "add": 4,
+      "acc": 5,
+      "stun": 2
+    },
+    "desc": "방패로 내리쳐 무기 피해의 1.8배 + 4, 명중 +15%. 대상을 2초 기절시킨다. 막기를 무시한다."
+  },
+  "fortress": {
+    "id": "fortress",
+    "name": "철벽",
+    "cls": "knight",
+    "icon": "skill_fortress",
+    "mp": 12,
+    "cooldown": 45,
+    "buff": {
+      "id": "fortress",
+      "dur": 12,
+      "dmgTaken": 0.6
+    },
+    "fx": "block",
+    "desc": "12초 동안 받는 피해가 40% 줄어든다."
+  },
+  "whirlwind": {
+    "id": "whirlwind",
+    "name": "회오리 베기",
+    "cls": "berserker",
+    "icon": "skill_whirlwind",
+    "mp": 10,
+    "cooldown": 10,
+    "attack": {
+      "mult": 1.4,
+      "add": 2,
+      "acc": 3,
+      "area": 1
+    },
+    "desc": "무기 피해의 1.4배 + 2로 대상과 주변 1칸의 적을 모두 벤다. 막기를 무시한다."
+  },
+  "bloodrage": {
+    "id": "bloodrage",
+    "name": "피의 격노",
+    "cls": "berserker",
+    "icon": "skill_bloodrage",
+    "mp": 10,
+    "cooldown": 60,
+    "buff": {
+      "id": "bloodrage",
+      "dur": 20,
+      "interval": 0.8,
+      "dmgTaken": 1.15
+    },
+    "fx": "haste",
+    "desc": "20초 동안 공격 간격이 20% 짧아지지만 받는 피해가 15% 늘어난다."
+  },
+  "holy_smite": {
+    "id": "holy_smite",
+    "name": "성스러운 일격",
+    "cls": "paladin",
+    "icon": "skill_holy_smite",
+    "mp": 8,
+    "cooldown": 8,
+    "attack": {
+      "mult": 2.0,
+      "add": 3,
+      "acc": 5,
+      "undeadMult": 1.5
+    },
+    "desc": "무기 피해의 2배 + 3, 언데드에게는 1.5배. 막기를 무시한다."
+  },
+  "sacred_ward": {
+    "id": "sacred_ward",
+    "name": "신성 보호막",
+    "cls": "paladin",
+    "icon": "skill_sacred_ward",
+    "mp": 14,
+    "cooldown": 50,
+    "buff": {
+      "id": "ward",
+      "dur": 20,
+      "absorbPct": 0.25
+    },
+    "fx": "bless",
+    "desc": "20초 동안 최대 체력의 25%만큼 피해를 흡수하는 보호막을 두른다."
   }
 }

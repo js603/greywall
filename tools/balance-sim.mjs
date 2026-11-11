@@ -20,15 +20,17 @@ const CASES = [
   ['mine2', 10, LATE], ['mine2', 12, LATE],
   ['marsh', 14, ACT1_BEST], ['marsh', 16, ACT1_BEST], ['marsh', 18, ACT1_BEST], ['marsh', 18, MARSH], ['marsh', 20, MARSH],
   ['ruins', 20, MARSH], ['ruins', 22, MARSH], ['ruins', 22, RUINS], ['ruins', 24, RUINS],
+  ['ruins', 22, RUINS, 'knight'], ['ruins', 22, RUINS, 'berserker'], ['ruins', 22, RUINS, 'paladin'],
+  ['ruins', 24, RUINS, 'knight'], ['ruins', 24, RUINS, 'berserker'], ['ruins', 24, RUINS, 'paladin'],
 ];
 
 const rows = [];
-for (const [map, level, gear] of CASES) {
+for (const [map, level, gear, cls] of CASES) {
   const acc = { xp: 0, coins: 0, kills: 0, deaths: 0, potions: 0 };
   for (let s = 1; s <= seeds; s++) {
     let potions = 0;
     const r = huntRun(1000 + s, minutes * 60 * 30, {
-      map, level, gear,
+      map, level, gear, cls,
       onTick: (w, i) => { if (i === 0) potions = w.stats.potions; },
     });
     const w = r.world;
@@ -40,7 +42,7 @@ for (const [map, level, gear] of CASES) {
   }
   const per = (v) => v / seeds / minutes;
   const need = XP_TABLE[level + 1] - XP_TABLE[level];
-  rows.push([map, level, gear.length ? gear.join(', ') : 'starter', per(acc.kills).toFixed(1), per(acc.xp).toFixed(0),
+  rows.push([map, level, (cls ? `[${cls}] ` : '') + (gear.length ? gear.join(', ') : 'starter'), per(acc.kills).toFixed(1), per(acc.xp).toFixed(0),
     per(acc.coins).toFixed(0), (acc.deaths / seeds).toFixed(1), per(acc.potions).toFixed(1),
     per(acc.xp) > 0 ? (need / per(acc.xp)).toFixed(1) : '∞']);
 }

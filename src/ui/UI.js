@@ -6,6 +6,7 @@ import { MAX_LEVEL, XP_TABLE } from "../data/progression.js";
 import { QUESTS } from "../data/quests.js";
 import { SHOPS } from "../data/shops.js";
 import { SKILLS } from "../data/skills.js";
+import { CLASSES } from "../data/classes.js";
 import { pwa } from "../pwa.js";
 import { ENCHANT_SAFE } from "../sim/constants.js";
 import { escapeHtml, qs } from "./dom.js";
@@ -656,7 +657,7 @@ class UI {
   }
   onClick(e) {
     let t = e.target.closest(
-      `[data-act],[data-open],[data-slot],[data-cell],[data-eq],[data-buy],[data-sell],[data-q],[data-tab],[data-skill],[data-zoom],[data-touch],[data-minimap],[data-assign]`
+      `[data-act],[data-open],[data-slot],[data-cell],[data-eq],[data-buy],[data-sell],[data-q],[data-tab],[data-skill],[data-zoom],[data-touch],[data-minimap],[data-assign],[data-cls]`
     );
     if (!t) {
       if (e.target.id === `win`) {
@@ -701,6 +702,21 @@ class UI {
     if (r.tab) {
       this.shopTab = r.tab;
       return this.render();
+    }
+    if (r.cls) {
+      const c = CLASSES[r.cls];
+      this.confirmBox(
+        `<b class="gold-t">${c.name}</b>(으)로 전직할까요?<br><span class="dim">${escapeHtml(c.desc)}</span><br><span class="bad">전직은 되돌릴 수 없습니다.</span>`,
+        `${c.name}(으)로 전직`,
+        () => {
+          if (n.chooseClass(r.cls)) {
+            this.renderSlots();
+            this.host.save();
+          }
+          this.render();
+        }
+      );
+      return;
     }
     if (r.assign) {
       const [slot, id] = r.assign.split(`:`);
@@ -1175,6 +1191,7 @@ class UI {
     let i = e.pDmgBonus();
     let a = XP_TABLE[Math.min(MAX_LEVEL, t.level + 1)];
     return `<div class="equip">${r}</div><div class="kv">
+      <span class="dim">직업</span><span>${t.cls ? `<b class="gold-t">${CLASSES[t.cls].name}</b> <span class="dim">${escapeHtml(CLASSES[t.cls].desc)}</span>` : `모험가 <span class="dim">(레벨 20에 검술 교관 하르덴에게서 전직)</span>`}</span>
       <span class="dim">레벨</span><span>${t.level} (경험치 ${
       t.xp
     } / ${a})</span>
@@ -1347,7 +1364,18 @@ class UI {
         : null;
     let i = ``;
 
-    if (t === `trainer` && e.quests.q_strike.state === `locked`) {
+    if (t === `trainer` && !e.classChangeBlocker()) {
+      i = `<div class="classpick"><div class="say">하르덴: "시험을 통과했군. 이제 어떤 길을 걸을지 정하게. 한 번 정하면 되돌릴 수 없네."</div>${Object.values(
+        CLASSES
+      )
+        .map(
+          (c) =>
+            `<div class="item"><div class="grow"><b class="gold-t">${c.name}</b><div class="dim">${escapeHtml(c.desc)}</div><div>${c.skills
+              .map((k) => `Lv${k.level} ${SKILLS[k.id].name}`)
+              .join(` · `)}</div></div><button class="btn gold" data-cls="${c.id}">${c.name}(으)로 전직</button></div>`
+        )
+        .join(``)}</div>`;
+    } else if (t === `trainer` && e.quests.q_strike.state === `locked`) {
       i = `<div class="dim">하르덴: "숲의 늑대 정도는 상대해 보고(경비병 브람의 의뢰), 레벨 4는 되어서 오게."</div>`;
     }
 

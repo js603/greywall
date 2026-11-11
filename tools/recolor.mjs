@@ -67,6 +67,7 @@ if (mode === 'sprite') {
   writeFileSync(DIR + `${dst}.json`, JSON.stringify(atlas, null, 1) + '\n');
   const anim = JSON.parse(readFileSync(DIR + `${src}.anim.json`, 'utf8'));
   anim.name = dst;
+  anim.base = anim.base ?? src; // body the renderer sizes shadows and labels by
   anim.artSource = `${anim.artSource ?? 'code'}; palette variant of ${src} via tools/recolor.mjs ${JSON.stringify(T)}`;
   writeFileSync(DIR + `${dst}.anim.json`, JSON.stringify(anim, null, 1) + '\n');
   console.log(`sprite ${src} -> ${dst}`);
