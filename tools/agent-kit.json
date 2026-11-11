@@ -1,0 +1,21 @@
+{
+  "$comment": "Which parts of the vendored agent repos are installed into .claude/. Run: node tools/sync-agent-kit.mjs [--check]",
+  "studio": {
+    "repo": "vendor/Claude-Code-Game-Studios",
+    "copy": [".claude/agents", ".claude/skills", ".claude/hooks", ".claude/rules", ".claude/docs", ".claude/statusline.sh", "docs/COLLABORATIVE-DESIGN-PRINCIPLE.md", "docs/WORKFLOW-GUIDE.md"],
+    "exclude": ["godot-*", "unity-*", "ue-*", "unreal-*", "setup-engine"],
+    "local": [".claude/settings.json", ".claude/docs/technical-preferences.md", ".claude/docs/directory-structure.md"]
+  },
+  "skills": {
+    "vendor/agent-sprite-forge/skills": ["codeart2d", "generate2dsprite", "generate2dmap", "generate2dmedia", "video2dsprite"],
+    "vendor/pixelfx/skills": ["pixelfx"],
+    "vendor/ponytail/skills": ["ponytail", "ponytail-audit", "ponytail-review", "ponytail-debt", "ponytail-gain", "ponytail-help"],
+    "vendor/awesome-gamedev-agent-skills/skills": [
+      "web-engines/phaser-core", "genres/rpg",
+      "disciplines/game-feel", "disciplines/save-systems", "disciplines/procedural-gen", "disciplines/game-ui-ux",
+      "disciplines/performance-optimization", "disciplines/level-design", "disciplines/audio-design", "disciplines/game-ai",
+      "disciplines/dialogue-systems", "disciplines/create-game-assets",
+      "workflows/itch-publish", "workflows/prototype-fast"
+    ]
+  }
+}

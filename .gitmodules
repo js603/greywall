@@ -1,0 +1,15 @@
+[submodule "vendor/agent-sprite-forge"]
+	path = vendor/agent-sprite-forge
+	url = https://github.com/js603/agent-sprite-forge.git
+[submodule "vendor/pixelfx"]
+	path = vendor/pixelfx
+	url = https://github.com/js603/pixelfx.git
+[submodule "vendor/awesome-gamedev-agent-skills"]
+	path = vendor/awesome-gamedev-agent-skills
+	url = https://github.com/js603/awesome-gamedev-agent-skills.git
+[submodule "vendor/ponytail"]
+	path = vendor/ponytail
+	url = https://github.com/js603/ponytail.git
+[submodule "vendor/Claude-Code-Game-Studios"]
+	path = vendor/Claude-Code-Game-Studios
+	url = https://github.com/js603/Claude-Code-Game-Studios.git
