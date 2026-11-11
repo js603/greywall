@@ -34,6 +34,8 @@ function buildMarsh() {
   paintPath(m, [[26, 24], [20, 15], [15, 10]], `dirt`, 1);
   paintPath(m, [[26, 25], [20, 36], [15, 42]], `dirt`, 1);
   paintPath(m, [[44, 26], [46, 33]], `dirt`, 1);
+  // act 2 area 2: north to the Ruined Watchtower (design/gdd/act2-ruined-watchtower.md)
+  paintPath(m, [[36, 22], [33, 14], [32, 6], [31, 0]], `dirt`, 2);
 
   // the witch's island: raised plateau x 2..9, y 21..31, reached by a stair at (10, 26)
   for (let y = 21; y <= 31; y++)
@@ -67,6 +69,8 @@ function buildMarsh() {
   m.exits.push(
     { x: 55, y: 26, to: `orc`, tx: 1, ty: 37, label: `붉은엄니 오크 영지` },
     { x: 55, y: 27, to: `orc`, tx: 1, ty: 38, label: `붉은엄니 오크 영지` },
+    { x: 31, y: 0, to: `ruins`, tx: 26, ty: 48, label: `무너진 감시탑` },
+    { x: 32, y: 0, to: `ruins`, tx: 27, ty: 48, label: `무너진 감시탑` },
   );
   for (const e of m.exits) {
     m.block[m.idx(e.x, e.y)] = 0;

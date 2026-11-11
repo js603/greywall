@@ -551,5 +551,77 @@
     "stack": true,
     "desc": "두껍고 축축한 가죽. 무겁다.",
     "weight": 4
+  },
+  "captain_sword": {
+    "id": "captain_sword",
+    "name": "하엘의 대검",
+    "icon": "captain_sword",
+    "type": "equip",
+    "slot": "weapon",
+    "dmg": [
+      9,
+      17
+    ],
+    "interval": 1.75,
+    "acc": 3,
+    "price": 3200,
+    "reqLevel": 21,
+    "desc": "타락한 감시대장의 붉게 녹슨 대검. 느리지만 한 번이 무겁다.",
+    "weight": 70
+  },
+  "garrison_mail": {
+    "id": "garrison_mail",
+    "name": "수비대 사슬갑옷",
+    "icon": "garrison_mail",
+    "type": "equip",
+    "slot": "armor",
+    "ac": 11,
+    "price": 3600,
+    "reqLevel": 21,
+    "desc": "감시탑 수비대가 입던 두꺼운 사슬갑옷. 녹이 슬었어도 튼튼하다.",
+    "weight": 160
+  },
+  "tower_shield": {
+    "id": "tower_shield",
+    "name": "감시탑 방패",
+    "icon": "tower_shield",
+    "type": "equip",
+    "slot": "shield",
+    "ac": 5,
+    "block": 0.15,
+    "price": 1500,
+    "reqLevel": 20,
+    "desc": "푸른 문장이 남은 큰 방패. 막기 15%.",
+    "weight": 70
+  },
+  "ruin_pelt": {
+    "id": "ruin_pelt",
+    "name": "검은 늑대 가죽",
+    "icon": "ruin_pelt",
+    "type": "material",
+    "price": 34,
+    "stack": true,
+    "desc": "폐허를 떠도는 검은 늑대의 가죽.",
+    "weight": 4
+  },
+  "rusted_insignia": {
+    "id": "rusted_insignia",
+    "name": "녹슨 휘장",
+    "icon": "rusted_insignia",
+    "type": "material",
+    "price": 40,
+    "stack": true,
+    "desc": "수비대를 버리고 달아난 병사들의 휘장. 교관 하르덴이 찾는다.",
+    "weight": 1
+  },
+  "plague_rag": {
+    "id": "plague_rag",
+    "name": "역병 누더기",
+    "icon": "plague_rag",
+    "type": "material",
+    "price": 26,
+    "stack": true,
+    "desc": "역병에 걸린 수비병의 옷 조각. 함부로 만지지 말 것.",
+    "weight": 2
   }
 }

@@ -11,17 +11,21 @@
 | orc | 9 | knight_sword, chain_mail, iron_shield | 5.5 | 203 | 98 | 0.0 | 4.8 | 5.4 |
 | mine2 | 10 | knight_sword, chain_mail, iron_shield | 3.6 | 253 | 61 | 0.0 | 6.1 | 5.5 |
 | mine2 | 12 | knight_sword, chain_mail, iron_shield | 4.4 | 273 | 78 | 0.0 | 6.2 | 8.0 |
-| marsh | 14 | chief_axe, plate_armor, iron_shield, lord_ring | 3.6 | 288 | 81 | 0.0 | 10.3 | 11.5 |
-| marsh | 16 | chief_axe, plate_armor, iron_shield, lord_ring | 3.9 | 311 | 84 | 0.0 | 8.8 | 16.1 |
-| marsh | 18 | chief_axe, plate_armor, iron_shield, lord_ring | 4.1 | 330 | 86 | 0.0 | 9.6 | 21.8 |
-| marsh | 18 | mist_blade, bog_scale, iron_shield, witch_charm | 4.6 | 363 | 99 | 0.0 | 5.5 | 19.8 |
-| marsh | 20 | mist_blade, bog_scale, iron_shield, witch_charm | 4.7 | 189 | 101 | 0.0 | 7.2 | 54.1 |
+| marsh | 14 | chief_axe, plate_armor, iron_shield, lord_ring | 3.5 | 283 | 75 | 0.0 | 7.5 | 11.7 |
+| marsh | 16 | chief_axe, plate_armor, iron_shield, lord_ring | 3.9 | 309 | 85 | 0.0 | 10.7 | 16.2 |
+| marsh | 18 | chief_axe, plate_armor, iron_shield, lord_ring | 4.0 | 321 | 91 | 0.0 | 9.5 | 22.4 |
+| marsh | 18 | mist_blade, bog_scale, iron_shield, witch_charm | 4.5 | 363 | 93 | 0.0 | 5.0 | 19.8 |
+| marsh | 20 | mist_blade, bog_scale, iron_shield, witch_charm | 4.8 | 190 | 99 | 0.0 | 6.6 | 53.7 |
+| ruins | 20 | mist_blade, bog_scale, iron_shield, witch_charm | 2.4 | 493 | 109 | 0.0 | 11.4 | 20.7 |
+| ruins | 22 | mist_blade, bog_scale, iron_shield, witch_charm | 2.5 | 521 | 112 | 0.0 | 8.9 | 27.1 |
+| ruins | 22 | captain_sword, garrison_mail, tower_shield, witch_charm | 2.5 | 528 | 112 | 0.0 | 5.6 | 26.7 |
+| ruins | 24 | captain_sword, garrison_mail, tower_shield, witch_charm | 2.8 | 577 | 125 | 0.0 | 6.8 | 32.9 |
 
-Driver limits: it never runs away and gets 5 free red potions whenever it runs out, so
-"Deaths" understates risk and "Potions/min" is the real cost signal (red potion price:
-see `assets/data/items.json`). Use the numbers to compare areas, not as absolute times.
+Driver limits: it never runs away, drinks only red potions (30 HP, 25 coins) and gets 5 free ones
+whenever it runs out, so "Deaths" understates risk and "Potions/min" reads as red-potion
+equivalents of HP lost. Use the numbers to compare areas, not as absolute times.
 
-Fog Marsh (design/gdd/act2-fog-marsh.md, acceptance 2): at Lv16 the marsh gives more XP/min
-than the orc lands at Lv9 and the next level comes in under 20 minutes. At Lv20 the slimes and
-spiders (Lv14–15) give half XP (existing rule: player ≥ monster + 5), which is the intended push
-toward act 2 area 2.
+Act 2 targets (design/gdd/act2-*.md): entering an area with the previous area's gear costs about
+10–11 potions/min; with the area's own gear 5–7. Level time 16–27 min per level in Lv 16–24.
+At Lv20 the marsh's Lv14–15 monsters give half XP (player ≥ monster + 5), pushing players on to
+the ruins.

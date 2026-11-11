@@ -1127,13 +1127,157 @@
     "x": 0.5,
     "y": 0.7142857142857143
    }
+  },
+  "captain_sword": {
+   "frame": {
+    "x": 0,
+    "y": 172,
+    "w": 20,
+    "h": 17
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 3,
+    "y": 6,
+    "w": 20,
+    "h": 17
+   },
+   "sourceSize": {
+    "w": 28,
+    "h": 28
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7142857142857143
+   }
+  },
+  "garrison_mail": {
+   "frame": {
+    "x": 0,
+    "y": 191,
+    "w": 16,
+    "h": 21
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 6,
+    "y": 1,
+    "w": 16,
+    "h": 21
+   },
+   "sourceSize": {
+    "w": 28,
+    "h": 28
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7142857142857143
+   }
+  },
+  "tower_shield": {
+   "frame": {
+    "x": 0,
+    "y": 214,
+    "w": 14,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 7,
+    "y": 5,
+    "w": 14,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 28,
+    "h": 28
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7142857142857143
+   }
+  },
+  "rusted_insignia": {
+   "frame": {
+    "x": 0,
+    "y": 232,
+    "w": 14,
+    "h": 14
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 7,
+    "y": 9,
+    "w": 14,
+    "h": 14
+   },
+   "sourceSize": {
+    "w": 28,
+    "h": 28
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7142857142857143
+   }
+  },
+  "plague_rag": {
+   "frame": {
+    "x": 0,
+    "y": 248,
+    "w": 16,
+    "h": 12
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 6,
+    "y": 12,
+    "w": 16,
+    "h": 12
+   },
+   "sourceSize": {
+    "w": 28,
+    "h": 28
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7142857142857143
+   }
+  },
+  "ruin_pelt": {
+   "frame": {
+    "x": 0,
+    "y": 262,
+    "w": 26,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 1,
+    "y": 11,
+    "w": 26,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 28,
+    "h": 28
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7142857142857143
+   }
   }
  },
  "meta": {
   "image": "icons.png",
   "size": {
    "w": 512,
-   "h": 170
+   "h": 278
   },
   "scale": "1",
   "app": "greywall tools/build_assets.py"

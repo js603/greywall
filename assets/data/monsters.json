@@ -854,5 +854,232 @@
         "max": 4
       }
     ]
+  },
+  "ruin_wolf": {
+    "id": "ruin_wolf",
+    "name": "검은 늑대",
+    "sprite": "ruin_wolf",
+    "level": 20,
+    "hp": 190,
+    "dmg": [
+      6,
+      11
+    ],
+    "acc": 9,
+    "eva": 6,
+    "ac": 4,
+    "interval": 1.9,
+    "windup": 0.5,
+    "step": 0.38,
+    "aggro": 5,
+    "xp": 145,
+    "coins": [
+      18,
+      36
+    ],
+    "respawn": 30,
+    "lawful": 4,
+    "drops": [
+      {
+        "item": "ruin_pelt",
+        "chance": 0.5
+      },
+      {
+        "item": "potion_clear",
+        "chance": 0.1
+      }
+    ]
+  },
+  "deserter": {
+    "id": "deserter",
+    "name": "탈영 석궁병",
+    "sprite": "deserter",
+    "level": 21,
+    "hp": 180,
+    "dmg": [
+      6,
+      11
+    ],
+    "acc": 10,
+    "eva": 5,
+    "ac": 5,
+    "interval": 2.5,
+    "windup": 0.5,
+    "step": 0.45,
+    "aggro": 4,
+    "xp": 160,
+    "coins": [
+      30,
+      60
+    ],
+    "respawn": 35,
+    "range": 5,
+    "projectile": "arrow",
+    "lawful": 5,
+    "drops": [
+      {
+        "item": "rusted_insignia",
+        "chance": 0.45
+      },
+      {
+        "item": "potion_clear",
+        "chance": 0.12
+      },
+      {
+        "item": "scroll_teleport",
+        "chance": 0.05
+      },
+      {
+        "item": "tower_shield",
+        "chance": 0.008
+      },
+      {
+        "item": "scroll_ench_a",
+        "chance": 0.025
+      }
+    ]
+  },
+  "plague_guard": {
+    "id": "plague_guard",
+    "name": "역병 수비병",
+    "sprite": "plague_guard",
+    "level": 22,
+    "hp": 250,
+    "dmg": [
+      7,
+      12
+    ],
+    "acc": 9,
+    "eva": 0,
+    "ac": 6,
+    "interval": 2.4,
+    "windup": 0.5,
+    "step": 0.7,
+    "aggro": 5,
+    "xp": 180,
+    "coins": [
+      24,
+      48
+    ],
+    "respawn": 35,
+    "poison": 0.25,
+    "lawful": 5,
+    "drops": [
+      {
+        "item": "plague_rag",
+        "chance": 0.5
+      },
+      {
+        "item": "antidote",
+        "chance": 0.25
+      },
+      {
+        "item": "holy_water",
+        "chance": 0.06
+      },
+      {
+        "item": "scroll_ench_a",
+        "chance": 0.025
+      }
+    ]
+  },
+  "garrison_skeleton": {
+    "id": "garrison_skeleton",
+    "name": "수비대 해골",
+    "sprite": "garrison_skeleton",
+    "level": 23,
+    "hp": 270,
+    "dmg": [
+      7,
+      13
+    ],
+    "acc": 10,
+    "eva": 2,
+    "ac": 7,
+    "interval": 2.2,
+    "windup": 0.5,
+    "step": 0.5,
+    "aggro": 6,
+    "xp": 210,
+    "coins": [
+      30,
+      60
+    ],
+    "respawn": 40,
+    "block": 0.1,
+    "lawful": 6,
+    "drops": [
+      {
+        "item": "bone_dust",
+        "chance": 0.4
+      },
+      {
+        "item": "potion_clear",
+        "chance": 0.15
+      },
+      {
+        "item": "garrison_mail",
+        "chance": 0.007
+      },
+      {
+        "item": "scroll_ench_w",
+        "chance": 0.02
+      }
+    ]
+  },
+  "fallen_captain": {
+    "id": "fallen_captain",
+    "name": "타락한 감시대장 하엘",
+    "sprite": "fallen_captain",
+    "level": 26,
+    "hp": 1800,
+    "dmg": [
+      11,
+      19
+    ],
+    "acc": 13,
+    "eva": 3,
+    "ac": 10,
+    "interval": 2.4,
+    "windup": 0.5,
+    "step": 0.5,
+    "aggro": 7,
+    "xp": 4200,
+    "coins": [
+      600,
+      900
+    ],
+    "respawn": 900,
+    "named": true,
+    "block": 0.2,
+    "lawful": 150,
+    "drops": [
+      {
+        "item": "captain_sword",
+        "chance": 0.3
+      },
+      {
+        "item": "garrison_mail",
+        "chance": 0.25
+      },
+      {
+        "item": "scroll_ench_w",
+        "chance": 1,
+        "min": 2,
+        "max": 3
+      },
+      {
+        "item": "scroll_ench_a",
+        "chance": 1,
+        "min": 2,
+        "max": 3
+      },
+      {
+        "item": "potion_clear",
+        "chance": 1,
+        "min": 3,
+        "max": 5
+      }
+    ]
   }
 }

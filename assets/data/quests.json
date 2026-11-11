@@ -351,5 +351,128 @@
     ],
     "rewardCoins": 1200,
     "rewardXp": 4000
+  },
+  {
+    "id": "q_ruins",
+    "name": "성벽 너머의 감시탑",
+    "giver": "guard",
+    "minLevel": 19,
+    "after": "q_marsh",
+    "summary": "안개 늪 북쪽 너머 무너진 감시탑 주변의 검은 늑대 10마리를 처치한다.",
+    "hint": "늪 한가운데 둑길에서 북쪽으로 갈라지는 길을 따라가면 감시탑이 보인다.",
+    "kill": {
+      "monster": "ruin_wolf",
+      "count": 10
+    },
+    "rewardItems": [
+      {
+        "item": "potion_clear",
+        "count": 6
+      }
+    ],
+    "rewardCoins": 600,
+    "rewardXp": 2600
+  },
+  {
+    "id": "q_insignia",
+    "name": "버려진 휘장",
+    "giver": "trainer",
+    "minLevel": 20,
+    "after": "q_troll",
+    "summary": "탈영 석궁병에게서 녹슨 휘장 8개를 모아 교관 하르덴에게 가져간다.",
+    "hint": "석궁병은 멀리서 쏜다. 벽 뒤로 돌아 붙어라.",
+    "bring": [
+      {
+        "item": "rusted_insignia",
+        "count": 8
+      }
+    ],
+    "rewardItems": [
+      {
+        "item": "potion_brave",
+        "count": 3
+      },
+      {
+        "item": "scroll_ench_a",
+        "count": 1
+      }
+    ],
+    "rewardCoins": 700,
+    "rewardXp": 3000
+  },
+  {
+    "id": "q_plague",
+    "name": "역병의 성벽",
+    "giver": "priest",
+    "minLevel": 21,
+    "after": "q_witch",
+    "summary": "감시탑 안뜰의 역병 수비병 10구를 잠재운다.",
+    "hint": "역병 수비병은 느리지만 독을 옮긴다. 해독제와 성수를 챙겨라.",
+    "kill": {
+      "monster": "plague_guard",
+      "count": 10
+    },
+    "rewardItems": [
+      {
+        "item": "holy_water",
+        "count": 4
+      },
+      {
+        "item": "antidote",
+        "count": 5
+      }
+    ],
+    "rewardCoins": 800,
+    "rewardXp": 3600
+  },
+  {
+    "id": "q_garrison",
+    "name": "남은 수비대",
+    "giver": "guard",
+    "minLevel": 22,
+    "after": "q_ruins",
+    "summary": "아직도 탑을 지키는 수비대 해골 10구를 쓰러뜨린다.",
+    "hint": "해골은 방패로 막는다. 강타는 막을 수 없다.",
+    "kill": {
+      "monster": "garrison_skeleton",
+      "count": 10
+    },
+    "rewardItems": [
+      {
+        "item": "scroll_ench_w",
+        "count": 1
+      },
+      {
+        "item": "scroll_ench_a",
+        "count": 1
+      }
+    ],
+    "rewardCoins": 900,
+    "rewardXp": 4200
+  },
+  {
+    "id": "q_captain",
+    "name": "타락한 감시대장",
+    "giver": "trainer",
+    "minLevel": 24,
+    "after": "q_insignia",
+    "summary": "감시탑 꼭대기의 타락한 감시대장 하엘을 쓰러뜨린다.",
+    "hint": "하엘은 방패로 자주 막는다. 강타와 투지의 물약으로 밀어붙여라. 탑 계단 위에 있다.",
+    "kill": {
+      "monster": "fallen_captain",
+      "count": 1
+    },
+    "rewardItems": [
+      {
+        "item": "scroll_ench_w",
+        "count": 2
+      },
+      {
+        "item": "scroll_ench_a",
+        "count": 2
+      }
+    ],
+    "rewardCoins": 2000,
+    "rewardXp": 7000
   }
 ]
