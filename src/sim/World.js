@@ -1324,7 +1324,7 @@ class World {
       );
     } else {
       this.take(n.item, 1);
-      t.skills.push(i);
+      this.grantSkill(i);
       this.stats.firstSkillAt === null &&
         (this.stats.firstSkillAt = this.stats.play);
 
@@ -1338,6 +1338,28 @@ class World {
         `level`
       );
     }
+  }
+  /** Adds a skill to the player and puts it in the first empty skill slot. */
+  grantSkill(id) {
+    const p = this.player;
+    if (!p.skills.includes(id)) p.skills.push(id);
+    if (!p.skillSlots.includes(id)) {
+      const free = p.skillSlots.indexOf(null);
+      if (free >= 0) p.skillSlots[free] = id;
+    }
+  }
+  /**
+   * Puts a learned skill in skill slot `slot` (0-3), or clears it with null. A skill sits in at
+   * most one slot: assigning it elsewhere moves it.
+   * @returns {boolean} false when the skill is not learned or the slot is out of range
+   */
+  assignSkillSlot(slot, id) {
+    const p = this.player;
+    if (slot < 0 || slot >= p.skillSlots.length) return false;
+    if (id !== null && !p.skills.includes(id)) return false;
+    if (id !== null) p.skillSlots = p.skillSlots.map((s) => (s === id ? null : s));
+    p.skillSlots[slot] = id;
+    return true;
   }
   equip(e) {
     let t = this.player;
@@ -1756,6 +1778,21 @@ class World {
         t.state = this.questItemsOk(e.id) ? `ready` : `active`;
       }
     }
+  }
+  /**
+   * Quest marker for an NPC: `?` when one of its quests can be turned in, `!` when one can be
+   * accepted, otherwise null.
+   * @param {string} npcId
+   */
+  npcQuestMarker(npcId) {
+    let marker = null;
+    for (const q of QUESTS) {
+      if (q.giver !== npcId) continue;
+      const state = this.quests[q.id].state;
+      if (state === `ready`) return `?`;
+      if (state === `available`) marker = `!`;
+    }
+    return marker;
   }
   questItemsOk(e) {
     let t = QUESTS.find((t) => {

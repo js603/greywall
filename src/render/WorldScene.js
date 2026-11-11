@@ -191,6 +191,7 @@ class WorldScene extends Phaser.Scene {
       e.spr.destroy();
       e.shadow.destroy();
       e.label?.destroy();
+      e.mark?.destroy();
     }
     this.ents.clear();
     for (let e of this.dropImgs.values()) {
@@ -458,6 +459,18 @@ class WorldScene extends Phaser.Scene {
         })
         .setOrigin(0.5, 1)
         .setDepth(10000000 - 2);
+      // quest marker: ! = a quest to accept, ? = a quest to turn in
+      t.mark = this.add
+        .text(0, 0, ``, {
+          fontFamily: `Galmuri11`,
+          fontSize: `20px`,
+          fontStyle: `bold`,
+          color: `#f4dc8a`,
+          stroke: `#1a1316`,
+          strokeThickness: 4,
+        })
+        .setOrigin(0.5, 1)
+        .setDepth(10000000 - 2);
     }
 
     this.ents.set(e.id, t);
@@ -555,6 +568,12 @@ class WorldScene extends Phaser.Scene {
 
     if (n.label) {
       n.label.setPosition(Math.round(r.x), Math.round(r.y) - 50);
+    }
+    if (n.mark) {
+      const m = this.world.npcQuestMarker(e.npcId) ?? ``;
+      if (n.mark.text !== m) n.mark.setText(m);
+      // a gentle bob so the marker reads as interactive
+      n.mark.setPosition(Math.round(r.x), Math.round(r.y) - 64 + Math.round(Math.sin(this.world.time * 3) * 2));
     }
   }
   playFx(e, t, n, r, i = {}) {
@@ -1298,6 +1317,7 @@ class WorldScene extends Phaser.Scene {
         t.spr.destroy();
         t.shadow.destroy();
         t.label?.destroy();
+        t.mark?.destroy();
         this.ents.delete(e);
       }
     }
@@ -1387,6 +1407,7 @@ class WorldScene extends Phaser.Scene {
       }
 
       e.label?.setVisible(n);
+      e.mark?.setVisible(n);
     }
   }
   updateLighting() {

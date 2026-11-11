@@ -88,3 +88,16 @@ test('a Lv20 hunter in marsh gear levels at the ruins', () => {
   assert.ok(r.world.stats.kills > 10, `kills ${r.world.stats.kills}`);
   assert.ok(r.world.player.xp > XP_TABLE[20]);
 });
+
+test('NPC quest markers: ! for a quest to accept, ? for one to turn in, none otherwise', () => {
+  const w = new World(MAP_BUILDERS, 4);
+  w.loadMap('town');
+  w.refreshQuests();
+  assert.equal(w.npcQuestMarker('guard'), '!'); // q_slime is available at level 1
+  assert.equal(w.npcQuestMarker('smith'), null);
+  w.quests.q_slime.state = 'ready';
+  assert.equal(w.npcQuestMarker('guard'), '?');
+  w.quests.q_slime.state = 'done';
+  w.refreshQuests();
+  assert.equal(w.npcQuestMarker('guard'), null); // q_wolf needs level 2
+});

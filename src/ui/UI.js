@@ -42,6 +42,10 @@ const DEFAULT_QUICKSLOTS = [
     id: `bless`,
   },
 ];
+/** Quickslots 1-4 hold fixed consumables; 5-8 are the player's assignable skill slots. */
+const QUICK_ITEMS = DEFAULT_QUICKSLOTS.filter((s) => s.kind === `item`);
+/** Icon for a skill: its own `icon`, else its book's icon. */
+const skillIcon = (id) => SKILLS[id]?.icon ?? SKILLS[id]?.book;
 const SKILL_BOOKS = {
   strike: `book_strike`,
   heal: `book_heal`,
@@ -146,13 +150,7 @@ class UI {
       this.tipUntil = 0;
     });
 
-    qs(`#slots`).innerHTML = DEFAULT_QUICKSLOTS.map((e, t) => {
-      return `<button class="slot" data-slot="${t}"><span class="k">${
-        t + 1
-      }</span>${iconHtml(
-        e.kind === `item` ? e.id : SKILL_BOOKS[e.id]
-      )}<span class="n"></span><span class="cd"></span></button>`;
-    }).join(``);
+    this.renderSlots();
 
     if (this.settings.logMin) {
       qs(`#log`).classList.add(`min`);
@@ -240,6 +238,25 @@ class UI {
     this.viewShift = Math.round(n / 2 - (i + a) / 2);
     return this.viewShift;
   }
+  /** Quickslot contents: the fixed items, then the four skill slots (id null = empty). */
+  slotList() {
+    return [...QUICK_ITEMS, ...this.w.player.skillSlots.map((id) => ({ kind: `skill`, id }))];
+  }
+  /** Rebuilds the quickslot buttons when the skill slot assignment changed. */
+  renderSlots() {
+    const list = this.slotList();
+    const sig = list.map((s) => s.id).join(`|`);
+    if (sig === this.slotSig) return;
+    this.slotSig = sig;
+    qs(`#slots`).innerHTML = list
+      .map(
+        (e, t) =>
+          `<button class="slot${e.kind === `skill` ? ` skill` : ``}" data-slot="${t}"><span class="k">${
+            t + 1
+          }</span>${e.id ? iconHtml(e.kind === `item` ? e.id : skillIcon(e.id)) : ``}<span class="n"></span><span class="cd"></span></button>`
+      )
+      .join(``);
+  }
   /** Shows or hides the minimap according to the saved setting (default: shown). */
   applyMinimap() {
     qs(`#minimap`).hidden = this.settings.minimap === false;
@@ -298,11 +315,17 @@ class UI {
         1
       )}%</span></div><div id="status-icons">${s}</div>`;
     }
-    DEFAULT_QUICKSLOTS.forEach((n, r) => {
+    this.renderSlots();
+    this.slotList().forEach((n, r) => {
       let i = qs(`.slot[data-slot="${r}"]`);
       let a = i.querySelector(`.n`);
       let o = i.querySelector(`.cd`);
-      if (n.kind === `item`) {
+      if (n.kind === `skill` && !n.id) {
+        i.classList.add(`empty`);
+        i.title = `빈 스킬 슬롯 — 스킬 창(K)에서 등록`;
+        a.textContent = ``;
+        o.style.display = `none`;
+      } else if (n.kind === `item`) {
         let r = e.count(n.id);
         a.textContent = r ? String(r) : ``;
         i.classList.toggle(`empty`, !r);
@@ -318,9 +341,8 @@ class UI {
         o.style.display = s && c > 0 ? `flex` : `none`;
         o.textContent = c > 0 ? String(Math.ceil(c)) : ``;
         a.textContent = s ? String(r.mp) : ``;
-        i.title = s
-          ? `${r.name} — 마나 ${r.mp}, 재사용 ${r.cooldown}초`
-          : `${r.name} (미습득) — ${SKILL_SOURCES[n.id]}`;
+        i.classList.remove(`empty`);
+        i.title = `${r.name} — 마나 ${r.mp}, 재사용 ${r.cooldown}초`;
       }
     });
 
@@ -571,7 +593,7 @@ class UI {
     }
     if (e.startsWith(`Digit`)) {
       let t = Number(e.slice(5)) - 1;
-      if (t >= 0 && t < DEFAULT_QUICKSLOTS.length) {
+      if (t >= 0 && t < this.slotList().length) {
         this.useQuick(t);
         return true;
       }
@@ -605,8 +627,12 @@ class UI {
       : e === `KeyL` && (qs(`#log`).classList.toggle(`min`), true);
   }
   useQuick(e) {
-    let t = DEFAULT_QUICKSLOTS[e];
+    let t = this.slotList()[e];
     let n = this.w;
+    if (t.kind === `skill` && !t.id) {
+      this.toggle(`skills`);
+      return;
+    }
     if (t.kind === `item`) {
       let e = n.player.inv.findIndex((e) => {
         return e.item === t.id;
@@ -630,7 +656,7 @@ class UI {
   }
   onClick(e) {
     let t = e.target.closest(
-      `[data-act],[data-open],[data-slot],[data-cell],[data-eq],[data-buy],[data-sell],[data-q],[data-tab],[data-skill],[data-zoom],[data-touch],[data-minimap]`
+      `[data-act],[data-open],[data-slot],[data-cell],[data-eq],[data-buy],[data-sell],[data-q],[data-tab],[data-skill],[data-zoom],[data-touch],[data-minimap],[data-assign]`
     );
     if (!t) {
       if (e.target.id === `win`) {
@@ -674,6 +700,12 @@ class UI {
     }
     if (r.tab) {
       this.shopTab = r.tab;
+      return this.render();
+    }
+    if (r.assign) {
+      const [slot, id] = r.assign.split(`:`);
+      n.assignSkillSlot(Number(slot), id === `-` ? null : id);
+      this.renderSlots();
       return this.render();
     }
     if (r.skill) {
@@ -1175,46 +1207,33 @@ class UI {
     }</span></div>
       <p class="dim">장비 칸을 누르면 해제합니다. 레벨이 오르면 체력·마나와 힘/민첩이 오릅니다.</p>`;
   }
+  /** Learned skills only, each with buttons to place it in skill slot 5-8. */
   r_skills() {
-    let e = this.w;
-    let t = e.player;
-    return `<div class="list">${Object.values(SKILLS)
-      .map((n) => {
-        let r = t.skills.includes(n.id);
-        let i = e.skillState(n.id);
-        let a = ITEMS[n.book];
-        return `<div class="item ${r ? `` : `locked`}">${iconHtml(
-          SKILL_BOOKS[n.id],
-          `x2`
-        )}<div class="grow"><b>${n.name}</b> ${
-          r
-            ? `<span class="good">습득</span>`
-            : `<span class="bad">미습득</span>`
-        }
-        <div class="dim">${n.desc}</div><div>마나 ${n.mp} · 재사용 ${
-          n.cooldown
-        }초${
-          n.consumes
-            ? ` · ${ITEMS[n.consumes].name} 1개 (보유 ${e.count(n.consumes)})`
-            : ``
-        }</div>
-        ${
-          r
-            ? ``
-            : `<div>학습 조건: ${a.name}, 레벨 ${
-                a.reqLevel
-              } 이상 <span class="${
-                t.level >= (a.reqLevel ?? 1) ? `good` : `bad`
-              }">(현재 ${t.level})</span> · 보유 ${e.count(
-                n.book
-              )}</div><div class="warn">획득처: ${SKILL_SOURCES[n.id]}</div>`
-        }</div>
-        <button class="btn" data-skill="${n.id}" ${
-          i.ok ? `` : `disabled`
-        } title="${escapeHtml(i.reason)}">사용</button></div>`;
+    const w = this.w;
+    const p = w.player;
+    const learned = p.skills.map((id) => SKILLS[id]).filter(Boolean);
+    if (!learned.length)
+      return `<p class="dim">아직 익힌 스킬이 없습니다. 기술서·마법서를 얻어 가방에서 사용하면 여기에 나타나고, 빈 스킬 슬롯(5~8)에 자동으로 등록됩니다.</p>`;
+    return `<div class="list">${learned
+      .map((sk) => {
+        const st = w.skillState(sk.id);
+        const at = p.skillSlots.indexOf(sk.id);
+        const slots = p.skillSlots
+          .map(
+            (cur, k) =>
+              `<button class="btn ${at === k ? `on` : ``}" data-assign="${k}:${at === k ? `-` : sk.id}" title="${
+                at === k ? `슬롯에서 빼기` : cur ? `${SKILLS[cur].name} 대신 등록` : `빈 슬롯에 등록`
+              }">${k + 5}</button>`
+          )
+          .join(``);
+        return `<div class="item">${iconHtml(skillIcon(sk.id), `x2`)}<div class="grow"><b>${sk.name}</b>
+        <div class="dim">${sk.desc}</div><div>마나 ${sk.mp} · 재사용 ${sk.cooldown}초${
+          sk.consumes ? ` · ${ITEMS[sk.consumes].name} 1개 (보유 ${w.count(sk.consumes)})` : ``
+        }</div><div class="row slots-assign"><span class="dim">슬롯</span>${slots}</div></div>
+        <button class="btn" data-skill="${sk.id}" ${st.ok ? `` : `disabled`} title="${escapeHtml(st.reason)}">사용</button></div>`;
       })
       .join(``)}</div>
-      <p class="dim">스킬은 레벨업으로 주어지지 않습니다. 기술서·마법서를 얻어 가방에서 익혀야 합니다.</p>`;
+      <p class="dim">숫자 버튼으로 스킬 슬롯 5~8에 등록합니다. 같은 스킬은 한 슬롯에만 들어가고, 켜진 번호를 누르면 슬롯에서 뺍니다.</p>`;
   }
   questBlock(e, t) {
     let n = this.w;
@@ -1292,20 +1311,18 @@ class UI {
       u ? `<div class="row">${u}</div>` : ``
     }</div>`;
   }
+  /** Quests in progress only (ready to turn in first); new quests are found by the ! over NPCs. */
   r_quests() {
     this.w.refreshQuests();
-    let e = [`ready`, `active`, `available`, `locked`, `done`];
-    return [...QUESTS]
-      .sort((t, n) => {
-        return (
-          e.indexOf(this.w.quests[t.id].state) -
-          e.indexOf(this.w.quests[n.id].state)
-        );
-      })
-      .map((e) => {
-        return this.questBlock(e.id, false);
-      })
-      .join(``);
+    const order = [`ready`, `active`];
+    const list = QUESTS.filter((q) => order.includes(this.w.quests[q.id].state)).sort(
+      (a, b) => order.indexOf(this.w.quests[a.id].state) - order.indexOf(this.w.quests[b.id].state)
+    );
+    const done = QUESTS.filter((q) => this.w.quests[q.id].state === `done`).length;
+    const head = `<div class="dim">진행 중 ${list.length} · 완료 ${done} / ${QUESTS.length}</div>`;
+    return list.length
+      ? head + list.map((q) => this.questBlock(q.id, false)).join(``)
+      : head + `<p class="dim">진행 중인 의뢰가 없습니다. 머리 위에 <b class="gold-t">!</b> 표시가 있는 주민에게 말을 걸어 의뢰를 받으세요. <b class="gold-t">?</b>는 완료 보고를 기다리는 주민입니다.</p>`;
   }
   r_dialog() {
     let e = this.w;
@@ -1464,7 +1481,7 @@ class UI {
     return `<div class="kv"><b>PC</b><span></span>
       <span class="dim">이동</span><span>바닥 클릭 · 방향키/WASD (위=북, 위+오른쪽=북동 …)</span>
       <span class="dim">공격</span><span>몬스터 클릭 → 다가가 평타 반복. 바닥을 클릭하면 공격 취소</span>
-      <span class="dim">퀵슬롯</span><span>1 빨간 물약 · 2 맑은 물약 · 3 해독제 · 4 귀환 주문서 · 5 강타 · 6 응급 치료 · 7 무기 축복</span>
+      <span class="dim">퀵슬롯</span><span>1 빨간 물약 · 2 맑은 물약 · 3 해독제 · 4 귀환 주문서 · 5~8 스킬 슬롯(스킬 창 K에서 자유롭게 등록)</span>
       <span class="dim">기타</span><span>F 가까운 적 공격 · N 미니맵 · G/Space 줍기 · R 휴식 · I 가방 · C 장비 · K 스킬 · J 의뢰 · L 기록 · M 음소거 · Esc 닫기</span>
       <b>모바일</b><span></span>
       <span class="dim">이동</span><span>바닥을 탭하면 그 자리로 걷습니다. 누른 채 끌면 손가락을 따라 계속 이동하고, 손을 떼면 마지막 지점에서 멈춥니다</span>
@@ -1480,6 +1497,8 @@ class UI {
 
 export {
   DEFAULT_QUICKSLOTS,
+  QUICK_ITEMS,
+  skillIcon,
   SKILL_BOOKS,
   SKILL_SOURCES,
   NPC_NAMES,

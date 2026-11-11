@@ -1138,3 +1138,22 @@ body.touch #minimap {
 #tip {
   cursor: pointer;
 }
+
+/* skill slot assignment (skills panel) */
+.slots-assign {
+  gap: 4px;
+  align-items: center;
+  margin-top: 4px;
+}
+.slots-assign .btn {
+  min-width: 30px;
+  padding: 2px 6px;
+}
+.slot.skill.empty {
+  border-style: dashed;
+}
+.slots-assign .btn.on {
+  border-color: var(--gold);
+  color: var(--gold2);
+  background: #4a3a1c;
+}

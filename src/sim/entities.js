@@ -87,6 +87,8 @@ class Player extends Entity {
     };
 
     this.skills = [];
+    /** Skill ids in the four assignable skill quickslots (5-8), null = empty. */
+    this.skillSlots = [null, null, null, null];
     this.cooldowns = {};
     this.target = null;
     this.targetKind = null;

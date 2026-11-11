@@ -39,6 +39,7 @@ function snapshotWorld(e) {
       ...t.equipPlus,
     },
     skills: [...t.skills],
+    skillSlots: [...t.skillSlots],
     quests: JSON.parse(JSON.stringify(e.quests)),
     stats: {
       ...e.stats,
@@ -200,6 +201,18 @@ function parseSave(e) {
       error: `스킬 데이터가 올바르지 않습니다.`,
     };
   }
+  // skill slots arrived after save version 3 shipped: optional, four entries of null or a learned skill
+  if (
+    r.skillSlots !== undefined &&
+    (!Array.isArray(r.skillSlots) ||
+      r.skillSlots.length !== 4 ||
+      r.skillSlots.some((e) => e !== null && !r.skills.includes(e)))
+  ) {
+    return {
+      ok: false,
+      error: `스킬 슬롯 데이터가 올바르지 않습니다.`,
+    };
+  }
   for (let e of QUESTS) {
     if (!r.quests?.[e.id]) {
       return {
@@ -248,6 +261,10 @@ function applySave(e, t) {
       ...t.equipPlus,
     },
     skills: [...t.skills],
+    // older saves: fill the skill slots with the learned skills in learning order
+    skillSlots: t.skillSlots
+      ? [...t.skillSlots]
+      : [0, 1, 2, 3].map((i) => t.skills[i] ?? null),
     dead: false,
     poison: null,
     blessUntil: 0,
