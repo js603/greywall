@@ -7,6 +7,7 @@ npm install
 npm run dev        # 개발 서버
 npm run build      # dist/ + 서비스워커(tools/gen_sw.mjs)
 npm test           # 헤드리스 시뮬레이션 테스트 (Node, 브라우저 불필요)
+npm run sim        # 지역별 밸런스 리포트
 ```
 
 URL 옵션: `?dev=1` 개발 모드(별도 저장 칸, `__gw.give/xp/warp`), `?bot=1` 자동 플레이 봇.
@@ -19,3 +20,5 @@ URL 옵션: `?dev=1` 개발 모드(별도 저장 칸, `__gw.give/xp/warp`), `?bo
 - 음악·효과음: WebAudio 실시간 합성
 
 원본 소스는 소실되어 배포 빌드에서 복원했습니다. [docs/restoration.md](docs/restoration.md) 참고.
+
+문서: [분석·개선·확장 계획](docs/analysis.md) · [에이전트 툴체인](docs/agent-kit.md) · [밸런스 리포트](design/balance/sim-report.md)
