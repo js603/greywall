@@ -1,0 +1,19 @@
+{
+  "name": "greywall",
+  "private": true,
+  "version": "1.0.0",
+  "description": "회색성벽 연대기 — 고정 쿼터뷰에서 느린 평타로 사냥하는 중세 판타지 RPG",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && node tools/gen_sw.mjs",
+    "preview": "vite preview",
+    "test": "node --test \"tests/**/*.test.js\""
+  },
+  "dependencies": {
+    "phaser": "3.90.0"
+  },
+  "devDependencies": {
+    "vite": "^6.3.5"
+  }
+}

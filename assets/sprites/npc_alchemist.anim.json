@@ -1,0 +1,142 @@
+{
+ "name": "npc_alchemist",
+ "frameSize": [
+  88,
+  96
+ ],
+ "anchor": [
+  44,
+  74
+ ],
+ "clips": {
+  "idle_S": {
+   "frames": [
+    0,
+    1,
+    0,
+    2
+   ],
+   "durations": [
+    240,
+    240,
+    240,
+    240
+   ],
+   "loop": true,
+   "events": []
+  },
+  "idle_SW": {
+   "frames": [
+    3,
+    4,
+    3,
+    5
+   ],
+   "durations": [
+    240,
+    240,
+    240,
+    240
+   ],
+   "loop": true,
+   "events": []
+  },
+  "idle_W": {
+   "frames": [
+    6,
+    7,
+    6,
+    8
+   ],
+   "durations": [
+    240,
+    240,
+    240,
+    240
+   ],
+   "loop": true,
+   "events": []
+  },
+  "idle_NW": {
+   "frames": [
+    9,
+    10,
+    9,
+    11
+   ],
+   "durations": [
+    240,
+    240,
+    240,
+    240
+   ],
+   "loop": true,
+   "events": []
+  },
+  "idle_N": {
+   "frames": [
+    12,
+    13,
+    12,
+    14
+   ],
+   "durations": [
+    240,
+    240,
+    240,
+    240
+   ],
+   "loop": true,
+   "events": []
+  },
+  "idle_NE": {
+   "frames": [
+    15,
+    16,
+    15,
+    17
+   ],
+   "durations": [
+    240,
+    240,
+    240,
+    240
+   ],
+   "loop": true,
+   "events": []
+  },
+  "idle_E": {
+   "frames": [
+    18,
+    19,
+    18,
+    20
+   ],
+   "durations": [
+    240,
+    240,
+    240,
+    240
+   ],
+   "loop": true,
+   "events": []
+  },
+  "idle_SE": {
+   "frames": [
+    21,
+    22,
+    21,
+    23
+   ],
+   "durations": [
+    240,
+    240,
+    240,
+    240
+   ],
+   "loop": true,
+   "events": []
+  }
+ },
+ "artSource": "code (agent-sprite-forge codeart2d PixelSpec; no image model)"
+}
