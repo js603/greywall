@@ -71,16 +71,28 @@ function buildMarsh() {
     { x: 55, y: 27, to: `orc`, tx: 1, ty: 38, label: `붉은엄니 오크 영지` },
     { x: 31, y: 0, to: `ruins`, tx: 26, ty: 48, label: `무너진 감시탑` },
     { x: 32, y: 0, to: `ruins`, tx: 27, ty: 48, label: `무너진 감시탑` },
+    // the drainage tunnel up from the deep silver mine, open once its lich has fallen (act1-deep-mine.md)
+    { x: 36, y: 49, to: `mine2`, tx: 47, ty: 18, label: `은광 심부(배수 갱도)`, needs: { kill: `lich`, quest: `q_lich` } },
   );
   for (const e of m.exits) {
     m.block[m.idx(e.x, e.y)] = 0;
     m.ground[m.idx(e.x, e.y)] = `dirt`;
   }
+  // the tunnel mouth: a clearing and a dirt track up to the spider hollow
+  paintPath(m, [[36, 49], [36, 45], [33, 38]], `dirt`, 1);
+  const track = (o) =>
+    (Math.abs(o.x - 36) <= 2 && o.y >= 46) || (m.ground[m.idx(o.x, o.y)] === `dirt` && o.y >= 38 && o.x >= 32 && o.x <= 37);
+  m.objects = m.objects.filter((o) => !track(o));
+  for (let y = 38; y <= 49; y++)
+    for (let x = 32; x <= 38; x++) if (m.ground[m.idx(x, y)] === `dirt` || (Math.abs(x - 36) <= 2 && y >= 46)) m.block[m.idx(x, y)] = 0;
   m.objects = m.objects.filter((o) => !m.exits.some((e) => e.x === o.x && e.y === o.y));
 
   for (const [kind, x, y, r, count] of SPAWNS) m.spawns.push({ kind, x, y, r, count });
   m.spawns.push({ kind: `fog_witch`, x: 5, y: 26, r: 1, count: 1 });
 
+  placeProp(m, `torch_post`, 38, 47, { fx: `torch` });
+  placeProp(m, `rock_big`, 34, 49);
+  placeProp(m, `rock_big`, 38, 49);
   addCamp(m, { x: 50, y: 24, npc: { id: `camp_marsh`, name: `늪 야영지 상인 도린`, x: 51, y: 23 } });
   m.start = { x: 53, y: 26 };
   randomizeVariants(m, rng);

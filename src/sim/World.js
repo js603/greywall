@@ -353,6 +353,11 @@ class World {
     e.hp = Math.min(e.hp, e.maxHp);
     e.mp = Math.min(e.mp, e.maxMp);
   }
+  /** True when an exit with `needs` may be used: its monster was killed or its quest is done. */
+  exitOpen(exit) {
+    const n = exit.needs;
+    return !n || (this.stats.bossKills[n.kill] ?? 0) > 0 || this.quests[n.quest]?.state === `done`;
+  }
   /** Living monsters left on this abyss floor (the stairs down open at 0). */
   abyssLeft() {
     return this.map.abyss ? this.monsters.filter((m) => !m.dead).length : 0;
@@ -613,6 +618,8 @@ class World {
 
     if (t && t.locked && this.abyssLeft() > 0) {
       this.msg(`심연의 기운이 계단을 막고 있다. 남은 적 ${this.abyssLeft()}`, `warn`);
+    } else if (t && !this.exitOpen(t)) {
+      this.msg(`무너진 갱도를 검은 기운이 막고 있다. ${MONSTERS[t.needs.kill].name}을(를) 쓰러뜨려야 지나갈 수 있다.`, `warn`);
     } else if (t) {
       this.pendingExit = {
         to: t.to,

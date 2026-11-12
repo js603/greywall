@@ -231,6 +231,17 @@ function buildDeepMine() {
     }
   );
 
+  // the old drainage tunnel behind the lich's dais, out to the Fog Marsh (design/gdd/act1-deep-mine.md).
+  // It opens once the lich has fallen (World: exit.needs).
+  {
+    const i = t.idx(48, 17);
+    t.block[i] = 0;
+    t.elev[i] = 1;
+    t.ground[i] = `plaza`;
+    t.objects = t.objects.filter((o) => !(o.x === 48 && o.y === 17));
+    t.exits.push({ x: 48, y: 17, to: `marsh`, tx: 36, ty: 48, label: `무너진 배수 갱도`, needs: { kill: `lich`, quest: `q_lich` } });
+  }
+
   t.start = {
     x: 3,
     y: 21,

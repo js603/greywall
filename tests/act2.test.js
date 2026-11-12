@@ -11,7 +11,8 @@ import { findPath } from '../src/core/pathfind.js';
 // re-pinned 2026-11-12: hunters' camps at the entrances, marsh entrance cleared, fence in the ruins camp (design/gdd/camps.md)
 // pass re-pinned for the sluice gate to the aqueduct; aqueduct pinned on creation (act2-ancient-aqueduct.md)
 // aqueduct re-pinned for the abyss gatekeeper by the camp (endgame-abyss.md); it was 'daa9bcb2'
-const PINNED = { marsh: '204f7087', ruins: 'f8ede561', pass: 'cb035154', aqueduct: '4d4873db' };
+// marsh re-pinned for the drainage tunnel to the deep mine (act1-deep-mine.md); it was '204f7087'
+const PINNED = { marsh: '60239eec', ruins: 'f8ede561', pass: 'cb035154', aqueduct: '4d4873db' };
 
 test('act 2 maps are deterministic and pinned', () => {
   for (const [id, hash] of Object.entries(PINNED)) {
@@ -193,4 +194,34 @@ test('aqueduct_pass_gate_links_both_ways', () => {
   assert.equal(back.length, 2);
   for (const e of out) assert.ok(aq.walkable(e.tx, e.ty), `arrive ${e.tx},${e.ty}`);
   for (const e of back) assert.ok(pass.walkable(e.tx, e.ty), `return ${e.tx},${e.ty}`);
+});
+
+test('test_tunnel_deep_mine_marsh_opens_after_lich_and_is_reachable', () => {
+  const marsh = MAP_BUILDERS.marsh(), mine2 = MAP_BUILDERS.mine2();
+  const down = marsh.exits.find((e) => e.to === 'mine2');
+  const up = mine2.exits.find((e) => e.to === 'marsh');
+  assert.ok(findPath(marsh, marsh.start.x, marsh.start.y, down.x, down.y), 'tunnel mouth reachable in the marsh');
+  // on the deep mine side the tunnel is behind the lich, up the dais stair
+  assert.ok(findPath(mine2, mine2.start.x, mine2.start.y, up.x, up.y), 'tunnel reachable from the deep mine entrance');
+  const w = new World(MAP_BUILDERS, 21);
+  assert.equal(w.exitOpen(up), false);
+  w.quests.q_lich.state = 'done';
+  assert.equal(w.exitOpen(up), true, 'open once the lich quest is done');
+  const w2 = new World(MAP_BUILDERS, 22);
+  w2.stats.bossKills.lich = 1;
+  assert.equal(w2.exitOpen(down), true, 'or once the lich was killed');
+  // a closed tunnel does not move the player
+  const w3 = new World(MAP_BUILDERS, 23);
+  w3.loadMap('marsh', 36, 48);
+  for (const m of w3.monsters) m.nextThink = 1e9;
+  assert.ok(w3.tryStep(w3.player, 36, 49));
+  for (let i = 0; i < 40; i++) w3.update(1 / 30);
+  assert.equal(w3.map.id, 'marsh');
+  w3.quests.q_lich.state = 'done';
+  assert.ok(w3.tryStep(w3.player, 36, 48));
+  for (let i = 0; i < 40; i++) w3.update(1 / 30);
+  assert.ok(w3.tryStep(w3.player, 36, 49));
+  for (let i = 0; i < 40; i++) w3.update(1 / 30);
+  assert.equal(w3.map.id, 'mine2');
+  assert.deepEqual([w3.player.x, w3.player.y], [47, 18]);
 });
