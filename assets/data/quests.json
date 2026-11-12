@@ -347,6 +347,10 @@
       {
         "item": "scroll_ench_a",
         "count": 2
+      },
+      {
+        "item": "witch_charm",
+        "count": 1
       }
     ],
     "rewardCoins": 1200,
@@ -470,6 +474,10 @@
       {
         "item": "scroll_ench_a",
         "count": 2
+      },
+      {
+        "item": "captain_sword",
+        "count": 1
       }
     ],
     "rewardCoins": 2000,
@@ -611,6 +619,10 @@
       {
         "item": "scroll_ench_a",
         "count": 2
+      },
+      {
+        "item": "glacier_blade",
+        "count": 1
       }
     ],
     "rewardCoins": 3000,

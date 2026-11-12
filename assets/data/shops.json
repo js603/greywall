@@ -9,6 +9,14 @@
       "leather_armor",
       "chain_mail",
       "plate_armor"
+    ],
+    "crafts": [
+      "mist_blade",
+      "bog_scale",
+      "tower_shield",
+      "garrison_mail",
+      "yeti_armor",
+      "frost_ring"
     ]
   },
   "alchemist": {

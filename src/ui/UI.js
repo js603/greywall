@@ -5,6 +5,7 @@ import { NPC_GREETINGS } from "../data/npcLines.js";
 import { MAX_LEVEL, XP_TABLE } from "../data/progression.js";
 import { QUESTS } from "../data/quests.js";
 import { SHOPS } from "../data/shops.js";
+import { RECIPES } from "../data/recipes.js";
 import { SKILLS } from "../data/skills.js";
 import { CLASSES } from "../data/classes.js";
 import { pwa } from "../pwa.js";
@@ -658,7 +659,7 @@ class UI {
   }
   onClick(e) {
     let t = e.target.closest(
-      `[data-act],[data-open],[data-slot],[data-cell],[data-eq],[data-buy],[data-sell],[data-q],[data-tab],[data-skill],[data-zoom],[data-touch],[data-minimap],[data-assign],[data-cls]`
+      `[data-act],[data-open],[data-slot],[data-cell],[data-eq],[data-buy],[data-sell],[data-q],[data-tab],[data-skill],[data-zoom],[data-touch],[data-minimap],[data-assign],[data-cls],[data-craft]`
     );
     if (!t) {
       if (e.target.id === `win`) {
@@ -693,6 +694,10 @@ class UI {
     }
     if (r.buy) {
       n.buy(this.shop, r.buy);
+      return this.render();
+    }
+    if (r.craft) {
+      n.craft(this.shop, r.craft);
       return this.render();
     }
     if (r.sell !== undefined) {
@@ -1404,9 +1409,12 @@ class UI {
       this.shopTab === `buy` ? `on` : ``
     }" data-tab="buy">사기</button><button class="btn ${
       this.shopTab === `sell` ? `on` : ``
-    }" data-tab="sell">팔기</button><span class="gold-t" style="margin-left:auto">동전 ${
+    }" data-tab="sell">팔기</button>${
+      t.crafts ? `<button class="btn ${this.shopTab === `craft` ? `on` : ``}" data-tab="craft">제작</button>` : ``
+    }<span class="gold-t" style="margin-left:auto">동전 ${
       e.player.coins
     }</span></div>`;
+    if (this.shopTab === `craft` && t.crafts) return n + this.r_crafts(t);
     return this.shopTab === `buy`
       ? n +
           `<div class="list">${t.items
@@ -1441,6 +1449,29 @@ class UI {
               })
               .join(``) || `<div class="dim">팔 물건이 없습니다.</div>`
           }</div>`;
+  }
+  /** Craft tab: each recipe with the materials the player has / needs and the fee. */
+  r_crafts(shop) {
+    const w = this.w;
+    const why = { level: `레벨 부족`, mats: `재료 부족`, coins: `동전 부족` };
+    return `<div class="note dim">재료와 수수료를 내면 장비를 만들어 준다.</div><div class="list">${shop.crafts
+      .map((id) => {
+        const r = RECIPES[id];
+        const st = w.craftState(id);
+        const mats = r.mats
+          .map((m) => {
+            const have = w.count(m.item);
+            return `<span class="${have >= m.count ? `good` : `bad`}">${escapeHtml(ITEMS[m.item].name)} ${Math.min(have, m.count)}/${m.count}</span>`;
+          })
+          .join(` · `);
+        return `<div class="item">${iconHtml(r.item)}<div class="grow">${this.itemInfo(r.item).replace(
+          /<span class="dim">판매가.*?<\/span>/,
+          ``
+        )}<div>재료: ${mats}</div></div><button class="btn ${st.ok ? `gold` : ``}" data-craft="${id}" ${
+          st.ok ? `` : `disabled title="${why[st.reason] ?? ``}"`
+        }>제작 ${r.coins}닢</button></div>`;
+      })
+      .join(``)}</div>`;
   }
   r_settings() {
     let e = this.settings;

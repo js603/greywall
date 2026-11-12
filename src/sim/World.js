@@ -6,6 +6,7 @@ import { MONSTERS } from "../data/monsters.js";
 import { MAX_LEVEL, XP_TABLE } from "../data/progression.js";
 import { QUESTS } from "../data/quests.js";
 import { SHOPS } from "../data/shops.js";
+import { RECIPES } from "../data/recipes.js";
 import { SKILLS } from "../data/skills.js";
 import { CLASSES } from "../data/classes.js";
 import {
@@ -1718,6 +1719,38 @@ class World {
 
       this.msg(`${n.name}을(를) 샀다. -${r}닢`, `loot`);
     }
+  }
+  /**
+   * Whether recipe `id` can be crafted now: { ok, reason } (reason: unknown, level, mats, coins).
+   * Design: design/gdd/equipment-economy.md
+   */
+  craftState(id) {
+    const r = RECIPES[id];
+    if (!r) return { ok: false, reason: `unknown` };
+    const item = ITEMS[r.item];
+    if ((item.reqLevel ?? 0) > this.player.level) return { ok: false, reason: `level` };
+    if (r.mats.some((m) => this.count(m.item) < m.count)) return { ok: false, reason: `mats` };
+    if (this.player.coins < r.coins) return { ok: false, reason: `coins` };
+    return { ok: true };
+  }
+  /** Crafts recipe `id` at shop `shopId`: takes the materials and fee, gives the item. Returns true on success. */
+  craft(shopId, id) {
+    const r = RECIPES[id];
+    if (!r || !SHOPS[shopId]?.crafts?.includes(id)) return false;
+    const st = this.craftState(id);
+    if (!st.ok) {
+      this.msg(st.reason === `level` ? `아직 다룰 수 없는 물건이다.` : st.reason === `coins` ? `동전이 부족하다.` : `재료가 모자라다.`, `warn`);
+      return false;
+    }
+    for (const m of r.mats) this.take(m.item, m.count);
+    if (!this.give(r.item, 1)) {
+      for (const m of r.mats) this.give(m.item, m.count); // bag full: undo
+      return false;
+    }
+    this.player.coins -= r.coins;
+    this.emit({ type: `coin` });
+    this.msg(`${ITEMS[r.item].name}을(를) 만들었다. -${r.coins}닢`, `loot`);
+    return true;
   }
   skillState(e) {
     let t = this.player;
