@@ -13,6 +13,9 @@ import {
   ACTION_TIMING,
   DAY_LENGTH,
   ENCHANT_SAFE,
+  DEFENSE_K,
+  HIT_SLOPE,
+  HIT_BASE,
   SWING_CANCEL_DELAY,
 } from "./constants.js";
 import { Monster, Npc, Player } from "./entities.js";
@@ -739,7 +742,7 @@ class World {
     let o = t === this.player ? this.pEva() : t.def.eva;
     let s = Math.max(
       0.3,
-      Math.min(0.95, 0.8 + (a - o) * 0.03)
+      Math.min(0.95, (this.hitBase ?? HIT_BASE) + (a - o) * (this.hitSlope ?? HIT_SLOPE))
     );
     if (this.rng() > s) {
       this.emit({
@@ -763,17 +766,17 @@ class World {
       return;
     }
     let l = t === this.player ? this.pAC() : t.def.ac;
-    let u = Math.floor(l * (0.3 + 0.4 * this.rng()));
+    // ratio defense (design/gdd/combat.md): armour shaves a share of every hit, never all of it
+    const K = this.defenseK ?? DEFENSE_K;
+    const keep = K / (K + l * (0.6 + 0.8 * this.rng()));
     let d;
     if (r) {
       let e = this.weapon();
       let t = randInt(this.rng, e?.dmg?.[0] ?? 1, e?.dmg?.[1] ?? 2);
-      d = sk
-        ? Math.round(t * sk.mult) + sk.add + this.pDmgBonus() - u
-        : t + this.pDmgBonus() - u;
+      d = Math.round((sk ? Math.round(t * sk.mult) + sk.add + this.pDmgBonus() : t + this.pDmgBonus()) * keep);
     } else {
       let t = e.def;
-      d = randInt(this.rng, t.dmg[0], t.dmg[1]) - u;
+      d = Math.round(randInt(this.rng, t.dmg[0], t.dmg[1]) * keep);
     }
     d = Math.max(1, d);
     if (r && t.def?.undead) {
@@ -824,7 +827,8 @@ class World {
     if (sk?.area && !splash) {
       for (const m of this.monsters) {
         if (m === t || m.dead) continue;
-        if (Math.max(Math.abs(m.x - this.player.x), Math.abs(m.y - this.player.y)) <= sk.area) this.landHit(e, m, n, true);
+        if (Math.max(Math.abs(m.x - this.player.x), Math.abs(m.y - this.player.y)) <= sk.area && this.map.canReach(this.player.x, this.player.y, m.x, m.y))
+          this.landHit(e, m, n, true);
       }
     }
   }
@@ -2040,6 +2044,7 @@ class World {
   }
   update(e) {
     let t = Math.min(0.1, Math.max(0, e));
+    this.dt = t;
     this.time += t;
     this.stats.play += t;
     this.updatePlayer(t);
@@ -2437,7 +2442,7 @@ class World {
           e.path = [];
         }
 
-        e.hp = Math.min(e.maxHp, e.hp + 0.4);
+        e.hp = Math.min(e.maxHp, e.hp + e.maxHp * 0.04 * this.dt); // 4%/s while walking home
         break;
       }
     }
