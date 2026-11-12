@@ -10,6 +10,7 @@ import { RECIPES } from "../data/recipes.js";
 import { SKILLS } from "../data/skills.js";
 import { CLASSES } from "../data/classes.js";
 import { ABYSS, ACHIEVEMENTS } from "../data/abyss.js";
+import { AFFIXES, SETS } from "../data/gear.js";
 import { echoOf } from "../maps/abyss.js";
 import {
   ACTION_TIMING,
@@ -159,7 +160,8 @@ class World {
       Math.floor((this.player.dex - 10) / 2) +
       Math.floor(this.player.level / 2) +
       (this.time < this.player.blessUntil ? 3 : 0) +
-      this.passive(`acc`)
+      this.passive(`acc`) +
+      this.gearBonus(`hit`)
     );
   }
   pDmgBonus() {
@@ -175,7 +177,7 @@ class World {
       t += 2;
     }
 
-    return t + this.effPlus(`weapon`);
+    return t + this.effPlus(`weapon`) + this.gearBonus(`str`);
   }
   /** A passive value of the player's class, or `fallback` for an adventurer. */
   passive(key, fallback = 0) {
@@ -187,13 +189,13 @@ class World {
   }
   /** Product of the damage-taken multipliers of the running buffs. */
   dmgTakenMult() {
-    let m = 1;
+    let m = this.gearBonus(`dmgTaken`);
     for (const b of Object.values(this.player.buffs)) if (b.until > this.time && b.dmgTaken) m *= b.dmgTaken;
     return m;
   }
   pAC() {
     let e = this.player;
-    let t = this.effPlus(`armor`) + this.effPlus(`shield`) + this.passive(`ac`);
+    let t = this.effPlus(`armor`) + this.effPlus(`shield`) + this.passive(`ac`) + this.gearBonus(`ac`);
     for (let n of Object.values(e.equip)) {
       if (n) {
         t += ITEMS[n].ac ?? 0;
@@ -203,14 +205,14 @@ class World {
   }
   pBlock() {
     let e = this.player.equip.shield;
-    return (e ? ITEMS[e].block ?? 0 : 0) + this.passive(`block`);
+    return (e ? ITEMS[e].block ?? 0 : 0) + this.passive(`block`) + this.gearBonus(`block`);
   }
   pInterval() {
     let e = this.weapon()?.interval ?? 1.8;
     let t = this.time < this.player.braveUntil
       ? Math.round(e * 0.85 * 100) / 100
       : e;
-    let m = this.passive(`intervalMult`, 1);
+    let m = this.passive(`intervalMult`, 1) * this.gearBonus(`interval`);
     for (const b of Object.values(this.player.buffs)) if (b.until > this.time && b.interval) m *= b.interval;
     return m === 1 ? t : Math.round(t * m * 100) / 100;
   }
@@ -291,8 +293,45 @@ class World {
     const markup = SHOPS[shopId]?.markup;
     return Math.max(1, Math.round(ITEMS[e].price * (markup ?? n)));
   }
-  itemName(e, t = 0) {
-    return (t > 0 ? `+${t} ` : ``) + ITEMS[e].name;
+  itemName(e, t = 0, affix = null) {
+    return (t > 0 ? `+${t} ` : ``) + (AFFIXES[affix] ? `${AFFIXES[affix].name} ` : ``) + ITEMS[e].name;
+  }
+  /** Equipped pieces of each set: {setId: count}. */
+  setCounts() {
+    const c = {};
+    for (const id of Object.values(this.player.equip)) {
+      const set = id && ITEMS[id].set;
+      if (set) c[set] = (c[set] ?? 0) + 1;
+    }
+    return c;
+  }
+  /** Set bonuses in effect: [{set, pieces, bonus}] (assets/data/sets.json). */
+  activeSetBonuses() {
+    const out = [];
+    for (const [set, n] of Object.entries(this.setCounts()))
+      for (const [k, bonus] of Object.entries(SETS[set]?.bonus ?? {})) if (n >= Number(k)) out.push({ set, pieces: Number(k), bonus });
+    return out;
+  }
+  /**
+   * Sum of `key` over the prefixes of the equipped pieces and the active set bonuses
+   * (design/gdd/gear-affixes.md). Multiplicative keys (interval, dmgTaken) multiply from 1.
+   */
+  gearBonus(key) {
+    const mult = key === `interval` || key === `dmgTaken`;
+    let v = mult ? 1 : 0;
+    const add = (x) => {
+      if (x === undefined) return;
+      v = mult ? v * x : v + x;
+    };
+    for (const a of Object.values(this.player.equipAffix ?? {})) if (a) add(AFFIXES[a]?.[key]);
+    for (const s of this.activeSetBonuses()) add(s.bonus[key]);
+    return v;
+  }
+  /** A random prefix that fits the item's slot, or null for items that take none. */
+  rollAffix(item) {
+    const slot = ITEMS[item]?.slot;
+    const fit = Object.values(AFFIXES).filter((a) => a.slots.includes(slot));
+    return fit.length ? fit[randInt(this.rng, 0, fit.length - 1)].id : null;
   }
   pEva() {
     return Math.floor((this.player.dex - 10) / 2);
@@ -305,7 +344,7 @@ class World {
         t += ITEMS[n].hp ?? 0;
       }
     }
-    e.maxHp = 30 + 8 * (e.level - 1) + (e.con - 12) * 2 + t;
+    e.maxHp = 30 + 8 * (e.level - 1) + (e.con - 12) * 2 + t + this.gearBonus(`hp`);
     e.maxMp = 8 + 3 * (e.level - 1);
     if (e.cls) {
       e.maxHp = Math.round(e.maxHp * this.passive(`hpMult`, 1));
@@ -362,6 +401,22 @@ class World {
           this.give(r.item, r.count);
           got.push(`${ITEMS[r.item].name} ${r.count}`);
         }
+    // prefixed gear: a chance on every clear, more likely deeper (design/gdd/gear-affixes.md)
+    const pg = R.prefixGear;
+    if (this.rng() < pg.base + pg.perFloor * floor) {
+      const item = pg.items[randInt(this.rng, 0, pg.items.length - 1)];
+      got.push(this.rewardGear(item, this.rollAffix(item)));
+    }
+    // an Echo set piece the first time each week the echo floors are cleared; missing pieces first
+    const sp = R.setPiece;
+    if (sp.floors.includes(floor) && floor > rec.best) {
+      const owned = new Set([...Object.values(this.player.equip), ...this.player.inv.map((x) => x.item)]);
+      const pieces = SETS[sp.set].items;
+      const missing = pieces.filter((x) => !owned.has(x));
+      const pool = missing.length ? missing : pieces;
+      const item = pool[randInt(this.rng, 0, pool.length - 1)];
+      got.push(this.rewardGear(item, this.rng() < sp.prefixChance ? this.rollAffix(item) : null));
+    }
     if (floor >= ABYSS.floors && rec.best < ABYSS.floors) {
       this.player.coins += R.weeklyClearCoins;
       got.push(`이번 주 첫 완주 동전 ${R.weeklyClearCoins}`);
@@ -372,6 +427,14 @@ class World {
     this.msg(`${floor}층을 정화했다! ${got.join(`, `)}. ${floor >= ABYSS.floors ? `출구가 열렸다.` : `아래층 계단이 열렸다.`}`, `quest`);
     this.emit({ type: `abyssclear`, floor });
     this.checkAchievements();
+  }
+  /** Puts a reward piece in the bag, or at the player's feet when the bag is full; returns its name. */
+  rewardGear(item, affix) {
+    const p = this.player;
+    if (p.inv.length >= 24 || this.weight() + (ITEMS[item].weight ?? 2) > this.capacity())
+      this.addDrop(item, 1, [p.x, p.y], 0, affix);
+    else this.give(item, 1, 0, affix);
+    return this.itemName(item, 0, affix);
   }
   /** Unlocks every achievement whose condition now holds (assets/data/achievements.json). */
   checkAchievements() {
@@ -1179,7 +1242,7 @@ class World {
     }
     return n;
   }
-  addDrop(e, t, n, r = 0) {
+  addDrop(e, t, n, r = 0, affix = null) {
     let i = {
       id: this.nextId++,
       item: e,
@@ -1188,6 +1251,7 @@ class World {
       y: n[1],
       expire: this.time + 180,
       plus: r,
+      affix,
     };
     this.drops.push(i);
 
@@ -1349,7 +1413,7 @@ class World {
             return e + t.count;
           }, 0);
   }
-  give(e, t = 1, n = 0) {
+  give(e, t = 1, n = 0, affix = null) {
     let r = this.player;
     if (e === `coin`) {
       r.coins += t;
@@ -1380,18 +1444,10 @@ class World {
       });
     } else {
       for (let i = 0; i < t; i++) {
-        r.inv.push(
-          n
-            ? {
-                item: e,
-                count: 1,
-                plus: n,
-              }
-            : {
-                item: e,
-                count: 1,
-              }
-        );
+        const entry = { item: e, count: 1 };
+        if (n) entry.plus = n;
+        if (affix) entry.affix = affix;
+        r.inv.push(entry);
       }
     }
 
@@ -1428,7 +1484,7 @@ class World {
     let t = this.player;
 
     if (Math.max(Math.abs(e.x - t.lx), Math.abs(e.y - t.ly)) <= 1) {
-      if (this.give(e.item, e.count, e.plus ?? 0)) {
+      if (this.give(e.item, e.count, e.plus ?? 0, e.affix ?? null)) {
         e.item === `book_strike` &&
           !this.stats.firstStrikeSource &&
           (this.stats.firstStrikeSource = `drop`);
@@ -1448,7 +1504,7 @@ class World {
         this.msg(
           e.item === `coin`
             ? `동전 ${e.count}닢을 주웠다.`
-            : `${this.itemName(e.item, e.plus)}${
+            : `${this.itemName(e.item, e.plus, e.affix)}${
                 e.count > 1 ? ` ×` + e.count : ``
               }을(를) 주웠다.`,
           e.item.startsWith(`book`) ? `level` : `loot`
@@ -1636,23 +1692,17 @@ class World {
     let i = r.slot;
     let a = t.equip[i];
     let o = t.equipPlus[i];
+    const oldAffix = t.equipAffix[i];
     t.inv.splice(e, 1);
     t.equip[i] = n.item;
     t.equipPlus[i] = n.plus ?? 0;
+    t.equipAffix[i] = n.affix ?? null;
 
     if (a) {
-      t.inv.push(
-        o
-          ? {
-              item: a,
-              count: 1,
-              plus: o,
-            }
-          : {
-              item: a,
-              count: 1,
-            }
-      );
+      const back = { item: a, count: 1 };
+      if (o) back.plus = o;
+      if (oldAffix) back.affix = oldAffix;
+      t.inv.push(back);
     }
 
     this.recalc();
@@ -1662,7 +1712,7 @@ class World {
       slot: i,
     });
 
-    this.msg(`${this.itemName(n.item, n.plus)}을(를) 장비했다.`, `info`);
+    this.msg(`${this.itemName(n.item, n.plus, n.affix)}을(를) 장비했다.`, `info`);
   }
   unequip(e) {
     let t = this.player;
@@ -1675,21 +1725,14 @@ class World {
       return;
     }
     let r = t.equipPlus[e];
+    const affix = t.equipAffix[e];
     t.equip[e] = null;
     t.equipPlus[e] = 0;
-
-    t.inv.push(
-      r
-        ? {
-            item: n,
-            count: 1,
-            plus: r,
-          }
-        : {
-            item: n,
-            count: 1,
-          }
-    );
+    t.equipAffix[e] = null;
+    const back = { item: n, count: 1 };
+    if (r) back.plus = r;
+    if (affix) back.affix = affix;
+    t.inv.push(back);
 
     this.recalc();
 
@@ -1698,7 +1741,7 @@ class World {
       slot: e,
     });
 
-    this.msg(`${this.itemName(n, r)}을(를) 벗었다.`, `info`);
+    this.msg(`${this.itemName(n, r, affix)}을(를) 벗었다.`, `info`);
   }
   sell(e, t = 1) {
     let n = this.player;
@@ -1709,7 +1752,9 @@ class World {
     let i = ITEMS[r.item];
     let a = Math.min(t, r.count);
     let o = this.sellPrice(r) * a;
-    this.take(r.item, a);
+    // sell the chosen piece itself (another copy may carry a different enhancement or prefix)
+    if (i.stack) this.take(r.item, a);
+    else n.inv.splice(e, 1);
     n.coins += o;
 
     this.emit({
@@ -1722,7 +1767,7 @@ class World {
     let t = ITEMS[e.item];
     return Math.max(
       1,
-      Math.floor(t.price * 0.4 * (1 + (e.plus ?? 0) * 0.5))
+      Math.floor(t.price * 0.4 * (1 + (e.plus ?? 0) * 0.5) * (e.affix ? 1.5 : 1))
     );
   }
   enchantTarget(e) {
@@ -1789,6 +1834,7 @@ class World {
           ))
         : ((t.equip[r.slot] = null),
           (t.equipPlus[r.slot] = 0),
+          (t.equipAffix[r.slot] = null),
           this.recalc(),
           this.emit({
             type: `enchant`,

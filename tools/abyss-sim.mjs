@@ -1,14 +1,14 @@
 // Abyss floor difficulty (design/gdd/endgame-abyss.md): a Lv30 class hunter with endgame gear clears each floor
 // of a few weeks' corridors. Reports minutes to clear, red potions per minute and deaths.
-// Usage: node tools/abyss-sim.mjs [weeks=3] [plus=0]
+// Usage: node tools/abyss-sim.mjs [weeks=3] [plus=0] [gear=base|echo]
 import { huntRun } from './sim/hunt.js';
 import { ABYSS } from '../src/data/abyss.js';
 
 const weeks = Number(process.argv[2] ?? 3);
 const plus = Number(process.argv[3] ?? 0);
-const GEAR = ['abyss_blade', 'naga_scale_mail', 'tower_shield', 'frost_ring'];
+const GEAR = process.argv[4] === 'echo' ? ['echo_blade', 'echo_mail', 'echo_shield', 'echo_ring'] : ['abyss_blade', 'naga_scale_mail', 'tower_shield', 'frost_ring'];
 const CAP = 30 * 60 * 20; // give up after 20 minutes on one floor
-console.log(`# Abyss simulation (${weeks} weeks, gear +${plus}, tools/abyss-sim.mjs)\n`);
+console.log(`# Abyss simulation (${weeks} weeks, gear ${process.argv[4] ?? 'base'} +${plus}, tools/abyss-sim.mjs)\n`);
 console.log('| Floor | Class | Clear (min) | Potions/min | Mana pot/min | Deaths | Cleared |');
 console.log('|---|---|---|---|---|---|---|');
 for (let floor = 1; floor <= ABYSS.floors; floor++)

@@ -786,5 +786,65 @@
     "reqLevel": 29,
     "desc": "여왕의 왕좌 아래 잠겨 있던 검. 칼날에서 물이 마르지 않는다.",
     "weight": 68
+  },
+  "echo_blade": {
+    "id": "echo_blade",
+    "name": "메아리의 검",
+    "icon": "echo_blade",
+    "type": "equip",
+    "slot": "weapon",
+    "dmg": [
+      13,
+      22
+    ],
+    "interval": 1.7,
+    "acc": 5,
+    "reqLevel": 30,
+    "price": 9000,
+    "weight": 66,
+    "set": "echo",
+    "desc": "심연 회랑의 메아리가 남긴 검. 같은 세트를 함께 입으면 힘이 공명한다."
+  },
+  "echo_mail": {
+    "id": "echo_mail",
+    "name": "메아리의 갑옷",
+    "icon": "echo_mail",
+    "type": "equip",
+    "slot": "armor",
+    "ac": 15,
+    "hp": 15,
+    "reqLevel": 30,
+    "price": 8000,
+    "weight": 115,
+    "set": "echo",
+    "desc": "메아리의 형상을 두른 갑옷. 메아리 세트."
+  },
+  "echo_shield": {
+    "id": "echo_shield",
+    "name": "메아리의 방패",
+    "icon": "echo_shield",
+    "type": "equip",
+    "slot": "shield",
+    "ac": 5,
+    "block": 0.16,
+    "reqLevel": 30,
+    "price": 4000,
+    "weight": 65,
+    "set": "echo",
+    "desc": "부딪힌 소리가 늦게 돌아오는 방패. 메아리 세트."
+  },
+  "echo_ring": {
+    "id": "echo_ring",
+    "name": "메아리의 반지",
+    "icon": "echo_ring",
+    "type": "equip",
+    "slot": "accessory",
+    "str": 3,
+    "hit": 3,
+    "ac": 1,
+    "price": 5000,
+    "weight": 2,
+    "set": "echo",
+    "desc": "귀에 대면 회랑의 바람 소리가 들리는 반지. 메아리 세트."
   }
 }

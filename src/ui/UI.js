@@ -15,6 +15,7 @@ import { escapeHtml, qs } from "./dom.js";
 import { iconHtml } from "./icons.js";
 import { Minimap } from "./Minimap.js";
 import { ACHIEVEMENTS } from "../data/abyss.js";
+import { AFFIXES, SETS } from "../data/gear.js";
 
 const DEFAULT_QUICKSLOTS = [
   {
@@ -733,8 +734,8 @@ class UI {
         this.sel = -1;
         this.render();
       };
-      if (it && ((it.plus ?? 0) > 0 || ITEMS[it.item].price >= 1000)) {
-        this.confirmBox(`<b>${escapeHtml(n.itemName(it.item, it.plus))}</b>을(를) ${n.sellPrice(it)}닢에 팔까요?<br><span class="dim">판 물건은 되살 수 없습니다.</span>`, `팔기`, doSell, true);
+      if (it && ((it.plus ?? 0) > 0 || it.affix || ITEMS[it.item].price >= 1000)) {
+        this.confirmBox(`<b>${escapeHtml(n.itemName(it.item, it.plus, it.affix))}</b>을(를) ${n.sellPrice(it)}닢에 팔까요?<br><span class="dim">판 물건은 되살 수 없습니다.</span>`, `팔기`, doSell, true);
         return;
       }
       return doSell();
@@ -836,7 +837,7 @@ class UI {
             if (t && t.plus >= t.safe) {
               this.confirmBox(
                 `<b>${escapeHtml(
-                  n.itemName(n.player.equip[t.slot], t.plus)
+                  n.itemName(n.player.equip[t.slot], t.plus, n.player.equipAffix[t.slot])
                 )}</b>은(는) 안전 강화 수치(+${
                   t.safe
                 })에 도달했습니다.<br>+${t.plus} → +${t.plus + 1}: <b class="good">성공 33%</b> (이 단계 효과 +2) · <b class="bad">증발 67%</b><br><span class="bad">실패하면 장비가 사라지며 되돌릴 수 없습니다.</span>`,
@@ -1043,10 +1044,34 @@ class UI {
       t[this.panel]
     }</span><button class="x" data-act="close" aria-label="닫기">✕</button></div><div class="body">${n}</div></div>`;
   }
-  itemInfo(e, t = 0) {
+  /** Short Korean text for a prefix or set bonus: "명중 +2 · 최대 체력 +25". */
+  statText(b) {
+    const out = [];
+    if (b.str) out.push(`공격력 +${b.str}`);
+    if (b.hit) out.push(`명중 +${b.hit}`);
+    if (b.ac) out.push(`방어 +${b.ac}`);
+    if (b.hp) out.push(`최대 체력 +${b.hp}`);
+    if (b.block) out.push(`막기 +${Math.round(b.block * 100)}%`);
+    if (b.interval) out.push(`공격 간격 −${Math.round((1 - b.interval) * 100)}%`);
+    if (b.dmgTaken) out.push(`받는 피해 −${Math.round((1 - b.dmgTaken) * 100)}%`);
+    return out.join(` · `);
+  }
+  itemInfo(e, t = 0, affix = null) {
     let n = ITEMS[e];
     let r = this.w;
     let i = [];
+    const ax = AFFIXES[affix];
+    if (ax) i.push(`<span class="affix-t">접두사 「${escapeHtml(ax.name)}」: ${this.statText(ax)}</span>`);
+    const set = SETS[n.set];
+    if (set) {
+      const have = r.setCounts()[set.id] ?? 0;
+      i.push(
+        `<span class="set-t">${escapeHtml(set.name)} 세트 (${have}/${set.items.length} 착용)</span>` +
+          Object.entries(set.bonus)
+            .map(([k, b]) => `<br><span class="${have >= Number(k) ? `good` : `dim`}">${k}세트: ${this.statText(b)}</span>`)
+            .join(``)
+      );
+    }
 
     if (t) {
       i.push(
@@ -1071,7 +1096,7 @@ class UI {
       i.push(
         t
           ? `대상: <b>${escapeHtml(
-              r.itemName(r.player.equip[t.slot], t.plus)
+              r.itemName(r.player.equip[t.slot], t.plus, r.player.equipAffix[t.slot])
             )}</b> → ${
               t.plus >= t.safe
                 ? `<span class="bad">위험(성공 1/3, 실패 시 증발)</span>`
@@ -1149,11 +1174,12 @@ class UI {
         item: e,
         count: 1,
         plus: t,
+        affix,
       })}닢</span>`
     );
 
-    return `<div><b class="${t ? `good` : ``}">${escapeHtml(
-      r.itemName(e, t)
+    return `<div><b class="${set ? `set-t` : ax ? `affix-t` : t ? `good` : ``}">${escapeHtml(
+      r.itemName(e, t, affix)
     )}</b></div><div class="dim">${escapeHtml(n.desc)}</div><div>${i.join(
       `<br>`
     )}</div>`;
@@ -1171,10 +1197,11 @@ class UI {
         return `<button class="cell ${
           r === this.sel ? `sel` : ``
         }" data-cell="${r}" ${
-          i ? `title="${escapeHtml(e.itemName(i.item, i.plus))}"` : `disabled`
+          i ? `title="${escapeHtml(e.itemName(i.item, i.plus, i.affix))}"` : `disabled`
         }>${
           i
             ? iconHtml(i.item) +
+              (ITEMS[i.item].set ? `<span class="tag set">세트</span>` : i.affix ? `<span class="tag affix">✦</span>` : ``) +
               (i.count > 1 ? `<span class="n">${i.count}</span>` : ``) +
               (i.plus ? `<span class="pl">+${i.plus}</span>` : ``)
             : ``
@@ -1206,7 +1233,7 @@ class UI {
           ? `마시기`
           : ``;
       a =
-        this.itemInfo(o.item, o.plus ?? 0) +
+        this.itemInfo(o.item, o.plus ?? 0, o.affix ?? null) +
         `<div class="row">${
           t ? `<button class="btn gold" data-act="use">${t}</button>` : ``
         }${
@@ -1233,9 +1260,9 @@ class UI {
         return `<button class="cell" ${
           i ? `data-eq="${n}" title="클릭하여 해제"` : `disabled`
         }>${i ? iconHtml(i) : ``}<span>${r}</span><span class="${
-          t.equipPlus[n] ? `good` : `dim`
+          i && ITEMS[i].set ? `set-t` : t.equipAffix[n] ? `affix-t` : t.equipPlus[n] ? `good` : `dim`
         }">${
-          i ? escapeHtml(e.itemName(i, t.equipPlus[n])) : `비어 있음`
+          i ? escapeHtml(e.itemName(i, t.equipPlus[n], t.equipAffix[n])) : `비어 있음`
         }</span></button>`;
       })
       .join(``);
@@ -1256,7 +1283,11 @@ class UI {
       <span class="dim">평타 피해</span><span>${(n?.dmg?.[0] ?? 1) + i} – ${
       (n?.dmg?.[1] ?? 2) + i
     }${e.time < t.braveUntil ? ` <span class="warn">(투지)</span>` : ``}</span>
-      <span class="dim">공격 간격</span><span>${e.pInterval()}초</span>
+      <span class="dim">공격 간격</span><span>${e.pInterval()}초</span>${
+      e.activeSetBonuses().length
+        ? `<span class="dim">세트 효과</span><span class="set-t">${e.activeSetBonuses().map((b) => `${escapeHtml(SETS[b.set].name)} ${b.pieces}세트: ${this.statText(b.bonus)}`).join(`<br>`)}</span>`
+        : ``
+    }
       <span class="dim">명중 보정 · 회피</span><span>+${e.pAcc()} · ${e.pEva()}</span>
       <span class="dim">방어 · 막기</span><span>${e.pAC()} · ${Math.round(
       e.pBlock() * 100
@@ -1527,7 +1558,7 @@ class UI {
                 let r = ITEMS[t.item];
                 return `<div class="item">${iconHtml(
                   t.item
-                )}<div class="grow">${escapeHtml(e.itemName(t.item, t.plus))}${
+                )}<div class="grow">${escapeHtml(e.itemName(t.item, t.plus, t.affix))}${
                   t.count > 1 ? ` ×` + t.count : ``
                 }<div class="dim">${escapeHtml(
                   r.desc

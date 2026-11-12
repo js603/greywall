@@ -1,0 +1,12 @@
+{
+  "echo": {
+    "id": "echo",
+    "name": "메아리",
+    "items": ["echo_blade", "echo_mail", "echo_shield", "echo_ring"],
+    "bonus": {
+      "2": { "hp": 30 },
+      "3": { "ac": 2, "hit": 2 },
+      "4": { "str": 2, "dmgTaken": 0.92 }
+    }
+  }
+}

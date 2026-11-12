@@ -57,7 +57,30 @@
         "count": 5
       }
     ],
-    "weeklyClearCoins": 3000
+    "weeklyClearCoins": 3000,
+    "prefixGear": {
+      "base": 0.15,
+      "perFloor": 0.05,
+      "items": [
+        "captain_sword",
+        "garrison_mail",
+        "tower_shield",
+        "witch_charm",
+        "glacier_blade",
+        "yeti_armor",
+        "frost_ring",
+        "naga_scale_mail",
+        "abyss_blade"
+      ]
+    },
+    "setPiece": {
+      "floors": [
+        5,
+        10
+      ],
+      "set": "echo",
+      "prefixChance": 0.5
+    }
   },
   "rooms": 7
 }

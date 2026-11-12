@@ -1751,13 +1751,109 @@
     "x": 0.5,
     "y": 0.7142857142857143
    }
+  },
+  "echo_blade": {
+   "frame": {
+    "x": 0,
+    "y": 652,
+    "w": 16,
+    "h": 19
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 5,
+    "y": 2,
+    "w": 16,
+    "h": 19
+   },
+   "sourceSize": {
+    "w": 28,
+    "h": 28
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7142857142857143
+   }
+  },
+  "echo_mail": {
+   "frame": {
+    "x": 0,
+    "y": 673,
+    "w": 16,
+    "h": 21
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 6,
+    "y": 1,
+    "w": 16,
+    "h": 21
+   },
+   "sourceSize": {
+    "w": 28,
+    "h": 28
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7142857142857143
+   }
+  },
+  "echo_shield": {
+   "frame": {
+    "x": 0,
+    "y": 696,
+    "w": 14,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 7,
+    "y": 5,
+    "w": 14,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 28,
+    "h": 28
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7142857142857143
+   }
+  },
+  "echo_ring": {
+   "frame": {
+    "x": 0,
+    "y": 714,
+    "w": 12,
+    "h": 13
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 8,
+    "y": 8,
+    "w": 12,
+    "h": 13
+   },
+   "sourceSize": {
+    "w": 28,
+    "h": 28
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7142857142857143
+   }
   }
  },
  "meta": {
   "image": "icons.png",
   "size": {
    "w": 512,
-   "h": 650
+   "h": 727
   },
   "scale": "1",
   "app": "greywall tools/build_assets.py"

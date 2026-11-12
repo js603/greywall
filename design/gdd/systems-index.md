@@ -31,6 +31,7 @@
 | 2막 얼어붙은 고개 | `act2-frozen-pass.md` | Approved | 24–28 |
 | 2막 고대 수로 | `act2-ancient-aqueduct.md` | In Review (신규) | 28–30 |
 | 엔드게임 「심연 회랑」(주간 시드 던전·메아리 보스·업적) | `endgame-abyss.md` | In Review (신규) | 30 |
+| 장비 접두사·메아리 세트 | `gear-affixes.md` | In Review (신규) | 30 |
 
 ## 표현·플랫폼
 

@@ -1,0 +1,9 @@
+{
+  "keen":    { "id": "keen",    "name": "예리한",   "slots": ["weapon"], "hit": 2 },
+  "heavy":   { "id": "heavy",   "name": "묵직한",   "slots": ["weapon"], "str": 2 },
+  "swift":   { "id": "swift",   "name": "날랜",     "slots": ["weapon"], "interval": 0.95 },
+  "sturdy":  { "id": "sturdy",  "name": "단단한",   "slots": ["armor", "shield"], "ac": 2 },
+  "vital":   { "id": "vital",   "name": "생기 도는", "slots": ["armor", "accessory"], "hp": 25 },
+  "warding": { "id": "warding", "name": "막아서는", "slots": ["shield"], "block": 0.04 },
+  "lucky":   { "id": "lucky",   "name": "행운의",   "slots": ["accessory"], "hit": 1, "str": 1 }
+}

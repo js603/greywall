@@ -4,6 +4,7 @@ import { MAX_LEVEL } from "./data/progression.js";
 import { ITEMS } from "./data/items.js";
 import { QUESTS } from "./data/quests.js";
 import { SKILLS } from "./data/skills.js";
+import { AFFIXES } from "./data/gear.js";
 
 function fnv1a(e) {
   let t = 2166136261;
@@ -38,6 +39,9 @@ function snapshotWorld(e) {
     },
     equipPlus: {
       ...t.equipPlus,
+    },
+    equipAffix: {
+      ...t.equipAffix,
     },
     skills: [...t.skills],
     skillSlots: [...t.skillSlots],
@@ -201,7 +205,9 @@ function parseSave(e) {
         !ITEMS[e?.item] ||
         e.item === `coin` ||
         !i(e.count, 1, 9999) ||
-        (e.plus !== undefined && !i(e.plus, 0, 10))
+        (e.plus !== undefined && !i(e.plus, 0, 10)) ||
+        // prefixes arrived after save version 3 shipped: optional, and only on a slot they fit
+        (e.affix !== undefined && !AFFIXES[e.affix]?.slots.includes(ITEMS[e.item].slot))
       );
     })
   ) {
@@ -227,6 +233,15 @@ function parseSave(e) {
     return {
       ok: false,
       error: `강화 데이터가 올바르지 않습니다.`,
+    };
+  }
+  if (
+    r.equipAffix !== undefined &&
+    Object.entries(r.equipAffix ?? {}).some(([slot, a]) => a !== null && (!AFFIXES[a]?.slots.includes(slot) || !r.equip?.[slot]))
+  ) {
+    return {
+      ok: false,
+      error: `장비 접두사 데이터가 올바르지 않습니다.`,
     };
   }
   if (
@@ -304,6 +319,13 @@ function applySave(e, t) {
       shield: 0,
       accessory: 0,
       ...t.equipPlus,
+    },
+    equipAffix: {
+      weapon: null,
+      armor: null,
+      shield: null,
+      accessory: null,
+      ...t.equipAffix,
     },
     skills: [...t.skills],
     // older saves: fill the skill slots with the learned skills in learning order

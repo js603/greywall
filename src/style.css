@@ -1204,3 +1204,23 @@ body.touch .slot:nth-child(n) {
   max-width: 44px;
   height: 44px;
 }
+/* equipment prefixes and sets (design/gdd/gear-affixes.md): blue for a prefix, violet for a set piece */
+.affix-t {
+  color: #8fc4ff;
+}
+.set-t {
+  color: #d6a8ff;
+}
+.cell .tag {
+  position: absolute;
+  bottom: 0;
+  left: 2px;
+  font-size: 9px;
+  text-shadow: 0 1px #000;
+}
+.cell .tag.affix {
+  color: #8fc4ff;
+}
+.cell .tag.set {
+  color: #d6a8ff;
+}

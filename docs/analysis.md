@@ -44,7 +44,7 @@
 |---|---|---|
 | 0 기반 (✅ 대부분 완료) | 소스 복원, 데이터 분리, 시뮬레이터, 메모리·번들, 저장 내보내기 | restore 도구, `npm test`, `npm run sim` |
 | 1 2막 「성벽 너머」 Lv16→30 (✅ 4/4: 안개 늪, 무너진 감시탑, 얼어붙은 고개, 고대 수로 완료) | 신규 지역 4곳(안개 늪, 무너진 감시탑, 얼어붙은 고개, 고대 수로), 지역당 몬스터 4~5종 + 네임드 1 | `codeart2d`(기존 팔레트 기반 PixelSpec, 변종은 팔레트 교체), `pixelfx` ice·lightning·shadow·weather·status, `level-designer`·`team-level` |
-| 2 성장 축 (🟡 일부) | ✅ 전직 3직업(기사·광전사·성기사, 직업별 스킬 2개, `class-change.md`), ✅ 대장간 재료 제작(`equipment-economy.md`). 남음: 장비 접두사·세트, 성향 분기 퀘스트 | `systems-designer`, `economy-designer`, `rpg`·`game-feel` 스킬, `balance-check` |
+| 2 성장 축 (✅) | ✅ 전직 3직업(기사·광전사·성기사, 직업별 스킬 2개, `class-change.md`), ✅ 대장간 재료 제작(`equipment-economy.md`). ✅ 장비 접두사 7종·메아리 세트(`gear-affixes.md`, 심연 회랑 보상). ✅ 성향 분기 의뢰 2개(`alignment.md`) | `systems-designer`, `economy-designer`, `rpg`·`game-feel` 스킬, `balance-check` |
 | 3 엔드게임 (✅ 1차: 심연 회랑 10층, 주간 시드, 5·10층 메아리 보스, 업적 16개 — `endgame-abyss.md`) | 시드 기반 무작위 던전 「심연 회랑」, 강화판 보스 재도전, 주간 시드, 업적 | `procedural-gen` 스킬, 기존 시드 맵 빌더, 시뮬레이터로 층별 난이도 검증 |
 
 콘텐츠 하나를 추가하는 흐름: GDD(`/design-system`) → `assets/data/*.json`에 수치 추가 →

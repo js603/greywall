@@ -109,6 +109,13 @@ class Player extends Entity {
       shield: 0,
       accessory: 0,
     };
+    /** Prefix id per equipped slot, or null (design/gdd/gear-affixes.md). */
+    this.equipAffix = {
+      weapon: null,
+      armor: null,
+      shield: null,
+      accessory: null,
+    };
 
     this.hasteUntil = 0;
     this.braveUntil = 0;
