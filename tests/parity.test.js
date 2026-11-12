@@ -14,5 +14,5 @@ test('map generation matches the original build', () => {
 // The combat rules left the original on purpose on 2026-11-12 (ratio defense, hit slope 0.015, monster
 // ac ×0.6 / dmg ×0.8 — design/reviews/decisions-2026-11-12.md). Original build: 'b181039b'.
 test('seeded hunting run is stable (pinned after the 2026-11-12 combat change)', () => {
-  assert.equal(huntRun(4242, 20000).hash, 'c2fba143');
+  assert.equal(huntRun(4242, 20000).hash, '1e15706c'); // re-pinned again: the sim walks to drops between fights
 });

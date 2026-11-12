@@ -608,6 +608,12 @@ class WorldScene extends Phaser.Scene {
 
     if (e === this.world.player && this.world.player.resting) {
       n.spr.setTint(12109055);
+    } else if (e === this.world.player && this.world.player.equipPlus.weapon >= 7 && this.world.time >= n.flashUntil) {
+      // enhancement glow past the safe line (design/gdd/enhancement.md): a slow blue pulse, brighter at +10
+      const k = (Math.sin(this.world.time * 3) + 1) / 2;
+      const top = this.world.player.equipPlus.weapon >= 10 ? 0.55 : 0.3;
+      const c = Math.round(255 - 255 * top * k);
+      n.spr.setTint(Phaser.Display.Color.GetColor(c, Math.round(255 - 120 * top * k), 255));
     }
 
     if (n.label) {
@@ -708,6 +714,7 @@ class WorldScene extends Phaser.Scene {
     }
   }
   floatText(e, t, n, r, i = 12) {
+    i = Math.max(12, i); // UX review: no floating text under 12 px
     let a = this.add
       .text(Math.round(e), Math.round(t), n, {
         fontFamily: `Galmuri11`,
@@ -968,7 +975,7 @@ class WorldScene extends Phaser.Scene {
         case `dot`:
           {
             let n = i(t.player);
-            this.floatText(n.x, n.y - 18, `-` + e.dmg, `#a8d870`, 10);
+            this.floatText(n.x, n.y - 18, `독 -` + e.dmg, `#a8d870`, 12);
           }
           break;
         case `step`: {

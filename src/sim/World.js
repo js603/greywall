@@ -633,7 +633,18 @@ class World {
     }
 
     if (!t) {
-      this.msg(`주변에 주울 것이 없다.`, `dim`);
+      // nothing at hand: walk to the nearest drop in sight and pick it up (decision 2026-11-12)
+      let best = null;
+      let bd = 13;
+      for (const n of this.drops) {
+        const d = Math.max(Math.abs(n.x - e.x), Math.abs(n.y - e.y));
+        if (d < bd && this.map.elevAt(n.x, n.y) === this.map.elevAt(e.x, e.y)) {
+          bd = d;
+          best = n;
+        }
+      }
+      if (best) this.commandPickup(best.id);
+      else this.msg(`주변에 주울 것이 없다.`, `dim`);
     }
   }
   setDirInput(e) {

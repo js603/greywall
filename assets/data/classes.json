@@ -3,11 +3,12 @@
     "id": "knight",
     "name": "기사",
     "sprite": "player_knight",
-    "desc": "막아 내는 벽. 방어 +3, 막기 +5%, 최대 체력 +15%.",
+    "desc": "막아 내는 벽. 방어 +3, 막기 +5%, 공격력 +2, 최대 체력 +15%.",
     "passive": {
       "ac": 3,
       "block": 0.05,
-      "hpMult": 1.15
+      "hpMult": 1.15,
+      "dmg": 2
     },
     "skills": [
       {

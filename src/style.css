@@ -61,6 +61,13 @@ body {
   pointer-events: none;
   position: fixed;
   inset: 0;
+  zoom: var(--ui-zoom, 1); /* 설정 → 글자 크기 */
+}
+#info .goal {
+  margin-top: 3px;
+  color: var(--gold2);
+  font-size: 12px;
+  max-width: 260px;
 }
 #ui > * {
   pointer-events: auto;
@@ -412,6 +419,7 @@ button {
   opacity: 0.35;
 }
 #log {
+  background: rgba(38, 35, 33, var(--log-alpha, 0.9));
   left: 6px;
   bottom: calc(6px + var(--safe-b));
   width: min(330px, 40vw);
@@ -1172,4 +1180,19 @@ body.touch #minimap {
   border-color: var(--gold);
   color: var(--gold2);
   background: #4a3a1c;
+}
+
+/* touch: quick items 1-4 and skills 5-8 on two rows of 44 px targets (UX review) */
+body.touch #slots {
+  display: grid;
+  grid-template-columns: repeat(4, 44px);
+  grid-auto-rows: 44px;
+  gap: 4px;
+}
+body.touch .slot,
+body.touch .slot:nth-child(n) {
+  width: 44px;
+  min-width: 44px;
+  max-width: 44px;
+  height: 44px;
 }

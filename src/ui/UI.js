@@ -91,6 +91,8 @@ class UI {
       zoom: 0,
       touch: `auto`,
       logMin: false,
+      uiScale: 1,
+      logAlpha: 0.9,
     };
 
     this.lastHud = ``;
@@ -114,6 +116,12 @@ class UI {
   }
   saveSettings() {
     store.setItem(`greywall.settings`, JSON.stringify(this.settings));
+  }
+  /** Text size and log opacity from the settings (CSS variables on the root). */
+  applyView() {
+    const root = document.documentElement.style;
+    root.setProperty(`--ui-zoom`, String(this.settings.uiScale ?? 1));
+    root.setProperty(`--log-alpha`, String(Math.max(0.15, this.settings.logAlpha ?? 0.9)));
   }
   applyTouch() {
     let e = matchMedia(`(pointer: coarse)`).matches || `ontouchstart` in window;
@@ -140,7 +148,7 @@ class UI {
       <div id="dock">
         <div id="acts">
           <div id="acts-l"><button class="btn" data-act="logm">기록</button><button class="btn" data-act="rest">휴식</button><button class="btn" data-act="pickup">줍기</button></div>
-          <div id="acts-r"><button class="btn" data-act="strike">강타</button><button class="btn big" data-act="attack">공격</button></div>
+          <div id="acts-r"><button class="btn big" data-act="attack">공격</button></div>
         </div>
         <div id="bottom" class="frame iron"><div class="bars"><div class="bar hp"><i></i><span></span></div><div class="bar mp"><i></i><span></span></div><div class="bar xp"><i></i></div></div><div id="slots"></div></div>
       </div>
@@ -168,6 +176,7 @@ class UI {
     });
 
     this.applyTouch();
+    this.applyView();
   }
   releaseInputs() {}
   fitTouchLayout() {
@@ -277,7 +286,7 @@ class UI {
       t.resting
     }|${e.isNight()}|${Math.ceil(t.hasteUntil - e.time)}|${Math.ceil(
       t.braveUntil - e.time
-    )}|${Math.ceil((t.manaUntil ?? 0) - e.time)}|${e.burdened()}|${e.regenFactor().toFixed(1)}`;
+    )}|${this.objectiveLine()}|${Math.ceil((t.manaUntil ?? 0) - e.time)}|${e.burdened()}|${e.regenFactor().toFixed(1)}`;
     if (a !== this.lastHud) {
       this.lastHud = a;
       qs(`.bar.hp i`).style.width = `${Math.max(0, (t.hp / t.maxHp) * 100)}%`;
@@ -321,7 +330,7 @@ class UI {
         t.coins
       }</span><span class="xpt"> · 경험 ${i.toFixed(
         1
-      )}%</span></div><div id="status-icons">${s}</div>`;
+      )}%</span></div><div id="status-icons">${s}</div>${this.objectiveLine()}`;
     }
     this.renderSlots();
     this.slotList().forEach((n, r) => {
@@ -558,7 +567,8 @@ class UI {
       }, 2600);
     }
   }
-  confirmBox(e, t, n) {
+  /** Yes/no box. `danger`: the risky choice is red and "그만두기" is the highlighted default. */
+  confirmBox(e, t, n, danger = false) {
     let r = document.querySelector(`#confirm`);
 
     if (!r) {
@@ -567,7 +577,9 @@ class UI {
       document.body.appendChild(r);
     }
 
-    r.innerHTML = `<div class="frame iron box"><div class="msg">${e}</div><div class="row"><button class="btn gold" data-y>${t}</button><button class="btn" data-n>그만두기</button></div></div>`;
+    r.innerHTML = danger
+      ? `<div class="frame iron box"><div class="msg">${e}</div><div class="row"><button class="btn gold" data-n>그만두기</button><button class="btn bad" data-y>${t}</button></div></div>`
+      : `<div class="frame iron box"><div class="msg">${e}</div><div class="row"><button class="btn gold" data-y>${t}</button><button class="btn" data-n>그만두기</button></div></div>`;
     r.style.display = `flex`;
 
     r.onclick = (e) => {
@@ -591,7 +603,8 @@ class UI {
   }
   showDeath() {
     let e = qs(`#death`);
-    e.innerHTML = `<h2>쓰러졌습니다</h2><div class="dim">새벽 신전에서 다시 일어납니다. 현재 레벨 경험치의 일부를 잃습니다.</div><button class="btn gold" data-act="revive">새벽 신전에서 일어나기</button>`;
+    const c = this.w.deathCost();
+    e.innerHTML = `<h2>쓰러졌습니다</h2><div class="dim">새벽 신전에서 다시 일어납니다(체력·마나 50%).</div><div>잃는 것: 경험치 <b class="bad">${c.xp}</b> · 동전 <b class="bad">${c.coins}</b> <span class="dim">(아이템은 잃지 않습니다)</span></div><button class="btn gold" data-act="revive">새벽 신전에서 일어나기</button>`;
     e.classList.add(`open`);
   }
   hotkey(e) {
@@ -664,7 +677,7 @@ class UI {
   }
   onClick(e) {
     let t = e.target.closest(
-      `[data-act],[data-open],[data-slot],[data-cell],[data-eq],[data-buy],[data-sell],[data-q],[data-tab],[data-skill],[data-zoom],[data-touch],[data-minimap],[data-assign],[data-cls],[data-craft]`
+      `[data-act],[data-open],[data-slot],[data-cell],[data-eq],[data-buy],[data-sell],[data-q],[data-tab],[data-skill],[data-zoom],[data-touch],[data-minimap],[data-assign],[data-cls],[data-craft],[data-uiscale]`
     );
     if (!t) {
       if (e.target.id === `win`) {
@@ -706,9 +719,18 @@ class UI {
       return this.render();
     }
     if (r.sell !== undefined) {
-      n.sell(Number(r.sell), 1);
-      this.sel = -1;
-      return this.render();
+      const k = Number(r.sell);
+      const it = n.player.inv[k];
+      const doSell = () => {
+        n.sell(k, 1);
+        this.sel = -1;
+        this.render();
+      };
+      if (it && ((it.plus ?? 0) > 0 || ITEMS[it.item].price >= 1000)) {
+        this.confirmBox(`<b>${escapeHtml(n.itemName(it.item, it.plus))}</b>을(를) ${n.sellPrice(it)}닢에 팔까요?<br><span class="dim">판 물건은 되살 수 없습니다.</span>`, `팔기`, doSell, true);
+        return;
+      }
+      return doSell();
     }
     if (r.tab) {
       this.shopTab = r.tab;
@@ -748,6 +770,12 @@ class UI {
         this.settings.zoom = Number(r.zoom);
         this.saveSettings();
         this.host.setZoom(this.settings.zoom);
+        return this.render();
+      }
+      if (r.uiscale !== undefined) {
+        this.settings.uiScale = Number(r.uiscale);
+        this.applyView();
+        this.saveSettings();
         return this.render();
       }
       if (r.minimap !== undefined) {
@@ -804,9 +832,10 @@ class UI {
                   n.itemName(n.player.equip[t.slot], t.plus)
                 )}</b>은(는) 안전 강화 수치(+${
                   t.safe
-                })에 도달했습니다.<br><span class="bad">실패하면 장비가 증발합니다 (성공 확률 1/3).</span>`,
-                `그래도 읽는다`,
-                i
+                })에 도달했습니다.<br>+${t.plus} → +${t.plus + 1}: <b class="good">성공 33%</b> (이 단계 효과 +2) · <b class="bad">증발 67%</b><br><span class="bad">실패하면 장비가 사라지며 되돌릴 수 없습니다.</span>`,
+                `증발 위험을 감수하고 읽기`,
+                i,
+                true
               );
               return;
             }
@@ -945,7 +974,8 @@ class UI {
       return;
     }
     this.settings[n] = Number(t.value) / 100;
-    audio.setVolume(n, this.settings[n]);
+    if (n === `logAlpha`) this.applyView();
+    else audio.setVolume(n, this.settings[n]);
     this.saveSettings();
     let r = t.parentElement.querySelector(`output`);
 
@@ -1263,6 +1293,19 @@ class UI {
       .join(``)}</div>
       <p class="dim">숫자 버튼으로 스킬 슬롯 5~8에 등록합니다. 같은 스킬은 한 슬롯에만 들어가고, 켜진 번호를 누르면 슬롯에서 뺍니다.</p>`;
   }
+  /** HUD line for the first quest in progress (UX review: current goal at a glance). */
+  objectiveLine() {
+    const w = this.w;
+    const q = QUESTS.find((x) => w.quests[x.id]?.state === `ready` || w.quests[x.id]?.state === `active`);
+    if (!q) return ``;
+    const st = w.quests[q.id];
+    const giver = { guard: `브람`, smith: `고른`, alchemist: `미라`, trainer: `하르덴`, priest: `엘린` }[q.giver] ?? ``;
+    let what;
+    if (st.state === `ready`) what = `<span class="good">보고 가능</span>${giver ? ` · 마을의 ${giver}` : ``}`;
+    else if (q.kill) what = `${escapeHtml(MONSTERS[q.kill.monster].name)} ${Math.min(st.progress, q.kill.count)}/${q.kill.count}`;
+    else what = (q.bring ?? []).map((b) => `${escapeHtml(ITEMS[b.item].name)} ${Math.min(w.count(b.item), b.count)}/${b.count}`).join(` · `);
+    return `<div class="goal" title="${escapeHtml(q.summary)}">▸ ${escapeHtml(q.name)}: ${what}</div>`;
+  }
   questBlock(e, t) {
     let n = this.w;
 
@@ -1502,7 +1545,14 @@ class UI {
     return `<div class="sliders">${t(`master`, `전체 음량`)}${t(
       `music`,
       `배경음`
-    )}${t(`sfx`, `효과음`)}</div>
+    )}${t(`sfx`, `효과음`)}${t(`logAlpha`, `기록창 불투명도`)}</div>
+      <p>글자 크기</p><div class="row">${[
+        [1, `보통`],
+        [1.15, `크게`],
+        [1.3, `아주 크게`],
+      ]
+        .map(([k, label]) => `<button class="btn ${e.uiScale === k ? `on` : ``}" data-uiscale="${k}">${label}</button>`)
+        .join(``)}</div>
       <div class="row"><button class="btn ${
         e.muted ? `on` : ``
       }" data-act="mute">${e.muted ? `음소거 해제` : `음소거`}</button></div>
@@ -1562,7 +1612,7 @@ class UI {
       <span class="dim">기타</span><span>F 가까운 적 공격 · N 미니맵 · G/Space 줍기 · R 휴식 · I 가방 · C 장비 · K 스킬 · J 의뢰 · L 기록 · M 음소거 · Esc 닫기</span>
       <b>모바일</b><span></span>
       <span class="dim">이동</span><span>바닥을 탭하면 그 자리로 걷습니다. 누른 채 끌면 손가락을 따라 계속 이동하고, 손을 떼면 마지막 지점에서 멈춥니다</span>
-      <span class="dim">행동</span><span>상태창 위(가로 화면은 양옆)의 기록·휴식·줍기·강타·공격 버튼, 화면의 적·NPC·아이템을 탭</span></div>
+      <span class="dim">행동</span><span>상태창 위(가로 화면은 양옆)의 기록·휴식·줍기·공격 버튼(스킬은 하단 스킬 슬롯 5~8), 화면의 적·NPC·아이템을 탭</span></div>
       <p><b>강화</b>: 칼날 벼림 주문서(무기)·갑옷 단련 주문서(갑옷)를 가방에서 읽으면 장비한 물건이 +1 됩니다. 무기 +6, 갑옷 +4까지는 안전하고, 그 이상은 1/3 확률로 성공하며 실패하면 증발합니다.
       <b>무게</b>: 짐이 50%를 넘으면 체력·마나가 저절로 회복되지 않고, 100%면 더 들 수 없습니다(가방 창의 무게 막대).
       <b>성향</b>: 몬스터를 잡으면 오르고 쓰러지면 조금 내려갑니다. 선량함(300)부터 상점이 5%, 정의로움(1000)부터 10% 깎아 줍니다.
