@@ -24,10 +24,10 @@
 | ruins | 24 | [knight] captain_sword, garrison_mail, tower_shield, witch_charm | 2.8 | 642 | 161 | 124 | 0.0 | 3.9 | 187 | 29.6 |
 | ruins | 24 | [berserker] captain_sword, garrison_mail, tower_shield, witch_charm | 3.6 | 734 | 203 | 24 | 0.0 | 7.3 | 46 | 25.9 |
 | ruins | 24 | [paladin] captain_sword, garrison_mail, tower_shield, witch_charm | 3.5 | 708 | 200 | 22 | 0.0 | 8.1 | 20 | 26.9 |
-| pass | 24 | mist_blade, garrison_mail, tower_shield, witch_charm | 3.3 | 740 | 134 | 33 | 0.0 | 6.2 | 11 | 25.7 |
-| pass | 24 | [knight] captain_sword, garrison_mail, tower_shield, witch_charm | 3.1 | 727 | 147 | 24 | 0.0 | 4.6 | 56 | 26.1 |
-| pass | 24 | [berserker] captain_sword, garrison_mail, tower_shield, witch_charm | 3.8 | 925 | 140 | 75 | 0.0 | 7.3 | 33 | 20.5 |
-| pass | 24 | [paladin] captain_sword, garrison_mail, tower_shield, witch_charm | 3.2 | 753 | 136 | 32 | 0.0 | 8.2 | -37 | 25.2 |
-| pass | 27 | [knight] captain_sword, yeti_armor, tower_shield, frost_ring | 3.4 | 818 | 128 | 43 | 0.0 | 4.1 | 68 | 36.1 |
-| pass | 27 | [berserker] captain_sword, yeti_armor, tower_shield, frost_ring | 4.3 | 1046 | 152 | 81 | 0.0 | 4.0 | 134 | 28.2 |
-| pass | 27 | [paladin] captain_sword, yeti_armor, tower_shield, frost_ring | 3.2 | 800 | 133 | 87 | 0.0 | 6.3 | 62 | 36.9 |
+| pass | 24 | mist_blade, garrison_mail, tower_shield, witch_charm | 3.3 | 774 | 134 | 33 | 0.0 | 6.2 | 11 | 24.5 |
+| pass | 24 | [knight] captain_sword, garrison_mail, tower_shield, witch_charm | 3.1 | 762 | 147 | 24 | 0.0 | 4.6 | 56 | 24.9 |
+| pass | 24 | [berserker] captain_sword, garrison_mail, tower_shield, witch_charm | 3.8 | 969 | 140 | 77 | 0.0 | 7.2 | 37 | 19.6 |
+| pass | 24 | [paladin] captain_sword, garrison_mail, tower_shield, witch_charm | 3.2 | 788 | 136 | 32 | 0.0 | 8.2 | -37 | 24.1 |
+| pass | 27 | [knight] captain_sword, yeti_armor, tower_shield, frost_ring | 3.4 | 855 | 128 | 43 | 0.0 | 4.1 | 68 | 34.5 |
+| pass | 27 | [berserker] captain_sword, yeti_armor, tower_shield, frost_ring | 4.3 | 1094 | 152 | 81 | 0.0 | 4.0 | 134 | 27.0 |
+| pass | 27 | [paladin] captain_sword, yeti_armor, tower_shield, frost_ring | 3.2 | 838 | 133 | 87 | 0.0 | 6.3 | 62 | 35.2 |

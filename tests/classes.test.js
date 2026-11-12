@@ -113,3 +113,16 @@ test('paladin passive accuracy is added to hit chance', () => {
   a.chooseClass('paladin');
   assert.equal(a.pAcc(), before + 2);
 });
+
+test('death ends chill, class buffs and the ward (status-effects.md)', async () => {
+  const { World } = await import('../src/sim/World.js');
+  const { MAP_BUILDERS } = await import('../src/maps/index.js');
+  const w = new World(MAP_BUILDERS, 3);
+  w.loadMap('town');
+  w.player.buffs.chill = { until: w.time + 5, interval: 1.2 };
+  w.player.buffs.fortress = { until: w.time + 12, dmgTaken: 0.6 };
+  w.player.ward = 40;
+  w.killPlayer();
+  assert.deepEqual(w.player.buffs, {});
+  assert.equal(w.player.ward, 0);
+});

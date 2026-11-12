@@ -1056,6 +1056,8 @@ class World {
       e.path = [];
       e.target = null;
       e.poison = null;
+      e.buffs = {}; // chill and class buffs end with death, like poison (design/gdd/status-effects.md)
+      e.ward = 0;
       e.deadAt = this.time;
       e.resting = false;
       e.dirInput = null;
