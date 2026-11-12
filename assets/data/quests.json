@@ -350,7 +350,30 @@
       }
     ],
     "rewardCoins": 400,
-    "rewardXp": 1200
+    "rewardXp": 1200,
+    "choices": [
+      {
+        "id": "cure",
+        "label": "해독제 재료로 미라에게 준다",
+        "lawful": 300,
+        "desc": "성향 +300. 기본 보상."
+      },
+      {
+        "id": "poison",
+        "label": "독을 따로 빼돌려 판다",
+        "lawful": -600,
+        "chaos": true,
+        "replaceRewards": true,
+        "rewardCoins": 1400,
+        "rewardItems": [
+          {
+            "item": "antidote",
+            "count": 5
+          }
+        ],
+        "desc": "성향이 혼돈으로 떨어진다(−600). 동전 1,400, 해독제 5. 보상 경험치는 그대로."
+      }
+    ]
   },
   {
     "id": "q_mist",
@@ -473,7 +496,30 @@
       }
     ],
     "rewardCoins": 700,
-    "rewardXp": 3000
+    "rewardXp": 3000,
+    "choices": [
+      {
+        "id": "loyal",
+        "label": "휘장을 하르덴에게 돌려준다",
+        "lawful": 300,
+        "desc": "성향 +300. 기본 보상."
+      },
+      {
+        "id": "fence",
+        "label": "감시탑 암상인에게 몰래 넘긴다",
+        "lawful": -600,
+        "chaos": true,
+        "replaceRewards": true,
+        "rewardCoins": 1800,
+        "rewardItems": [
+          {
+            "item": "potion_brave",
+            "count": 2
+          }
+        ],
+        "desc": "성향이 혼돈으로 떨어진다(−600). 동전 1,800, 투지의 물약 2. 보상 경험치는 그대로."
+      }
+    ]
   },
   {
     "id": "q_plague",

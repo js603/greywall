@@ -274,10 +274,12 @@ class World {
       ? `중립`
       : `혼돈`;
   }
-  priceOf(e) {
+  /** Buying price of item `e` (at shop `shopId`, whose `markup` applies; alignment discount otherwise). */
+  priceOf(e, shopId) {
     let t = this.player.lawful;
     let n = t >= 1000 ? 0.9 : t >= 300 ? 0.95 : 1;
-    return Math.max(1, Math.round(ITEMS[e].price * n));
+    const markup = SHOPS[shopId]?.markup;
+    return Math.max(1, Math.round(ITEMS[e].price * (markup ?? n)));
   }
   itemName(e, t = 0) {
     return (t > 0 ? `+${t} ` : ``) + ITEMS[e].name;
@@ -1739,7 +1741,11 @@ class World {
     if (!SHOPS[e].items.includes(t)) {
       return;
     }
-    let r = this.priceOf(t);
+    if (SHOPS[e].chaoticOnly && this.player.lawful > -100) {
+      this.msg(`암상인이 고개를 젓는다.`, `warn`);
+      return;
+    }
+    let r = this.priceOf(t, e);
 
     if (this.player.coins < r) {
       this.msg(`동전이 부족하다.`, `warn`);
@@ -2000,15 +2006,28 @@ class World {
       type: `quest`,
     });
   }
-  completeQuest(e) {
+  /**
+   * Hands in quest `e`. Quests with `choices` need `choiceId` (design/gdd/alignment.md): the choice moves the
+   * alignment (a chaotic choice drops it to min(lawful, 0) − 600) and may replace the item/coin rewards.
+   */
+  completeQuest(e, choiceId) {
     this.refreshQuests();
     let t = this.quests[e];
 
     let n = QUESTS.find((t) => {
       return t.id === e;
     });
+    const ch = n?.choices ? n.choices.find((c) => c.id === choiceId) : null;
+    if (n?.choices && !ch) return;
+    if (ch?.replaceRewards) n = { ...n, rewardItems: ch.rewardItems ?? [], rewardCoins: ch.rewardCoins ?? 0 };
 
     if (t.state === `ready`) {
+      if (ch) {
+        const p = this.player;
+        p.lawful = ch.chaos ? Math.max(-32768, Math.min(p.lawful, 0) + ch.lawful) : Math.min(32767, p.lawful + ch.lawful);
+        t.choice = ch.id;
+        this.msg(`${ch.label}. 성향: ${this.lawfulName()} (${p.lawful})`, ch.chaos ? `warn` : `good`);
+      }
       for (let e of n.bring ?? []) {
         this.take(e.item, e.count);
       }
@@ -2058,10 +2077,10 @@ class World {
     const coins = Math.floor(e.coins * (e.level >= MAX_LEVEL ? 0.1 : 0.05));
     return { xp, coins };
   }
-  /** Priest's offering for a full heal (design/gdd/progression.md): free to Lv5, then 5 × level; doubled for the chaotic. */
+  /** Priest's offering for a full heal (design/gdd/alignment.md): free to Lv5 and for the righteous (1000+), else 5 × level, doubled for the chaotic (−100 or less). */
   priestFee() {
     const p = this.player;
-    if (p.level <= 5) return 0;
+    if (p.level <= 5 || p.lawful >= 1000) return 0;
     return p.level * 5 * (p.lawful <= -100 ? 2 : 1);
   }
   priestHeal() {

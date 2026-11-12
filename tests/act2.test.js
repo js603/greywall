@@ -8,8 +8,8 @@ import { fnv1a, parseSave, serializeSave } from '../src/save.js';
 import { findPath } from '../src/core/pathfind.js';
 
 // marsh was 'bd7063ba' before the north road to the ruins was added; ruins 'c8c78717' before the north postern to the pass
-// re-pinned 2026-11-12: hunters' camps at the entrances, marsh entrance cleared (design/gdd/camps.md)
-const PINNED = { marsh: '204f7087', ruins: '153241b7', pass: 'f5b3289f' };
+// re-pinned 2026-11-12: hunters' camps at the entrances, marsh entrance cleared, fence in the ruins camp (design/gdd/camps.md)
+const PINNED = { marsh: '204f7087', ruins: 'f8ede561', pass: 'f5b3289f' };
 
 test('act 2 maps are deterministic and pinned', () => {
   for (const [id, hash] of Object.entries(PINNED)) {

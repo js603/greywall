@@ -51,5 +51,17 @@
       "antidote",
       "scroll_return"
     ]
+  },
+  "black": {
+    "id": "black",
+    "title": "암상인의 보따리",
+    "chaoticOnly": true,
+    "items": [
+      "scroll_ench_w",
+      "scroll_ench_a",
+      "potion_brave",
+      "scroll_teleport"
+    ],
+    "markup": 2
   }
 }

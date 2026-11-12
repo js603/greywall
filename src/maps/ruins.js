@@ -83,6 +83,8 @@ function buildRuins() {
   m.spawns.push(...SPAWNS);
 
   addCamp(m, { x: 23, y: 45, npc: { id: `camp_ruins`, name: `감시탑 야영지 상인 테사`, x: 22, y: 44 } });
+  // the fence only trades with the chaotic (design/gdd/alignment.md)
+  m.npcs.push({ id: `black_market`, kind: `npc_fence`, name: `암상인 그릭`, x: 21, y: 47, facing: `SE`, role: `black_market` });
   m.start = { x: 26, y: 46 };
   randomizeVariants(m, rng);
   return m;

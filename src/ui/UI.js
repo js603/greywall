@@ -763,12 +763,12 @@ class UI {
         return this.render();
       }
       if (r.q) {
-        let [e, t] = r.q.split(`:`);
+        let [e, t, c] = r.q.split(`:`);
 
         if (e === `accept`) {
           n.acceptQuest(t);
         } else {
-          n.completeQuest(t);
+          n.completeQuest(t, c);
         }
 
         return this.render();
@@ -1325,7 +1325,14 @@ class UI {
       ? i.state === `available`
         ? `<button class="btn gold" data-q="accept:${e}">수락</button>`
         : i.state === `ready`
-        ? `<button class="btn gold" data-q="done:${e}">완료 보고</button>`
+        ? r.choices
+          ? `<div class="choices">${r.choices
+              .map(
+                (c) =>
+                  `<button class="btn ${c.chaos ? `bad` : `gold`}" data-q="done:${e}:${c.id}">${escapeHtml(c.label)}</button><div class="dim">${escapeHtml(c.desc)}</div>`
+              )
+              .join(``)}</div>`
+          : `<button class="btn gold" data-q="done:${e}">완료 보고</button>`
         : ``
       : ``;
     return `<div class="q"><b>${
@@ -1374,6 +1381,8 @@ class UI {
         ? `temple`
         : t.startsWith?.(`camp_`)
         ? `camp`
+        : t === `black_market` && e.player.lawful <= -100
+        ? `black`
         : null;
     let i = ``;
 
@@ -1392,8 +1401,9 @@ class UI {
       i = `<div class="dim">하르덴: "숲의 늑대 정도는 상대해 보고(경비병 브람의 의뢰), 레벨 4는 되어서 오게."</div>`;
     }
 
+    const greet = t === `black_market` && e.player.lawful > -100 ? NPC_GREETINGS.black_market_refuse : NPC_GREETINGS[t];
     return `<div class="dialog"><div class="say">${escapeHtml(
-      NPC_GREETINGS[t]
+      greet
     )}</div>${i}${n
       .map((e) => {
         return this.questBlock(e.id, true);
@@ -1427,7 +1437,7 @@ class UI {
           `<div class="list">${t.items
             .map((t) => {
               ITEMS[t];
-              let n = e.priceOf(t);
+              let n = e.priceOf(t, this.shop);
               let r = e.player.coins >= n;
               return `<div class="item">${iconHtml(
                 t
