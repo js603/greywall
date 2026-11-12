@@ -4,7 +4,7 @@
  * courtyard, and a raised keep (stair at its south face) where the fallen captain stands.
  */
 import { createRng, randInt } from "../core/rng.js";
-import { fillBlob, fillRect, isOpenTile, paintPath, placeProp, randomizeVariants } from "./helpers.js";
+import { addCamp, fillBlob, fillRect, isOpenTile, paintPath, placeProp, randomizeVariants } from "./helpers.js";
 import { GameMap } from "../sim/GameMap.js";
 
 const WALL = { x0: 10, x1: 43, y0: 8, y1: 38 };
@@ -82,6 +82,7 @@ function buildRuins() {
 
   m.spawns.push(...SPAWNS);
 
+  addCamp(m, { x: 23, y: 45, npc: { id: `camp_ruins`, name: `감시탑 야영지 상인 테사`, x: 22, y: 44 } });
   m.start = { x: 26, y: 46 };
   randomizeVariants(m, rng);
   return m;

@@ -82,7 +82,27 @@ function randomizeVariants(e, t) {
   }
 }
 
+/**
+ * A small hunters' camp (design/gdd/camps.md): clears a ring of `r` tiles around (x, y) to the map's
+ * ground, lights a campfire in the middle and puts a merchant beside it. The ring is a safe zone
+ * (World.safeHere): regen ×2 and monsters do not follow the player in.
+ */
+function addCamp(m, { x, y, r = 3, ground = `dirt`, npc }) {
+  const inRing = (o) => Math.max(Math.abs(o.x - x), Math.abs(o.y - y)) <= r;
+  m.objects = m.objects.filter((o) => !inRing(o));
+  for (let yy = y - r; yy <= y + r; yy++)
+    for (let xx = x - r; xx <= x + r; xx++) {
+      if (!m.inside(xx, yy) || m.elev[m.idx(xx, yy)] || m.stair[m.idx(xx, yy)]) continue;
+      m.block[m.idx(xx, yy)] = 0;
+      if (m.ground[m.idx(xx, yy)] === `water`) m.ground[m.idx(xx, yy)] = ground;
+    }
+  placeProp(m, `torch_post`, x, y, { fx: `campfire` });
+  m.camps = [...(m.camps ?? []), { x, y, r }];
+  m.npcs.push({ kind: `npc_merchant`, facing: `SW`, role: `camp`, ...npc });
+}
+
 export {
+  addCamp,
   BUILDING_SIZES,
   fillRect,
   fillBlob,

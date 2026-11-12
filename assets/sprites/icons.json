@@ -1583,13 +1583,37 @@
     "x": 0.5,
     "y": 0.7142857142857143
    }
+  },
+  "potion_mana": {
+   "frame": {
+    "x": 0,
+    "y": 528,
+    "w": 12,
+    "h": 20
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 8,
+    "y": 1,
+    "w": 12,
+    "h": 20
+   },
+   "sourceSize": {
+    "w": 28,
+    "h": 28
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7142857142857143
+   }
   }
  },
  "meta": {
   "image": "icons.png",
   "size": {
    "w": 512,
-   "h": 526
+   "h": 548
   },
   "scale": "1",
   "app": "greywall tools/build_assets.py"

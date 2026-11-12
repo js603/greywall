@@ -33,9 +33,10 @@ const CASES = [
 ];
 
 const RED = 25; // potion_red price: the sim drinks red potions
+const MANA = 60; // potion_mana price: class runs keep one going below half mana
 const rows = [];
 for (const [map, level, gear, cls] of CASES) {
-  const acc = { xp: 0, coins: 0, loot: 0, kills: 0, deaths: 0, potions: 0 };
+  const acc = { xp: 0, coins: 0, loot: 0, kills: 0, deaths: 0, potions: 0, mana: 0 };
   for (let s = 1; s <= seeds; s++) {
     let potions = 0;
     const r = huntRun(1000 + s, minutes * 60 * 30, {
@@ -49,17 +50,18 @@ for (const [map, level, gear, cls] of CASES) {
     acc.loot += w.player.inv.filter((it) => it.item !== 'potion_red').reduce((v, it) => v + w.sellPrice(it) * it.count, 0);
     acc.kills += w.stats.kills;
     acc.deaths += w.stats.deaths;
-    acc.potions += w.stats.potions - potions;
+    acc.mana += w.stats.manaPotions ?? 0;
+    acc.potions += w.stats.potions - potions - (w.stats.manaPotions ?? 0);
   }
   const per = (v) => v / seeds / minutes;
   const need = XP_TABLE[level + 1] - XP_TABLE[level];
   rows.push([map, level, (cls ? `[${cls}] ` : '') + (gear.length ? gear.join(', ') : 'starter'), per(acc.kills).toFixed(1), per(acc.xp).toFixed(0),
-    per(acc.coins).toFixed(0), per(acc.loot).toFixed(0), (acc.deaths / seeds).toFixed(1), per(acc.potions).toFixed(1),
-    (per(acc.coins) + per(acc.loot) - per(acc.potions) * RED).toFixed(0),
+    per(acc.coins).toFixed(0), per(acc.loot).toFixed(0), (acc.deaths / seeds).toFixed(1), per(acc.potions).toFixed(1), per(acc.mana).toFixed(1),
+    (per(acc.coins) + per(acc.loot) - per(acc.potions) * RED - per(acc.mana) * MANA).toFixed(0),
     per(acc.xp) > 0 ? (need / per(acc.xp)).toFixed(1) : '∞']);
 }
 
 console.log(`# Balance simulation (${minutes} min × ${seeds} seeds, tools/balance-sim.mjs)\n`);
-console.log('| Area | Lv | Gear | Kills/min | XP/min | Coins/min | Loot/min | Deaths/run | Potions/min | Net/min | → next lv (min) |');
-console.log('|---|---|---|---|---|---|---|---|---|---|---|');
+console.log('| Area | Lv | Gear | Kills/min | XP/min | Coins/min | Loot/min | Deaths/run | Potions/min | Mana pot/min | Net/min | → next lv (min) |');
+console.log('|---|---|---|---|---|---|---|---|---|---|---|---|');
 for (const r of rows) console.log(`| ${r.join(' | ')} |`);

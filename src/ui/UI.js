@@ -277,7 +277,7 @@ class UI {
       t.resting
     }|${e.isNight()}|${Math.ceil(t.hasteUntil - e.time)}|${Math.ceil(
       t.braveUntil - e.time
-    )}|${e.burdened()}`;
+    )}|${Math.ceil((t.manaUntil ?? 0) - e.time)}|${e.burdened()}|${e.regenFactor().toFixed(1)}`;
     if (a !== this.lastHud) {
       this.lastHud = a;
       qs(`.bar.hp i`).style.width = `${Math.max(0, (t.hp / t.maxHp) * 100)}%`;
@@ -307,7 +307,12 @@ class UI {
         e.time < t.braveUntil
           ? `<span class="chip brave">투지 ${o(t.braveUntil)}</span>`
           : ``,
-        e.burdened() ? `<span class="chip heavy">무거움</span>` : ``,
+        e.time < (t.manaUntil ?? 0)
+          ? `<span class="chip mana">마나 회복 ${o(t.manaUntil)}</span>`
+          : ``,
+        e.burdened()
+          ? `<span class="chip heavy" title="짐이 30%를 넘으면 자연 회복이 줄고 50%면 멈춥니다">무거움 · 회복 ${Math.round(e.regenFactor() * 100)}%</span>`
+          : ``,
         t.resting ? `<span class="chip rest">휴식 중</span>` : ``,
       ].join(``);
       qs(`#info`).innerHTML = `<div class="area">${escapeHtml(
@@ -1367,6 +1372,8 @@ class UI {
         ? `alchemist`
         : t === `priest`
         ? `temple`
+        : t.startsWith?.(`camp_`)
+        ? `camp`
         : null;
     let i = ``;
 
@@ -1398,7 +1405,7 @@ class UI {
           : ``
       }${
       t === `priest`
-        ? `<button class="btn" data-act="heal">치유 받기</button>`
+        ? `<button class="btn" data-act="heal">치유 받기${e.priestFee() ? ` (헌금 ${e.priestFee()}닢)` : ``}</button>`
         : ``
     }<button class="btn" data-act="close">작별</button></div></div>`;
   }

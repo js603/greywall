@@ -8,7 +8,8 @@ import { fnv1a, parseSave, serializeSave } from '../src/save.js';
 import { findPath } from '../src/core/pathfind.js';
 
 // marsh was 'bd7063ba' before the north road to the ruins was added; ruins 'c8c78717' before the north postern to the pass
-const PINNED = { marsh: 'a61f63a5', ruins: 'b710aa04', pass: '7cf5b518' };
+// re-pinned 2026-11-12: hunters' camps at the entrances, marsh entrance cleared (design/gdd/camps.md)
+const PINNED = { marsh: '204f7087', ruins: '153241b7', pass: 'f5b3289f' };
 
 test('act 2 maps are deterministic and pinned', () => {
   for (const [id, hash] of Object.entries(PINNED)) {
@@ -122,4 +123,19 @@ test('frost: a wisp hit can chill the player, slowing swings until it wears off'
   assert.equal(w.pInterval(), Math.round(before * 1.2 * 100) / 100);
   w.time += 5;
   assert.equal(w.pInterval(), before);
+});
+
+test('camps: safe ring at each Act 2 entrance, merchant inside, no spawn within 8 tiles of the marsh gate', () => {
+  for (const id of ['marsh', 'ruins', 'pass']) {
+    const m = MAP_BUILDERS[id]();
+    assert.equal(m.camps?.length, 1, id);
+    const c = m.camps[0];
+    const npc = m.npcs.find((n) => n.role === 'camp');
+    assert.ok(npc && Math.max(Math.abs(npc.x - c.x), Math.abs(npc.y - c.y)) <= c.r, `${id} merchant in camp`);
+    const w = new World(MAP_BUILDERS, 9);
+    w.loadMap(id, c.x + 1, c.y + 1);
+    assert.equal(w.safeHere(), true, `${id} camp is safe`);
+  }
+  const marsh = MAP_BUILDERS.marsh();
+  for (const s of marsh.spawns) assert.ok(Math.max(Math.abs(s.x - 55), Math.abs(s.y - 26)) - s.r >= 8, `${s.kind} too close to the gate`);
 });

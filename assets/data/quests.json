@@ -211,6 +211,77 @@
     "rewardXp": 900
   },
   {
+    "id": "q_ash",
+    "name": "광부들의 재",
+    "giver": "priest",
+    "minLevel": 11,
+    "after": "q_lich",
+    "summary": "은광 심부의 망령 광부에게서 망령의 재 10줌을 모아 사제 엘린에게 가져간다.",
+    "hint": "모르가스가 쓰러져도 광부들의 넋은 아직 갱도를 떠돈다. 재를 모아 오면 장례를 치러 주겠다고 한다.",
+    "bring": [
+      {
+        "item": "wraith_ash",
+        "count": 10
+      }
+    ],
+    "rewardItems": [
+      {
+        "item": "holy_water",
+        "count": 2
+      }
+    ],
+    "rewardCoins": 200,
+    "rewardXp": 650
+  },
+  {
+    "id": "q_silk2",
+    "name": "질긴 거미줄",
+    "giver": "alchemist",
+    "minLevel": 12,
+    "after": "q_silk",
+    "summary": "거미줄 12타래를 더 모아 연금술사 미라에게 가져간다.",
+    "hint": "미라가 늪에 들고 갈 해독제 주머니를 짠다고 한다. 숲 동굴과 은광 심부의 거미에게서 얻는다.",
+    "bring": [
+      {
+        "item": "spider_silk",
+        "count": 12
+      }
+    ],
+    "rewardItems": [
+      {
+        "item": "antidote",
+        "count": 5
+      },
+      {
+        "item": "potion_mana",
+        "count": 2
+      }
+    ],
+    "rewardCoins": 250,
+    "rewardXp": 750
+  },
+  {
+    "id": "q_scout",
+    "name": "서쪽 둑길 정찰",
+    "giver": "guard",
+    "minLevel": 12,
+    "after": "q_chief",
+    "summary": "오크 영지 서쪽을 지키는 오크 궁수 12마리를 처치하고 늪으로 가는 길을 연다.",
+    "hint": "오크 영지 시작점에서 남서쪽으로 가면 서쪽 끝에 둑길 입구가 있다. 궁수는 멀리서 쏜다.",
+    "kill": {
+      "monster": "orc_archer",
+      "count": 12
+    },
+    "rewardItems": [
+      {
+        "item": "potion_clear",
+        "count": 4
+      }
+    ],
+    "rewardCoins": 250,
+    "rewardXp": 850
+  },
+  {
     "id": "q_bones",
     "name": "뼈의 정화",
     "giver": "priest",
@@ -238,7 +309,7 @@
     "name": "안개 늪 정찰",
     "giver": "guard",
     "minLevel": 14,
-    "after": "q_chief",
+    "after": "q_scout",
     "summary": "오크 영지 서쪽 너머 안개 늪의 늪 진흙덩이 10마리를 처치한다.",
     "hint": "오크 영지 남쪽 풀밭에서 서쪽 끝으로 가면 늪으로 이어지는 둑길이 있다. 안개 속에서는 적이 늦게 보인다.",
     "kill": {

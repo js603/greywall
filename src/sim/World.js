@@ -1123,6 +1123,7 @@ class World {
     e.blessUntil = 0;
     e.hasteUntil = 0;
     e.braveUntil = 0;
+    e.manaUntil = 0;
     this.loadMap(`town`, 18, 13);
     this.setAction(e, `idle`);
     this.msg(`새벽 신전에서 눈을 떴다. 경험치 -${Math.max(0, n)}${lost ? `, 동전 -${lost}` : ``}`, `sys`);
@@ -1364,6 +1365,8 @@ class World {
 
         if (r.buff === `haste`) {
           t.hasteUntil = e;
+        } else if (r.buff === `mana`) {
+          t.manaUntil = e;
         } else {
           t.braveUntil = e;
         }
@@ -2326,7 +2329,8 @@ class World {
           e.def.aggro > 0 &&
           n <= e.def.aggro &&
           this.map.elevAt(t.x, t.y) === this.map.elevAt(e.x, e.y) &&
-          this.map.id !== `town`
+          this.map.id !== `town` &&
+          !this.safeHere()
         ) {
           e.state = `alert`;
           e.stateUntil = this.time + 0.6;
@@ -2391,6 +2395,8 @@ class World {
         if (
           t.dead ||
           r > 13 ||
+          this.safeHere() || // the player reached a camp: monsters give up
+
           (this.time - Math.max(e.lastHurtAt, 0) > 10 && n > e.def.aggro + 3)
         ) {
           e.state = `return`;

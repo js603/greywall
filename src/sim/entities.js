@@ -112,6 +112,7 @@ class Player extends Entity {
 
     this.hasteUntil = 0;
     this.braveUntil = 0;
+    this.manaUntil = 0;
     this.lawful = 0;
     this.blessUntil = 0;
     this.poison = null;

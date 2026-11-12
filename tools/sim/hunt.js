@@ -41,6 +41,13 @@ export function huntRun(seed = 4242, ticks = 20000, opt = {}) {
       const k = w.player.inv.findIndex((s) => s.item === 'potion_red');
       if (k >= 0) w.useItem(k); else w.give('potion_red', 5);
     }
+    // class runs keep a mana potion going while mana is below half (design/gdd/status-effects.md)
+    if (skills.length && i % 30 === 0 && !w.player.dead && w.player.mp < w.player.maxMp * 0.5 && w.time >= w.player.manaUntil) {
+      let k = w.player.inv.findIndex((s) => s.item === 'potion_mana');
+      if (k < 0) { w.give('potion_mana', 3); k = w.player.inv.findIndex((s) => s.item === 'potion_mana'); }
+      w.useItem(k);
+      w.stats.manaPotions = (w.stats.manaPotions ?? 0) + 1;
+    }
     if (skills.length && i % 15 === 0 && !w.player.dead) {
       for (const sk of skills) {
         if (!w.skillState(sk.id).ok) continue;

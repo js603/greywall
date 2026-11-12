@@ -4,7 +4,7 @@
  * witch's raised island in the west, and a light fog layer (`ambient`) drawn by WorldScene.
  */
 import { createRng, randInt } from "../core/rng.js";
-import { fillBlob, isOpenTile, paintPath, placeProp, randomizeVariants } from "./helpers.js";
+import { addCamp, fillBlob, isOpenTile, paintPath, placeProp, randomizeVariants } from "./helpers.js";
 import { GameMap } from "../sim/GameMap.js";
 
 /** Builds the marsh deterministically (seed 66). */
@@ -21,7 +21,7 @@ function buildMarsh() {
 
   // dry ground around every hunting area
   const SPAWNS = [
-    [`bog_slime`, 47, 20, 4, 5], [`bog_slime`, 46, 32, 3, 4],
+    [`bog_slime`, 42, 18, 4, 5], [`bog_slime`, 43, 35, 3, 4], // ≥ 8 tiles clear of the east gate
     [`marsh_spider`, 32, 31, 4, 5],
     [`mist_wraith`, 29, 15, 4, 4], [`mist_wraith`, 24, 36, 3, 3],
     [`bog_ghoul`, 15, 9, 4, 5],
@@ -81,6 +81,7 @@ function buildMarsh() {
   for (const [kind, x, y, r, count] of SPAWNS) m.spawns.push({ kind, x, y, r, count });
   m.spawns.push({ kind: `fog_witch`, x: 5, y: 26, r: 1, count: 1 });
 
+  addCamp(m, { x: 50, y: 24, npc: { id: `camp_marsh`, name: `늪 야영지 상인 도린`, x: 51, y: 23 } });
   m.start = { x: 53, y: 26 };
   randomizeVariants(m, rng);
   return m;

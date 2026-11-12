@@ -27,6 +27,7 @@
       "potion_clear",
       "antidote",
       "potion_haste",
+      "potion_mana",
       "potion_brave",
       "scroll_return",
       "scroll_teleport"
@@ -38,6 +39,17 @@
     "items": [
       "holy_water",
       "book_heal"
+    ]
+  },
+  "camp": {
+    "id": "camp",
+    "title": "야영지 보급품",
+    "items": [
+      "potion_red",
+      "potion_clear",
+      "potion_mana",
+      "antidote",
+      "scroll_return"
     ]
   }
 }

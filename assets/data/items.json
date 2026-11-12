@@ -305,6 +305,18 @@
     "desc": "5분 동안 평타 간격이 15% 짧아진다.",
     "weight": 4
   },
+  "potion_mana": {
+    "id": "potion_mana",
+    "name": "마나 회복 물약",
+    "icon": "potion_mana",
+    "type": "potion",
+    "buff": "mana",
+    "duration": 180,
+    "price": 60,
+    "stack": true,
+    "desc": "3분 동안 마나가 세 배 빠르게 찬다.",
+    "weight": 4
+  },
   "scroll_teleport": {
     "id": "scroll_teleport",
     "name": "순간이동 주문서",

@@ -5,7 +5,7 @@
  * the titan Heim stands. Snow falls (map.weather) and the light is cold (map.ambient).
  */
 import { createRng, randInt } from "../core/rng.js";
-import { fillBlob, isOpenTile, paintPath, placeProp, randomizeVariants } from "./helpers.js";
+import { addCamp, fillBlob, isOpenTile, paintPath, placeProp, randomizeVariants } from "./helpers.js";
 import { GameMap } from "../sim/GameMap.js";
 
 const SPAWNS = [
@@ -75,6 +75,7 @@ function buildPass() {
   }
   m.objects = m.objects.filter((o) => !m.exits.some((e) => e.x === o.x && e.y === o.y));
   m.spawns.push(...SPAWNS);
+  addCamp(m, { x: 27, y: 50, ground: `snow`, npc: { id: `camp_pass`, name: `고개 야영지 상인 오스크`, x: 28, y: 49 } });
   m.start = { x: 24, y: 52 };
   randomizeVariants(m, rng);
   return m;
