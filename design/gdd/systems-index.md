@@ -25,7 +25,11 @@
 
 | 지역 | 문서 | 상태 | 레벨 |
 |---|---|---|---|
-| 1막 5지역 (마을·숲·은광·오크 영지·은광 심부) | — | Gap (원본 복원) | 1–16 |
+| 1막 마을 그레이월 | `act1-town.md` | Reverse-doc | — |
+| 1막 솔바람 숲길 | `act1-forest.md` | Reverse-doc | 1–6 |
+| 1막 버려진 은광 | `act1-mine.md` | Reverse-doc | 6–9 |
+| 1막 붉은엄니 오크 영지 | `act1-orc-lands.md` | Reverse-doc | 7–12 |
+| 1막 은광 심부 | `act1-deep-mine.md` | Reverse-doc | 9–14 |
 | 2막 안개 늪 | `act2-fog-marsh.md` | In Review (수정 완료) | 14–20 |
 | 2막 무너진 감시탑 | `act2-ruined-watchtower.md` | In Review (수정 완료) | 20–24 |
 | 2막 얼어붙은 고개 | `act2-frozen-pass.md` | Approved | 24–28 |
