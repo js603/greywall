@@ -145,7 +145,7 @@ class World {
         ? ITEMS[this.player.equip.accessory].hit ?? 0
         : 0) +
       (e?.acc ?? 0) +
-      Math.floor(this.player.equipPlus.weapon / 2) +
+      Math.floor(this.effPlus(`weapon`) / 2) +
       Math.floor((this.player.dex - 10) / 2) +
       Math.floor(this.player.level / 2) +
       (this.time < this.player.blessUntil ? 3 : 0) +
@@ -165,7 +165,7 @@ class World {
       t += 2;
     }
 
-    return t + e.equipPlus.weapon;
+    return t + this.effPlus(`weapon`);
   }
   /** A passive value of the player's class, or `fallback` for an adventurer. */
   passive(key, fallback = 0) {
@@ -183,7 +183,7 @@ class World {
   }
   pAC() {
     let e = this.player;
-    let t = e.equipPlus.armor + e.equipPlus.shield + this.passive(`ac`);
+    let t = this.effPlus(`armor`) + this.effPlus(`shield`) + this.passive(`ac`);
     for (let n of Object.values(e.equip)) {
       if (n) {
         t += ITEMS[n].ac ?? 0;
@@ -239,8 +239,30 @@ class World {
   weightPct() {
     return this.weight() / this.capacity();
   }
+  /** Natural regen share from the load (design/gdd/progression.md): 1 up to 30 %, falling to 0 at 50 %. */
+  /**
+   * Bonus points an enhanced slot gives (design/gdd/enhancement.md): +1 per step up to the safe line,
+   * +2 per step past it, and +2 more at +10.
+   */
+  effPlus(slot) {
+    const plus = this.player.equipPlus[slot] ?? 0;
+    const safe = slot === `weapon` ? ENCHANT_SAFE.weapon : ENCHANT_SAFE.armor;
+    return plus + Math.max(0, plus - safe) + (plus >= 10 ? 2 : 0);
+  }
+  /** True where the player is safe: a town map, or inside a camp's safe radius. */
+  safeHere() {
+    const m = this.map;
+    if (!m) return false;
+    if (m.safe) return true;
+    const p = this.player;
+    return (m.camps ?? []).some((c) => Math.max(Math.abs(p.x - c.x), Math.abs(p.y - c.y)) <= c.r);
+  }
+  regenFactor() {
+    return Math.max(0, Math.min(1, (0.5 - this.weightPct()) / 0.2));
+  }
+  /** True when the load slows natural regen (30 % or more). */
   burdened() {
-    return this.weightPct() >= 0.5;
+    return this.weightPct() >= 0.3;
   }
   lawfulName() {
     let e = this.player.lawful;
@@ -1090,9 +1112,11 @@ class World {
     if (!e.dead) {
       return;
     }
-    let t = XP_TABLE[Math.min(MAX_LEVEL, e.level + 1)] - XP_TABLE[e.level];
-    let n = Math.min(e.xp - XP_TABLE[e.level], Math.floor(t * 0.08));
-    e.xp -= Math.max(0, n);
+    const cost = this.deathCost();
+    let n = cost.xp;
+    const lost = cost.coins;
+    e.xp -= n;
+    e.coins -= lost;
     e.dead = false;
     e.hp = Math.ceil(e.maxHp * 0.5);
     e.mp = Math.ceil(e.maxMp * 0.5);
@@ -1101,7 +1125,7 @@ class World {
     e.braveUntil = 0;
     this.loadMap(`town`, 18, 13);
     this.setAction(e, `idle`);
-    this.msg(`새벽 신전에서 눈을 떴다. 경험치 -${Math.max(0, n)}`, `sys`);
+    this.msg(`새벽 신전에서 눈을 떴다. 경험치 -${Math.max(0, n)}${lost ? `, 동전 -${lost}` : ``}`, `sys`);
 
     this.emit({
       type: `revive`,
@@ -2020,8 +2044,31 @@ class World {
       });
     }
   }
+  /**
+   * What reviving costs now (design/gdd/progression.md): 8 % of the current level's XP span (never below the
+   * level) and 5 % of carried coins, 10 % at the level cap where no XP can be lost.
+   */
+  deathCost() {
+    const e = this.player;
+    const span = XP_TABLE[Math.min(MAX_LEVEL, e.level + 1)] - XP_TABLE[e.level];
+    const xp = Math.max(0, Math.min(e.xp - XP_TABLE[e.level], Math.floor(span * 0.08)));
+    const coins = Math.floor(e.coins * (e.level >= MAX_LEVEL ? 0.1 : 0.05));
+    return { xp, coins };
+  }
+  /** Priest's offering for a full heal (design/gdd/progression.md): free to Lv5, then 5 × level; doubled for the chaotic. */
+  priestFee() {
+    const p = this.player;
+    if (p.level <= 5) return 0;
+    return p.level * 5 * (p.lawful <= -100 ? 2 : 1);
+  }
   priestHeal() {
     let e = this.player;
+    const fee = this.priestFee();
+    if (e.coins < fee) {
+      this.msg(`헌금(${fee}닢)이 모자라다.`, `warn`);
+      return false;
+    }
+    e.coins -= fee;
     e.hp = e.maxHp;
     e.mp = e.maxMp;
 
@@ -2040,7 +2087,8 @@ class World {
       amount: 0,
     });
 
-    this.msg(`사제 엘린의 기도로 상처가 아물었다.`, `good`);
+    this.msg(`사제 엘린의 기도로 상처가 아물었다.${fee ? ` (헌금 ${fee}닢)` : ``}`, `good`);
+    return true;
   }
   update(e) {
     let t = Math.min(0.1, Math.max(0, e));
@@ -2492,13 +2540,14 @@ class World {
 
       t &&
         this.msg(
-          `짐이 무겁다(50% 이상). 체력과 마나가 저절로 회복되지 않는다.`,
+          `짐이 무겁다(30% 이상). 체력과 마나가 덜 회복되고, 50%면 멈춘다.`,
           `warn`
         );
     }
 
-    let n = this.time - e.lastHurtAt > 6 && !e.swing && !t;
-    let r = (e.resting ? 3 : 1) * (this.map.safe ? 2 : 1);
+    const f = this.regenFactor();
+    let n = this.time - e.lastHurtAt > 6 && !e.swing && f > 0;
+    let r = (e.resting ? 3 : 1) * (this.safeHere() ? 2 : 1) * f;
 
     if (n && this.time >= e.nextRegen) {
       e.nextRegen = this.time + 4 / r;
@@ -2506,9 +2555,12 @@ class World {
         (e.hp = Math.min(e.maxHp, e.hp + 1 + Math.floor(e.con / 8)));
     }
 
-    if (this.time >= e.nextMpRegen) {
-      e.nextMpRegen = this.time + 5 / r;
-      e.mp < e.maxMp && !t && (e.mp += 1);
+    if (f > 0 && this.time >= e.nextMpRegen) {
+      // mana potion: ×3 mana regen while it lasts (design/gdd/status-effects.md)
+      e.nextMpRegen = this.time + 5 / (r * (this.time < (e.manaUntil ?? 0) ? 3 : 1));
+      e.mp < e.maxMp && (e.mp += 1);
+    } else if (f === 0) {
+      e.nextMpRegen = this.time + 1;
     }
   }
   updateNight() {

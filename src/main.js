@@ -297,7 +297,7 @@ function bootGame() {
       onEvent: (e) => {
         ui.onEvent(e);
 
-        if (e.type === `mapchange` || e.type === `quest`) {
+        if (e.type === `mapchange` || e.type === `quest` || e.type === `enchant`) { // enchant: no reload to undo a failed attempt
           saveGame();
         }
       },

@@ -42,6 +42,7 @@ function snapshotWorld(e) {
     skills: [...t.skills],
     skillSlots: [...t.skillSlots],
     cls: t.cls,
+    timed: timedState(e),
     quests: JSON.parse(JSON.stringify(e.quests)),
     stats: {
       ...e.stats,
@@ -51,6 +52,42 @@ function snapshotWorld(e) {
       ...e.tutorial,
     },
   };
+}
+/**
+ * Running effects and cooldowns as seconds left, so a reload does not clear poison, frost or
+ * cooldowns (design/gdd/status-effects.md). Optional in save version 3.
+ */
+function timedState(w) {
+  const p = w.player;
+  const left = (until) => Math.max(0, Math.round(((until ?? 0) - w.time) * 10) / 10);
+  const buffs = {};
+  for (const [id, b] of Object.entries(p.buffs)) if (b.until > w.time) buffs[id] = { ...b, until: left(b.until) };
+  const cooldowns = {};
+  for (const [id, until] of Object.entries(p.cooldowns)) if (until > w.time) cooldowns[id] = left(until);
+  return {
+    buffs,
+    cooldowns,
+    ward: p.ward,
+    poison: p.poison ? left(p.poison.until) : 0,
+    bless: left(p.blessUntil),
+    haste: left(p.hasteUntil),
+    brave: left(p.braveUntil),
+    mana: left(p.manaUntil),
+  };
+}
+/** Restores `timedState` onto a freshly loaded world. */
+function applyTimed(w, t) {
+  if (!t || typeof t !== `object`) return;
+  const p = w.player;
+  const at = (s) => (typeof s === `number` && s > 0 ? w.time + Math.min(s, 3600) : 0);
+  for (const [id, b] of Object.entries(t.buffs ?? {})) if (b && typeof b.until === `number`) p.buffs[id] = { ...b, until: at(b.until) };
+  for (const [id, s] of Object.entries(t.cooldowns ?? {})) p.cooldowns[id] = at(s);
+  p.ward = typeof t.ward === `number` ? Math.max(0, t.ward) : 0;
+  if (t.poison > 0) p.poison = { until: at(t.poison), nextTick: w.time + 2 };
+  p.blessUntil = at(t.bless);
+  p.hasteUntil = at(t.haste);
+  p.braveUntil = at(t.brave);
+  p.manaUntil = at(t.mana);
 }
 function serializeSave(e) {
   let t = snapshotWorld(e);
@@ -297,6 +334,7 @@ function applySave(e, t) {
   n.hp = Math.min(n.maxHp, Math.max(1, t.hp));
   n.mp = Math.min(n.maxMp, t.mp);
   e.loadMap(t.map, t.x, t.y);
+  applyTimed(e, t.timed);
 
   if (!e.map.walkable(t.x, t.y)) {
     e.loadMap(t.map);

@@ -126,3 +126,15 @@ test('death ends chill, class buffs and the ward (status-effects.md)', async () 
   assert.deepEqual(w.player.buffs, {});
   assert.equal(w.player.ward, 0);
 });
+
+test('enhancement steps past the safe line count double, +10 adds 2 more (enhancement.md)', async () => {
+  const { World } = await import('../src/sim/World.js');
+  const { MAP_BUILDERS } = await import('../src/maps/index.js');
+  const w = new World(MAP_BUILDERS, 3);
+  for (const [plus, eff] of [[3, 3], [6, 6], [7, 8], [9, 12], [10, 16]]) {
+    w.player.equipPlus.weapon = plus;
+    assert.equal(w.effPlus('weapon'), eff, `weapon +${plus}`);
+  }
+  w.player.equipPlus.armor = 5; // armour safe line +4
+  assert.equal(w.effPlus('armor'), 6);
+});
