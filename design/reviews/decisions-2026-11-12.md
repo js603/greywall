@@ -1,5 +1,8 @@
 # 구현 리뷰 결정 (2026-11-12, 사용자 결정)
 
+상태: **전부 구현 완료**(커밋 76024fa … 이후). 문서: combat · progression · enhancement · status-effects · skill-slots ·
+class-change · equipment-economy · camps · alignment, 지역 문서 3개.
+
 | # | 주제 | 결정 | 구현 메모 |
 |---|---|---|---|
 | 1 | 방어 모델 | **비율 감산** d × K/(K + AC) | 플레이어·몬스터 공통. 1막 체감 유지하도록 K 선택 후 2막 몬스터 피해 재조정. 원본 일치 해시 의도적 갱신 |

@@ -488,7 +488,7 @@ button {
 .panel {
   flex-direction: column;
   width: min(560px, 96vw);
-  max-height: min(620px, 88vh);
+  max-height: min(620px, calc(88vh / var(--ui-zoom, 1)));
   display: flex;
 }
 .panel .head {
