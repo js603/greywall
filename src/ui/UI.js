@@ -286,7 +286,7 @@ class UI {
       t.resting
     }|${e.isNight()}|${Math.ceil(t.hasteUntil - e.time)}|${Math.ceil(
       t.braveUntil - e.time
-    )}|${this.objectiveLine()}|${Math.ceil((t.manaUntil ?? 0) - e.time)}|${e.burdened()}|${e.regenFactor().toFixed(1)}`;
+    )}|${this.objectiveLine()}|${Math.ceil((t.manaUntil ?? 0) - e.time)}|${Math.ceil((t.buffs.chill?.until ?? 0) - e.time)}|${Math.ceil((t.buffs.soak?.until ?? 0) - e.time)}|${e.burdened()}|${e.regenFactor().toFixed(1)}`;
     if (a !== this.lastHud) {
       this.lastHud = a;
       qs(`.bar.hp i`).style.width = `${Math.max(0, (t.hp / t.maxHp) * 100)}%`;
@@ -316,6 +316,8 @@ class UI {
         e.time < t.braveUntil
           ? `<span class="chip brave">투지 ${o(t.braveUntil)}</span>`
           : ``,
+        e.buffActive(`chill`) ? `<span class="chip chill" title="공격 간격이 늘어납니다">서리 ${o(t.buffs.chill.until)}</span>` : ``,
+        e.buffActive(`soak`) ? `<span class="chip soak" title="걸음이 느려집니다">젖음 ${o(t.buffs.soak.until)}</span>` : ``,
         e.time < (t.manaUntil ?? 0)
           ? `<span class="chip mana">마나 회복 ${o(t.manaUntil)}</span>`
           : ``,

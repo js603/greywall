@@ -795,7 +795,7 @@ class WorldScene extends Phaser.Scene {
               elevPx(r.px + r.py) + 9,
               {
                 flip: o,
-                scale: hfx === `frostnova` ? 0.45 : hfx ? 0.6 : 1,
+                scale: hfx === `frostnova` ? 0.45 : hfx === `splash` ? 0.4 : hfx ? 0.6 : 1,
               }
             );
 
@@ -1031,6 +1031,21 @@ class WorldScene extends Phaser.Scene {
         case `chill`: {
           this.chillFx?.spr.destroy();
           this.chillFx = this.playFx(`frozen`, 0, 0, 0, { follow: 0, scale: 0.7, loop: true, until: e.until, dy: 2 });
+          break;
+        }
+        case `soak`: {
+          // soaked by a naga (design/gdd/act2-ancient-aqueduct.md): heavy steps
+          const r = i(t.player);
+          this.floatText(r.x, r.y - 34, `젖음`, `#8ad4ff`, 12);
+          this.playFx(`splash`, 0, 0, 0, { follow: 0, scale: 0.3, dy: 4 });
+          break;
+        }
+        case `drain`: {
+          const n = t.entity(e.id);
+          if (n) {
+            const r = i(n);
+            this.floatText(r.x, r.y - 30, `흡혈 +${e.amount}`, `#e07a8a`, 12);
+          }
           break;
         }
         case `stun`: {

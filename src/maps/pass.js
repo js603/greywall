@@ -65,7 +65,17 @@ function buildPass() {
       else if (r < 0.13) placeProp(m, rng() < 0.5 ? `rock_0` : `bush_1`, x, y);
     }
 
+  // the broken sluice gate east of the golems' slope, down to the Ancient Aqueduct (act2-ancient-aqueduct.md)
+  for (let x = 38; x < m.w; x++)
+    for (const y of [22, 23]) {
+      const i = m.idx(x, y);
+      m.block[i] = 0;
+      m.ground[i] = `road`;
+    }
+  m.objects = m.objects.filter((o) => !(o.x >= 38 && (o.y === 22 || o.y === 23)));
   m.exits.push(
+    { x: 49, y: 22, to: `aqueduct`, tx: 1, ty: 25, label: `고대 수로` },
+    { x: 49, y: 23, to: `aqueduct`, tx: 1, ty: 26, label: `고대 수로` },
     { x: 24, y: 55, to: `ruins`, tx: 39, ty: 1, label: `무너진 감시탑` },
     { x: 25, y: 55, to: `ruins`, tx: 40, ty: 1, label: `무너진 감시탑` },
   );

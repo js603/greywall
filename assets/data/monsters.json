@@ -1322,5 +1322,235 @@
         "max": 5
       }
     ]
+  },
+  "aqueduct_leech": {
+    "id": "aqueduct_leech",
+    "name": "수로 거머리",
+    "sprite": "aqueduct_leech",
+    "level": 27,
+    "hp": 300,
+    "dmg": [
+      6,
+      9
+    ],
+    "acc": 13,
+    "eva": 4,
+    "ac": 3,
+    "interval": 2.0,
+    "windup": 0.5,
+    "step": 0.55,
+    "aggro": 4,
+    "xp": 395,
+    "coins": [
+      45,
+      90
+    ],
+    "respawn": 35,
+    "drain": 0.5,
+    "hitFx": "splash",
+    "lawful": 6,
+    "drops": [
+      {
+        "item": "leech_sac",
+        "chance": 0.5
+      },
+      {
+        "item": "potion_clear",
+        "chance": 0.12
+      }
+    ]
+  },
+  "spine_crab": {
+    "id": "spine_crab",
+    "name": "가시 가재",
+    "sprite": "spine_crab",
+    "level": 28,
+    "hp": 420,
+    "dmg": [
+      7,
+      11
+    ],
+    "acc": 13,
+    "eva": 0,
+    "ac": 8,
+    "interval": 2.6,
+    "windup": 0.5,
+    "step": 0.6,
+    "aggro": 4,
+    "xp": 485,
+    "coins": [
+      55,
+      110
+    ],
+    "respawn": 45,
+    "block": 0.15,
+    "hitFx": "splash",
+    "lawful": 7,
+    "drops": [
+      {
+        "item": "crab_spine",
+        "chance": 0.5
+      },
+      {
+        "item": "potion_clear",
+        "chance": 0.15
+      },
+      {
+        "item": "scroll_ench_a",
+        "chance": 0.03
+      }
+    ]
+  },
+  "drowned_monk": {
+    "id": "drowned_monk",
+    "name": "익사한 수도승",
+    "sprite": "drowned_monk",
+    "level": 28,
+    "hp": 360,
+    "dmg": [
+      7,
+      10
+    ],
+    "acc": 14,
+    "eva": 5,
+    "ac": 4,
+    "interval": 2.3,
+    "windup": 0.5,
+    "step": 0.55,
+    "aggro": 5,
+    "xp": 450,
+    "coins": [
+      50,
+      100
+    ],
+    "respawn": 40,
+    "undead": true,
+    "lawful": 7,
+    "drops": [
+      {
+        "item": "monk_rosary",
+        "chance": 0.45
+      },
+      {
+        "item": "holy_water",
+        "chance": 0.06
+      },
+      {
+        "item": "potion_clear",
+        "chance": 0.12
+      },
+      {
+        "item": "scroll_ench_w",
+        "chance": 0.02
+      }
+    ]
+  },
+  "naga": {
+    "id": "naga",
+    "name": "물비늘 나가",
+    "sprite": "naga",
+    "level": 29,
+    "hp": 330,
+    "dmg": [
+      7,
+      11
+    ],
+    "acc": 15,
+    "eva": 8,
+    "ac": 4,
+    "interval": 2.6,
+    "windup": 0.5,
+    "step": 0.5,
+    "aggro": 6,
+    "xp": 485,
+    "coins": [
+      55,
+      115
+    ],
+    "respawn": 40,
+    "range": 5,
+    "projectile": "bolt",
+    "soak": {
+      "chance": 0.35,
+      "dur": 4,
+      "step": 1.3
+    },
+    "hitFx": "splash",
+    "lawful": 7,
+    "drops": [
+      {
+        "item": "naga_scale",
+        "chance": 0.45
+      },
+      {
+        "item": "potion_clear",
+        "chance": 0.12
+      },
+      {
+        "item": "potion_mana",
+        "chance": 0.06
+      },
+      {
+        "item": "naga_scale_mail",
+        "chance": 0.005
+      }
+    ]
+  },
+  "naga_queen": {
+    "id": "naga_queen",
+    "name": "심연의 나가 여왕 메르시아",
+    "sprite": "naga_queen",
+    "level": 32,
+    "hp": 3200,
+    "dmg": [
+      9,
+      15
+    ],
+    "acc": 17,
+    "eva": 4,
+    "ac": 8,
+    "interval": 2.6,
+    "windup": 0.5,
+    "step": 0.55,
+    "aggro": 7,
+    "xp": 8000,
+    "coins": [
+      1200,
+      1800
+    ],
+    "respawn": 900,
+    "named": true,
+    "range": 5,
+    "projectile": "bolt",
+    "block": 0.1,
+    "soak": {
+      "chance": 0.5,
+      "dur": 5,
+      "step": 1.4
+    },
+    "hitFx": "splash",
+    "lawful": 200,
+    "drops": [
+      {
+        "item": "abyss_blade",
+        "chance": 0.3
+      },
+      {
+        "item": "naga_scale_mail",
+        "chance": 0.25
+      },
+      {
+        "item": "scroll_ench_w",
+        "chance": 0.6
+      },
+      {
+        "item": "scroll_ench_a",
+        "chance": 0.6
+      },
+      {
+        "item": "potion_clear",
+        "chance": 1
+      }
+    ]
   }
 }

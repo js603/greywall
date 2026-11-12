@@ -1066,6 +1066,14 @@ body.touch #death .btn {
   color: #f4dc8a;
   border-color: #9c7426;
 }
+.chip.chill {
+  color: #c8ecff;
+  border-color: #4a7aa6;
+}
+.chip.soak {
+  color: #8ad4ff;
+  border-color: #2a6a9a;
+}
 .chip.mana {
   color: #d6b0f4;
   border-color: #7a4aa6;

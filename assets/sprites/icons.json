@@ -1607,13 +1607,157 @@
     "x": 0.5,
     "y": 0.7142857142857143
    }
+  },
+  "leech_sac": {
+   "frame": {
+    "x": 0,
+    "y": 550,
+    "w": 14,
+    "h": 13
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 7,
+    "y": 10,
+    "w": 14,
+    "h": 13
+   },
+   "sourceSize": {
+    "w": 28,
+    "h": 28
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7142857142857143
+   }
+  },
+  "crab_spine": {
+   "frame": {
+    "x": 0,
+    "y": 565,
+    "w": 14,
+    "h": 10
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 6,
+    "y": 12,
+    "w": 14,
+    "h": 10
+   },
+   "sourceSize": {
+    "w": 28,
+    "h": 28
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7142857142857143
+   }
+  },
+  "monk_rosary": {
+   "frame": {
+    "x": 0,
+    "y": 577,
+    "w": 14,
+    "h": 14
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 7,
+    "y": 9,
+    "w": 14,
+    "h": 14
+   },
+   "sourceSize": {
+    "w": 28,
+    "h": 28
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7142857142857143
+   }
+  },
+  "naga_scale": {
+   "frame": {
+    "x": 0,
+    "y": 593,
+    "w": 14,
+    "h": 13
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 7,
+    "y": 10,
+    "w": 14,
+    "h": 13
+   },
+   "sourceSize": {
+    "w": 28,
+    "h": 28
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7142857142857143
+   }
+  },
+  "naga_scale_mail": {
+   "frame": {
+    "x": 0,
+    "y": 608,
+    "w": 16,
+    "h": 21
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 6,
+    "y": 1,
+    "w": 16,
+    "h": 21
+   },
+   "sourceSize": {
+    "w": 28,
+    "h": 28
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7142857142857143
+   }
+  },
+  "abyss_blade": {
+   "frame": {
+    "x": 0,
+    "y": 631,
+    "w": 16,
+    "h": 19
+   },
+   "rotated": false,
+   "trimmed": true,
+   "spriteSourceSize": {
+    "x": 5,
+    "y": 2,
+    "w": 16,
+    "h": 19
+   },
+   "sourceSize": {
+    "w": 28,
+    "h": 28
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.7142857142857143
+   }
   }
  },
  "meta": {
   "image": "icons.png",
   "size": {
    "w": 512,
-   "h": 548
+   "h": 650
   },
   "scale": "1",
   "app": "greywall tools/build_assets.py"

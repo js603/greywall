@@ -26,8 +26,14 @@
 | ruins | 24 | [paladin] captain_sword, garrison_mail, tower_shield, witch_charm | 3.4 | 698 | 263 | 14 | 0.0 | 7.8 | 0.4 | 55 | 27.2 |
 | pass | 24 | mist_blade, garrison_mail, tower_shield, witch_charm | 3.1 | 714 | 179 | 13 | 0.0 | 7.1 | 0.0 | 15 | 26.6 |
 | pass | 24 | [knight] captain_sword, garrison_mail, tower_shield, witch_charm | 2.7 | 719 | 180 | 8 | 0.0 | 10.6 | 0.4 | -101 | 26.4 |
-| pass | 24 | [berserker] captain_sword, garrison_mail, tower_shield, witch_charm | 4.0 | 1015 | 200 | 15 | 0.0 | 6.3 | 0.4 | 36 | 18.7 |
+| pass | 24 | [berserker] captain_sword, garrison_mail, tower_shield, witch_charm | 4.0 | 1015 | 202 | 15 | 0.0 | 6.1 | 0.4 | 42 | 18.7 |
 | pass | 24 | [paladin] captain_sword, garrison_mail, tower_shield, witch_charm | 3.2 | 787 | 175 | 13 | 0.0 | 7.3 | 0.4 | -16 | 24.2 |
 | pass | 27 | [knight] captain_sword, yeti_armor, tower_shield, frost_ring | 3.3 | 857 | 188 | 16 | 0.0 | 7.5 | 0.4 | -7 | 34.4 |
 | pass | 27 | [berserker] captain_sword, yeti_armor, tower_shield, frost_ring | 4.1 | 1050 | 239 | 32 | 0.0 | 6.8 | 0.3 | 79 | 28.1 |
 | pass | 27 | [paladin] captain_sword, yeti_armor, tower_shield, frost_ring | 3.4 | 810 | 172 | 19 | 0.0 | 7.0 | 0.5 | -10 | 36.4 |
+| aqueduct | 28 | [knight] captain_sword, yeti_armor, tower_shield, frost_ring | 2.7 | 1122 | 197 | 24 | 0.0 | 5.7 | 0.4 | 55 | 30.3 |
+| aqueduct | 28 | [berserker] captain_sword, yeti_armor, tower_shield, frost_ring | 2.5 | 1137 | 197 | 19 | 0.0 | 7.2 | 0.4 | 10 | 29.9 |
+| aqueduct | 28 | [paladin] captain_sword, yeti_armor, tower_shield, frost_ring | 2.8 | 1120 | 189 | 25 | 0.0 | 6.8 | 0.4 | 20 | 30.4 |
+| aqueduct | 29 | [knight] captain_sword, naga_scale_mail, tower_shield, frost_ring | 2.4 | 1022 | 175 | 23 | 0.0 | 5.6 | 0.4 | 37 | 38.1 |
+| aqueduct | 29 | [berserker] captain_sword, naga_scale_mail, tower_shield, frost_ring | 3.2 | 1334 | 243 | 14 | 0.0 | 6.5 | 0.4 | 72 | 29.2 |
+| aqueduct | 29 | [paladin] captain_sword, naga_scale_mail, tower_shield, frost_ring | 2.4 | 1014 | 176 | 22 | 0.0 | 6.6 | 0.4 | 8 | 38.5 |

@@ -239,6 +239,122 @@ def frost_wisp(clip, i):
     return prims, m
 
 
+def aqueduct_leech(clip, i):
+    """Segmented leech: slithers with a lateral wave, rears its sucker-mouth up to strike."""
+    m = common(clip, i)
+    n = CLIPS[clip][0]
+    t = i / n
+    prims = []
+    wave = 2 * math.pi * (t + 1 / 16) if clip == "walk" else 0
+    amp = 3.2 if clip == "walk" else 1.0 + m["breath"] * 0.6
+    rear = max(0.0, m["raise_"])  # attack: front rises
+    segs = 7
+    for k in range(segs):
+        y = 12 - k * 4.4
+        x = math.sin(wave + k * 0.9) * amp * (0.4 + k / segs)
+        front = max(0, 3 - k) / 3
+        z = 4.6 + front * rear * 9 + (m["breath"] * 0.4 if k < 2 else 0)
+        r = 5.4 - abs(k - 2) * 0.55
+        prims.append(ellipsoid((x, y, z), (r, 3.4, r * 0.82), "skin", rot_z(math.cos(wave + k * 0.9) * 0.3)))
+        prims.append(ellipsoid((x, y + 0.6, z - 1.6), (r * 0.7, 2.6, r * 0.45), "belly"))
+    # mouth ring and three hooked teeth on the front segment
+    hz = 4.6 + rear * 9
+    hx = math.sin(wave) * amp * 0.4
+    prims.append(ellipsoid((hx, 15.4, hz + 0.6), (3.6, 1.6, 3.4), "mouth"))
+    for a in (0, 2.1, 4.2):
+        prims.append(capsule((hx + math.cos(a) * 2.4, 16, hz + math.sin(a) * 2.4), (hx + math.cos(a) * 1.4, 18.2, hz + math.sin(a) * 1.4), 0.6, "tooth"))
+    return prims, m
+
+
+def spine_crab(clip, i):
+    """Wide spiny crab on six legs; two big pincers open on the wind-up and snap shut."""
+    m = common(clip, i)
+    prims = []
+    sw = m["swing"]; up = m["raise_"]; br = m["breath"]
+    bz = 9 + m["bob"] * 0.8 + br * 0.4
+    # a crab scuttles: the whole body sways sideways with the stride, so half-cycle frames differ
+    sx = sw * 2.6
+    prims.append(ellipsoid((0, 0, bz), (13, 10, 6.2), "shell"))
+    prims.append(ellipsoid((0, 1, bz - 3.2), (11, 8.5, 2.6), "belly"))
+    for x, y in ((-6, -3), (0, -5), (6, -3), (-3, 2), (3, 2)):  # back spines
+        prims.append(capsule((x, y, bz + 4.5), (x * 1.15, y * 1.15 - 1, bz + 10), 1.1, "spine"))
+    for side in (-1, 1):  # eye stalks
+        prims.append(capsule((side * 3, 8, bz + 3), (side * 3.6, 10, bz + 7), 0.9, "shell"))
+        prims.append(ellipsoid((side * 3.6, 10.3, bz + 7.6), (1.2, 1.2, 1.2), "eye"))
+    for side in (-1, 1):  # six legs
+        for k, ly in enumerate((5, 0, -5)):
+            ph = sw * (1 if (k + (side > 0)) % 2 else -1)
+            knee = (side * 17, ly + ph * 2.5, bz + 2.5 + max(0, ph) * 2)
+            prims.append(capsule((side * 10, ly, bz), knee, 1.6, "leg"))
+            prims.append(capsule(knee, (side * 20, ly + ph * 3.5, 1.2), 1.3, "leg"))
+    for side in (-1, 1):  # pincers
+        sh = np.array((side * 9, 8, bz + 1 + side * sw * 1.6))
+        ang = up * 0.9 + side * sw * 0.18
+        elbow = sh + rot_x(ang) @ np.array((side * 5, 7, 2))
+        claw = elbow + rot_x(ang) @ np.array((side * 1, 7, 1))
+        prims.append(capsule(sh, elbow, 2.0, "shell"))
+        prims.append(ellipsoid(claw, (4.2, 5.4, 3.6), "shell", rot_x(ang)))
+        gap = 0.5 + max(0, up) * 1.8
+        tip = claw + rot_x(ang) @ np.array((0, 6, 0))
+        prims.append(capsule(claw + np.array((0, 2, gap)), tip + np.array((0, 0, gap + 1.2)), 1.3, "spine"))
+        prims.append(capsule(claw + np.array((0, 2, -gap)), tip + np.array((0, 0, -gap - 0.6)), 1.3, "spine"))
+    if sx:  # shift the body, claws and eyes (not the planted leg tips) sideways
+        moved = []
+        for pts, nrm, mat in prims:
+            q = pts.copy()
+            if mat != "leg":
+                q[:, 0] += sx
+            moved.append((q, nrm, mat))
+        prims = moved
+    return prims, m
+
+
+def naga(clip, i, queen=False):
+    """Serpent-bodied naga: coiled tail on the ground, upright torso, finned head, a spear held in both hands."""
+    m = common(clip, i)
+    n = CLIPS[clip][0]
+    t = i / n
+    S = 1.25 if queen else 1.0
+    prims = []
+    up = m["raise_"]; br = m["breath"]
+    wave = 2 * math.pi * (t + 1 / 16) if clip == "walk" else 0
+    # tail: a curve of shrinking segments behind and to the side
+    for k in range(9):
+        a = k * 0.42
+        x = (math.sin(a) * 9 + math.sin(wave + k * 0.7) * (1.6 if clip == "walk" else 0.3)) * S
+        y = (2 - k * 3.1) * S
+        r = (5.6 - k * 0.45) * S
+        prims.append(ellipsoid((x, y, r * 0.75), (r, 3.6 * S, r * 0.72), "scale"))
+        prims.append(ellipsoid((x, y + 0.8, r * 0.3), (r * 0.7, 2.4 * S, r * 0.35), "belly"))
+    # torso rising from the front of the tail
+    base = np.array((0, 3 * S, 5 * S))
+    top = np.array((0, 4.5 * S + m["lunge"] * 0.3, 21 * S + br * 0.6))
+    prims.append(capsule(base, top, 4.6 * S, "scale"))
+    prims.append(ellipsoid(top + np.array((0, 1.6, -5 * S)), (3.4 * S, 1.8 * S, 5.5 * S), "belly"))
+    # head with a fin crest
+    hz = top[2] + 6 * S
+    prims.append(ellipsoid((0, top[1] + 1, hz), (3.8 * S, 4.2 * S, 4.0 * S), "scale"))
+    for side in (-1, 1):
+        prims.append(ellipsoid((side * 1.5 * S, top[1] + 4.6 * S, hz + 0.6), (0.8, 0.5, 0.8), "eye"))
+        prims.append(capsule((side * 3.4 * S, top[1], hz), (side * 6.4 * S, top[1] - 2, hz + 3.5 * S), 1.0 * S, "fin"))
+    prims.append(capsule((0, top[1] - 1, hz + 3 * S), (0, top[1] - 5, hz + 6 * S), 1.2 * S, "fin"))
+    if queen:  # golden crown
+        for x in (-2.6, 0, 2.6):
+            prims.append(capsule((x * S, top[1] + 1, hz + 3.6 * S), (x * S, top[1] + 1, hz + (8.5 if x == 0 else 6.6) * S), 1.0 * S, "gold"))
+    # arms and spear: raised and thrust forward on attack
+    ang = up * 1.3
+    for side in (-1, 1):
+        sh = top + np.array((side * 4.2 * S, 0, -1.5 * S))
+        hand = sh + rot_x(ang) @ np.array((side * 1.5 * S, 6 * S, -5 * S))
+        prims.append(capsule(sh, hand, 1.6 * S, "scale"))
+    grip = top + rot_x(ang) @ np.array((0, 6.5 * S, -6 * S))
+    shaft = rot_x(ang) @ np.array((0, 1, 0.55))
+    shaft = shaft / np.linalg.norm(shaft)
+    prims.append(capsule(grip - shaft * 9 * S, grip + shaft * 12 * S, 0.8 * S, "gold"))
+    prims.append(capsule(grip + shaft * 12 * S, grip + shaft * 16 * S, 1.5 * S, "gold"))
+    return prims, m
+
+
 CREATURES = {
     "frost_golem": dict(fn=frost_golem, canvas=(120, 120), anchor=(60, 94), palette={
         "k": "#121826",
@@ -265,12 +381,41 @@ CREATURES = {
         "a": "#1a5486", "b": "#349dd2", "c": "#86defc", "d": "#ffffff",
         "y": "#e8fdff",
     }, mats={"crystal": "abcd", "glow": "yyyy"}),
+    "aqueduct_leech": dict(fn=aqueduct_leech, canvas=(120, 110), anchor=(60, 80), death="squash", scale=1.4, palette={
+        "k": "#140a12",
+        "a": "#3a1426", "b": "#62233d", "c": "#91405a", "d": "#c77a8a",   # skin
+        "e": "#5a3a2a", "f": "#8a6040", "g": "#b98a5c", "h": "#e0bd8a",   # belly
+        "m": "#1c0710", "y": "#f2e6d0",
+    }, mats={"skin": "abcd", "belly": "efgh", "mouth": "mmmm", "tooth": "yyyy"}),
+    "spine_crab": dict(fn=spine_crab, canvas=(112, 104), anchor=(56, 76), death="squash", palette={
+        "k": "#1a0c08",
+        "a": "#6e2414", "b": "#a8401e", "c": "#d8702e", "d": "#f6b064",   # shell
+        "e": "#7a6a52", "f": "#a8987a", "g": "#d4c6a4", "h": "#f4ead0",   # belly / spines
+        "l": "#3a1a12", "n": "#5e2e1e", "o": "#8a4a2e", "p": "#b46a40",   # legs
+        "y": "#101010",
+    }, mats={"shell": "abcd", "belly": "efgh", "spine": "efgh", "leg": "lnop", "eye": "yyyy"}),
+    "naga": dict(fn=naga, canvas=(160, 160), anchor=(80, 118), death="squash", scale=1.3, palette={
+        "k": "#081618",
+        "a": "#0f4a4a", "b": "#1d7a72", "c": "#3fb09a", "d": "#9ee6c8",   # scale
+        "e": "#6a7a5a", "f": "#9aa880", "g": "#c8d2a6", "h": "#eef2d2",   # belly
+        "i": "#2a4a7a", "j": "#3e74b0", "l": "#68a8e0", "o": "#b4dcff",   # fin
+        "p": "#7a5a1a", "q": "#b48a2a", "r": "#e2bc4a", "s": "#fff0a0",   # gold
+        "y": "#ffe94a",
+    }, mats={"scale": "abcd", "belly": "efgh", "fin": "ijlo", "gold": "pqrs", "eye": "yyyy"}),
+    "naga_queen": dict(fn=lambda c, i: naga(c, i, queen=True), canvas=(200, 200), anchor=(100, 148), death="squash", scale=1.5, palette={
+        "k": "#0c0818",
+        "a": "#2a1450", "b": "#46248a", "c": "#7048c0", "d": "#b49cf0",   # scale (abyssal violet)
+        "e": "#3e5a5a", "f": "#5e8a84", "g": "#8cc0b4", "h": "#d0f0e4",   # belly
+        "i": "#0e4a5a", "j": "#1a7a8a", "l": "#3ab4c0", "o": "#a4f0f4",   # fin
+        "p": "#7a5a1a", "q": "#b48a2a", "r": "#e2bc4a", "s": "#fff0a0",   # gold
+        "y": "#ff5aa8",
+    }, mats={"scale": "abcd", "belly": "efgh", "fin": "ijlo", "gold": "pqrs", "eye": "yyyy"}),
 }
 
 
 # ---------------------------------------------------------------- raster
 
-def render(prims, m, facing, canvas, anchor, mats, flying=False):
+def render(prims, m, facing, canvas, anchor, mats, flying=False, squash=False, scale=1.0):
     W, H = canvas
     fx, fy = FWD[facing]
     yaw = math.atan2(fx, fy)  # rotate body +y (forward) onto the facing vector
@@ -280,9 +425,9 @@ def render(prims, m, facing, canvas, anchor, mats, flying=False):
         pts.append(p); nrms.append(n); keys.append(np.full(len(p), mat, dtype=object))
     P = np.concatenate(pts); N = np.concatenate(nrms); K = np.concatenate(keys)
     # pose-level motion in body space: lean / recoil (pitch about the feet), lunge, fall over backwards
-    P = P.copy()
-    P[:, 1] += m["lunge"] - m["recoil"] * 2.0
-    pitch = m["lean"] + (-m["fall"] * 1.45 if not flying else 0)
+    P = P.copy() * scale
+    P[:, 1] += (m["lunge"] - m["recoil"] * 2.0) * scale
+    pitch = m["lean"] + (-m["fall"] * 1.45 if not (flying or squash) else 0)
     if pitch:
         Rx = rot_x(-pitch)  # positive lean tips the head forward (+y)
         P = P @ Rx.T; N = N @ Rx.T
@@ -290,6 +435,10 @@ def render(prims, m, facing, canvas, anchor, mats, flying=False):
         f = m["fall"]
         P[:, 2] = P[:, 2] * (1 - f * 0.55) - f * 6
         P[:, :2] *= 1 + f * 0.35  # shards scatter
+    if squash and m["fall"]:  # low bodies slump flat and spread instead of tipping over
+        f = m["fall"]
+        P[:, 2] = P[:, 2] * (1 - f * 0.6)
+        P[:, :2] *= 1 + f * 0.15
     P = P @ R.T; N = N @ R.T
     sp, cp = math.sin(PITCH), math.cos(PITCH)
     sx = np.rint(anchor[0] + P[:, 0]).astype(int)
@@ -364,13 +513,14 @@ def segments(grid):
 def build(name):
     c = CREATURES[name]
     flying = name == "frost_wisp"
+    squash = c.get("death") == "squash"
     frames, clips = [], {}
     for clip, (n, durs, loop, order) in CLIPS.items():
         for d in DIRS:
             names = []
             for i in range(n):
                 prims, m = c["fn"](clip, i)
-                g = render(prims, m, d, c["canvas"], c["anchor"], c["mats"], flying)
+                g = render(prims, m, d, c["canvas"], c["anchor"], c["mats"], flying, squash, c.get("scale", 1.0))
                 fname = f"{clip}_{d}_{i}"
                 frames.append({"name": fname, "layers": {"body": {"segments": segments(g)}}})
                 names.append(fname)

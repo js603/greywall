@@ -412,7 +412,9 @@ class World {
           (this.map.ground[this.map.idx(t, n)] === `ice` ? 0.7 : 1) *
           (e === this.player && this.time < this.player.hasteUntil
             ? 0.75
-            : 1)),
+            : 1) *
+          // soaked (nagas in the aqueduct): heavier steps (design/gdd/status-effects.md)
+          (e === this.player && this.buffActive(`soak`) ? this.player.buffs.soak.step : 1)),
         (e.facing = dirFromStep(t - e.fx, n - e.fy)),
         this.occ.set(this.tileIdx(t, n), e.id),
         this.setAction(e, `walk`),
@@ -848,6 +850,20 @@ class World {
 
     if (!r && e.def.poison && this.rng() < e.def.poison) {
       this.applyPoison();
+    }
+    // soak (nagas): the player's steps slow down for a few seconds
+    if (!r && t === this.player && e.def.soak && this.rng() < e.def.soak.chance) {
+      const c = e.def.soak;
+      this.player.buffs.soak = { until: this.time + c.dur, step: c.step };
+      this.emit({ type: `soak`, until: this.time + c.dur });
+    }
+    // drain (leeches): the monster heals by part of the damage it dealt
+    if (!r && e.def.drain && d > 0 && !e.dead) {
+      const heal = Math.min(e.maxHp - e.hp, Math.round(d * e.def.drain));
+      if (heal > 0) {
+        e.hp += heal;
+        this.emit({ type: `drain`, id: e.id, amount: heal });
+      }
     }
     // frost (wisps, the titan): the player's swings slow down for a few seconds
     if (!r && t === this.player && e.def.chill && this.rng() < e.def.chill.chance) {

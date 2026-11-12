@@ -1,8 +1,114 @@
 {
-  "bog_scale": { "id": "bog_scale", "item": "bog_scale", "shop": "smith", "mats": [{ "item": "troll_hide", "count": 10 }, { "item": "bog_mud", "count": 12 }], "coins": 1500 },
-  "mist_blade": { "id": "mist_blade", "item": "mist_blade", "shop": "smith", "mats": [{ "item": "mist_essence", "count": 12 }, { "item": "marsh_venom", "count": 8 }], "coins": 1600 },
-  "tower_shield": { "id": "tower_shield", "item": "tower_shield", "shop": "smith", "mats": [{ "item": "rusted_insignia", "count": 10 }, { "item": "ruin_pelt", "count": 10 }], "coins": 1300 },
-  "garrison_mail": { "id": "garrison_mail", "item": "garrison_mail", "shop": "smith", "mats": [{ "item": "bone_dust", "count": 15 }, { "item": "plague_rag", "count": 10 }], "coins": 2600 },
-  "yeti_armor": { "id": "yeti_armor", "item": "yeti_armor", "shop": "smith", "mats": [{ "item": "yeti_fur", "count": 10 }, { "item": "snow_pelt", "count": 10 }], "coins": 3800 },
-  "frost_ring": { "id": "frost_ring", "item": "frost_ring", "shop": "smith", "mats": [{ "item": "frost_shard", "count": 12 }, { "item": "golem_core", "count": 6 }], "coins": 3000 }
+  "bog_scale": {
+    "id": "bog_scale",
+    "item": "bog_scale",
+    "shop": "smith",
+    "mats": [
+      {
+        "item": "troll_hide",
+        "count": 10
+      },
+      {
+        "item": "bog_mud",
+        "count": 12
+      }
+    ],
+    "coins": 1500
+  },
+  "mist_blade": {
+    "id": "mist_blade",
+    "item": "mist_blade",
+    "shop": "smith",
+    "mats": [
+      {
+        "item": "mist_essence",
+        "count": 12
+      },
+      {
+        "item": "marsh_venom",
+        "count": 8
+      }
+    ],
+    "coins": 1600
+  },
+  "tower_shield": {
+    "id": "tower_shield",
+    "item": "tower_shield",
+    "shop": "smith",
+    "mats": [
+      {
+        "item": "rusted_insignia",
+        "count": 10
+      },
+      {
+        "item": "ruin_pelt",
+        "count": 10
+      }
+    ],
+    "coins": 1300
+  },
+  "garrison_mail": {
+    "id": "garrison_mail",
+    "item": "garrison_mail",
+    "shop": "smith",
+    "mats": [
+      {
+        "item": "bone_dust",
+        "count": 15
+      },
+      {
+        "item": "plague_rag",
+        "count": 10
+      }
+    ],
+    "coins": 2600
+  },
+  "yeti_armor": {
+    "id": "yeti_armor",
+    "item": "yeti_armor",
+    "shop": "smith",
+    "mats": [
+      {
+        "item": "yeti_fur",
+        "count": 10
+      },
+      {
+        "item": "snow_pelt",
+        "count": 10
+      }
+    ],
+    "coins": 3800
+  },
+  "frost_ring": {
+    "id": "frost_ring",
+    "item": "frost_ring",
+    "shop": "smith",
+    "mats": [
+      {
+        "item": "frost_shard",
+        "count": 12
+      },
+      {
+        "item": "golem_core",
+        "count": 6
+      }
+    ],
+    "coins": 3000
+  },
+  "naga_scale_mail": {
+    "id": "naga_scale_mail",
+    "item": "naga_scale_mail",
+    "shop": "smith",
+    "mats": [
+      {
+        "item": "naga_scale",
+        "count": 10
+      },
+      {
+        "item": "crab_spine",
+        "count": 10
+      }
+    ],
+    "coins": 4800
+  }
 }

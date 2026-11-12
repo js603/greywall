@@ -9,7 +9,8 @@ import { findPath } from '../src/core/pathfind.js';
 
 // marsh was 'bd7063ba' before the north road to the ruins was added; ruins 'c8c78717' before the north postern to the pass
 // re-pinned 2026-11-12: hunters' camps at the entrances, marsh entrance cleared, fence in the ruins camp (design/gdd/camps.md)
-const PINNED = { marsh: '204f7087', ruins: 'f8ede561', pass: 'f5b3289f' };
+// pass re-pinned for the sluice gate to the aqueduct; aqueduct pinned on creation (act2-ancient-aqueduct.md)
+const PINNED = { marsh: '204f7087', ruins: 'f8ede561', pass: 'cb035154', aqueduct: 'daa9bcb2' };
 
 test('act 2 maps are deterministic and pinned', () => {
   for (const [id, hash] of Object.entries(PINNED)) {
@@ -39,7 +40,7 @@ test('marsh and orc lands link both ways onto walkable tiles', () => {
   for (const e of toOrc) assert.ok(orc.walkable(e.tx, e.ty), `orc ${e.tx},${e.ty}`);
 });
 
-for (const area of ['marsh', 'ruins', 'pass'])
+for (const area of ['marsh', 'ruins', 'pass', 'aqueduct'])
 test(`every ${area} spawn has its monster, fills up, and is reachable on foot from the entrance`, () => {
   const w = new World(MAP_BUILDERS, 9);
   w.loadMap(area);
@@ -126,7 +127,7 @@ test('frost: a wisp hit can chill the player, slowing swings until it wears off'
 });
 
 test('camps: safe ring at each Act 2 entrance, merchant inside, no spawn within 8 tiles of the marsh gate', () => {
-  for (const id of ['marsh', 'ruins', 'pass']) {
+  for (const id of ['marsh', 'ruins', 'pass', 'aqueduct']) {
     const m = MAP_BUILDERS[id]();
     assert.equal(m.camps?.length, 1, id);
     const c = m.camps[0];
@@ -138,4 +139,55 @@ test('camps: safe ring at each Act 2 entrance, merchant inside, no spawn within 
   }
   const marsh = MAP_BUILDERS.marsh();
   for (const s of marsh.spawns) assert.ok(Math.max(Math.abs(s.x - 55), Math.abs(s.y - 26)) - s.r >= 8, `${s.kind} too close to the gate`);
+});
+
+
+test('aqueduct_soak_naga_hit_slows_steps_until_it_wears_off', () => {
+  // Arrange: a player next to a naga whose soak always lands
+  const w = new World(MAP_BUILDERS, 11);
+  w.gainXp(XP_TABLE[28]);
+  w.loadMap('aqueduct');
+  const naga = w.monsters.find((m) => m.def.id === 'naga');
+  naga.def = { ...naga.def, soak: { chance: 1, dur: 4, step: 1.3 } };
+  // Act
+  w.landHit(naga, w.player, 'basic');
+  // Assert: soaked now (unless the swing missed or was blocked), gone after 4 s
+  if (w.buffActive('soak')) {
+    assert.equal(w.player.buffs.soak.step, 1.3);
+    w.time += 4.1;
+    assert.equal(w.buffActive('soak'), false);
+  }
+  let soaked = false;
+  for (let k = 0; k < 20 && !soaked; k++) { w.landHit(naga, w.player, 'basic'); soaked = w.buffActive('soak'); }
+  assert.ok(soaked, 'twenty hits soak at least once');
+});
+
+test('aqueduct_drain_leech_hit_heals_the_leech_by_half_the_damage', () => {
+  // Arrange: a wounded leech
+  const w = new World(MAP_BUILDERS, 12);
+  w.gainXp(XP_TABLE[28]);
+  w.loadMap('aqueduct');
+  const leech = w.monsters.find((m) => m.def.id === 'aqueduct_leech');
+  leech.hp = 100;
+  // Act: hit until one lands
+  let before = w.player.hp, healed = 0;
+  for (let k = 0; k < 20 && !healed; k++) {
+    before = w.player.hp; const hp0 = leech.hp;
+    w.landHit(leech, w.player, 'basic');
+    healed = leech.hp - hp0;
+    if (healed) assert.equal(healed, Math.round((before - w.player.hp + (w.player.ward ?? 0) * 0) * 0.5));
+  }
+  // Assert
+  assert.ok(healed > 0, 'a landed bite heals the leech');
+});
+
+test('aqueduct_pass_gate_links_both_ways', () => {
+  const pass = MAP_BUILDERS.pass();
+  const aq = MAP_BUILDERS.aqueduct();
+  const out = pass.exits.filter((e) => e.to === 'aqueduct');
+  const back = aq.exits.filter((e) => e.to === 'pass');
+  assert.equal(out.length, 2);
+  assert.equal(back.length, 2);
+  for (const e of out) assert.ok(aq.walkable(e.tx, e.ty), `arrive ${e.tx},${e.ty}`);
+  for (const e of back) assert.ok(pass.walkable(e.tx, e.ty), `return ${e.tx},${e.ty}`);
 });

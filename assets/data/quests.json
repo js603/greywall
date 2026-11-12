@@ -744,5 +744,130 @@
     ],
     "rewardCoins": 3000,
     "rewardXp": 12000
+  },
+  {
+    "id": "q_aqueduct",
+    "name": "고대 수로",
+    "giver": "guard",
+    "minLevel": 27,
+    "after": "q_pass",
+    "summary": "얼어붙은 고개 동쪽 수문 아래 고대 수로의 거머리 12마리를 처치한다.",
+    "hint": "고개 동쪽, 골렘의 비탈 끝에 무너진 수문이 있다. 수로 입구 야영지에서 물약을 채워라.",
+    "kill": {
+      "monster": "aqueduct_leech",
+      "count": 12
+    },
+    "rewardItems": [
+      {
+        "item": "potion_clear",
+        "count": 8
+      }
+    ],
+    "rewardCoins": 1300,
+    "rewardXp": 9000
+  },
+  {
+    "id": "q_spines",
+    "name": "가재 가시",
+    "giver": "smith",
+    "minLevel": 28,
+    "after": "q_aqueduct",
+    "summary": "가시 가재에게서 가재 가시 10개를 모아 대장장이 고른에게 가져간다.",
+    "hint": "가재는 수로 남쪽 통로에 산다. 등딱지가 단단해 자주 막는다. 기술로 밀어붙여라.",
+    "bring": [
+      {
+        "item": "crab_spine",
+        "count": 10
+      }
+    ],
+    "rewardItems": [
+      {
+        "item": "scroll_ench_a",
+        "count": 2
+      }
+    ],
+    "rewardCoins": 1400,
+    "rewardXp": 10000
+  },
+  {
+    "id": "q_monks",
+    "name": "익사한 수도승",
+    "giver": "priest",
+    "minLevel": 28,
+    "after": "q_titan",
+    "summary": "물에 잠긴 수도원의 익사한 수도승 10구를 잠재운다.",
+    "hint": "수로 북서쪽, 옛 수도원 터에 그들이 떠돈다. 언데드다.",
+    "kill": {
+      "monster": "drowned_monk",
+      "count": 10
+    },
+    "rewardItems": [
+      {
+        "item": "holy_water",
+        "count": 4
+      },
+      {
+        "item": "scroll_ench_w",
+        "count": 1
+      }
+    ],
+    "rewardCoins": 1500,
+    "rewardXp": 10000
+  },
+  {
+    "id": "q_scales",
+    "name": "나가 비늘",
+    "giver": "alchemist",
+    "minLevel": 29,
+    "after": "q_shards",
+    "summary": "물비늘 나가에게서 나가 비늘 8개를 모아 연금술사 미라에게 가져간다.",
+    "hint": "나가는 동쪽 물길 건너에서 물줄기를 쏜다. 맞으면 발이 무거워진다.",
+    "bring": [
+      {
+        "item": "naga_scale",
+        "count": 8
+      }
+    ],
+    "rewardItems": [
+      {
+        "item": "potion_mana",
+        "count": 4
+      },
+      {
+        "item": "potion_brave",
+        "count": 3
+      }
+    ],
+    "rewardCoins": 1600,
+    "rewardXp": 11000
+  },
+  {
+    "id": "q_queen",
+    "name": "심연의 나가 여왕",
+    "giver": "trainer",
+    "minLevel": 29,
+    "after": "q_yeti",
+    "summary": "고대 수로 저수조의 섬에 있는 심연의 나가 여왕 메르시아를 쓰러뜨린다.",
+    "hint": "여왕은 섬 위에서 멀리 물줄기를 쏜다. 북쪽 다리로 저수조에 다가가 계단으로 올라라.",
+    "kill": {
+      "monster": "naga_queen",
+      "count": 1
+    },
+    "rewardItems": [
+      {
+        "item": "abyss_blade",
+        "count": 1
+      },
+      {
+        "item": "scroll_ench_w",
+        "count": 2
+      },
+      {
+        "item": "scroll_ench_a",
+        "count": 2
+      }
+    ],
+    "rewardCoins": 4000,
+    "rewardXp": 16000
   }
 ]

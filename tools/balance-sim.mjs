@@ -18,6 +18,7 @@ const RUINS_IN = ['mist_blade', 'bog_scale', 'iron_shield', 'witch_charm'];
 const RUINS = ['mist_blade', 'garrison_mail', 'tower_shield', 'witch_charm'];
 const RUINS_END = ['captain_sword', 'garrison_mail', 'tower_shield', 'witch_charm'];
 const PASS = ['captain_sword', 'yeti_armor', 'tower_shield', 'frost_ring'];
+const AQUEDUCT = ['captain_sword', 'naga_scale_mail', 'tower_shield', 'frost_ring'];
 const CLASSES3 = ['knight', 'berserker', 'paladin'];
 const CASES = [
   ['forest', 1, STARTER], ['forest', 3, STARTER], ['forest', 5, MID],
@@ -30,6 +31,8 @@ const CASES = [
   ...CLASSES3.map((c) => ['ruins', 24, RUINS_END, c]),
   ['pass', 24, RUINS], ...CLASSES3.map((c) => ['pass', 24, RUINS_END, c]),
   ...CLASSES3.map((c) => ['pass', 27, PASS, c]),
+  ...CLASSES3.map((c) => ['aqueduct', 28, PASS, c]),
+  ...CLASSES3.map((c) => ['aqueduct', 29, AQUEDUCT, c]),
 ];
 
 const RED = 25; // potion_red price: the sim drinks red potions

@@ -57,7 +57,7 @@ Lv24 감시탑 장비 XP 714/분·물약 7.1병/분, Lv27 고개 장비 기사 8
 - 이 문서가 의존: 무너진 감시탑(북쪽 쪽문 추가로 감시탑 맵 해시 갱신), 전직(직업별 측정), 상태 효과(서리),
   장비와 경제(`equipment-economy.md`: 설인 털갑옷·서리 반지 제작, 하임 의뢰 보상 대검), codeart2d 몬스터
   (`tools/codeart/`), pixelfx 이펙트(`tools/fx/import_pixelfx.py` → `tools/pack-fx.mjs`).
-- 이 문서에 의존: 2막 4지역(고대 수로, Lv 28–30).
+- 이 문서에 의존: 2막 4지역(고대 수로, Lv 28–30, `act2-ancient-aqueduct.md`). 동쪽 비탈 끝(49, 22–23)의 수문이 수로로 이어진다(맵 해시 갱신).
 
 ## Tuning Knobs
 

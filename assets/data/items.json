@@ -717,5 +717,74 @@
     "stack": true,
     "desc": "얼음 골렘의 가슴에서 빛나던 돌.",
     "weight": 5
+  },
+  "leech_sac": {
+    "id": "leech_sac",
+    "name": "거머리 피주머니",
+    "icon": "leech_sac",
+    "type": "material",
+    "price": 60,
+    "stack": true,
+    "desc": "수로 거머리가 빨아들인 피가 고인 주머니. 연금술사가 탐낸다.",
+    "weight": 2
+  },
+  "crab_spine": {
+    "id": "crab_spine",
+    "name": "가재 가시",
+    "icon": "crab_spine",
+    "type": "material",
+    "price": 75,
+    "stack": true,
+    "desc": "가시 가재의 등딱지에서 뽑은 단단한 가시. 대장장이 고른이 찾는다.",
+    "weight": 3
+  },
+  "monk_rosary": {
+    "id": "monk_rosary",
+    "name": "젖은 묵주",
+    "icon": "monk_rosary",
+    "type": "material",
+    "price": 65,
+    "stack": true,
+    "desc": "물에 잠긴 수도원의 묵주. 사제 엘린이 거두고 싶어 한다.",
+    "weight": 1
+  },
+  "naga_scale": {
+    "id": "naga_scale",
+    "name": "나가 비늘",
+    "icon": "naga_scale",
+    "type": "material",
+    "price": 80,
+    "stack": true,
+    "desc": "푸른 빛이 도는 물비늘 나가의 비늘. 물이 스미지 않는다.",
+    "weight": 1
+  },
+  "naga_scale_mail": {
+    "id": "naga_scale_mail",
+    "name": "나가 비늘 갑옷",
+    "icon": "naga_scale_mail",
+    "type": "equip",
+    "slot": "armor",
+    "ac": 15,
+    "price": 7200,
+    "reqLevel": 28,
+    "desc": "나가 비늘을 가재 가시로 엮은 갑옷. 가볍고 물이 스미지 않는다.",
+    "weight": 120
+  },
+  "abyss_blade": {
+    "id": "abyss_blade",
+    "name": "심연의 검",
+    "icon": "abyss_blade",
+    "type": "equip",
+    "slot": "weapon",
+    "dmg": [
+      13,
+      22
+    ],
+    "interval": 1.75,
+    "acc": 5,
+    "price": 8000,
+    "reqLevel": 29,
+    "desc": "여왕의 왕좌 아래 잠겨 있던 검. 칼날에서 물이 마르지 않는다.",
+    "weight": 68
   }
 }
