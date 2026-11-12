@@ -1,0 +1,63 @@
+{
+  "floors": 10,
+  "minLevel": 28,
+  "requiresQuest": "q_queen",
+  "weekEpoch": "2026-01-05",
+  "size": 44,
+  "scale": {
+    "hp": 0.05,
+    "dmg": 0.1,
+    "coins": 0.1
+  },
+  "pool": [
+    "snow_wolf",
+    "frost_wisp",
+    "yeti",
+    "frost_golem",
+    "aqueduct_leech",
+    "spine_crab",
+    "drowned_monk",
+    "naga"
+  ],
+  "kindsPerFloor": 3,
+  "bossFloors": {
+    "5": {
+      "pick": [
+        "fog_witch",
+        "fallen_captain"
+      ],
+      "hp": 1.4,
+      "dmg": 1.3
+    },
+    "10": {
+      "pick": [
+        "glacier_titan",
+        "naga_queen"
+      ],
+      "hp": 1.15,
+      "dmg": 1.35
+    }
+  },
+  "reward": {
+    "coinsPerFloor": 150,
+    "items": [
+      {
+        "from": 3,
+        "item": "scroll_ench_a",
+        "count": 1
+      },
+      {
+        "from": 6,
+        "item": "scroll_ench_w",
+        "count": 1
+      },
+      {
+        "from": 10,
+        "item": "potion_clear",
+        "count": 5
+      }
+    ],
+    "weeklyClearCoins": 3000
+  },
+  "rooms": 7
+}

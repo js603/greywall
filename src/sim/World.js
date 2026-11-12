@@ -9,6 +9,8 @@ import { SHOPS } from "../data/shops.js";
 import { RECIPES } from "../data/recipes.js";
 import { SKILLS } from "../data/skills.js";
 import { CLASSES } from "../data/classes.js";
+import { ABYSS, ACHIEVEMENTS } from "../data/abyss.js";
+import { echoOf } from "../maps/abyss.js";
 import {
   ACTION_TIMING,
   DAY_LENGTH,
@@ -48,7 +50,15 @@ class World {
       firstStrikeBookAt: null,
       firstStrikeSource: null,
       swingLog: [],
+      // endgame (design/gdd/endgame-abyss.md): weekly record, named kills and achievements ride in stats
+      abyss: { week: -1, best: 0, bestEver: 0, clears: 0 },
+      bossKills: {},
+      ach: [],
     };
+    /** Week number for the abyss seed; main.js sets it from the clock (rules never read it). */
+    this.week = 0;
+    /** The abyss run in progress: {week, floor}, or null outside the dungeon. */
+    this.abyssRun = null;
 
     this.tutorial = {};
     this.pendingExit = null;
@@ -304,8 +314,88 @@ class World {
     e.hp = Math.min(e.hp, e.maxHp);
     e.mp = Math.min(e.mp, e.maxMp);
   }
+  /** Living monsters left on this abyss floor (the stairs down open at 0). */
+  abyssLeft() {
+    return this.map.abyss ? this.monsters.filter((m) => !m.dead).length : 0;
+  }
+  /** Why the gatekeeper will not let the player in, or null. */
+  abyssBlocker() {
+    if (this.player.level < ABYSS.minLevel) return `레벨 ${ABYSS.minLevel} 이상만 들어갈 수 있다.`;
+    if (this.quests[ABYSS.requiresQuest]?.state !== `done`) return `심연의 나가 여왕을 쓰러뜨린 자만 들어갈 수 있다.`;
+    return null;
+  }
+  /** This week's record and the two echo bosses, for the gatekeeper's dialog. */
+  abyssInfo() {
+    const rec = this.stats.abyss;
+    return {
+      week: this.week,
+      best: rec.week === this.week ? rec.best : 0,
+      bestEver: rec.bestEver,
+      clears: rec.clears,
+      echoes: Object.keys(ABYSS.bossFloors).map((f) => ({ floor: Number(f), name: MONSTERS[echoOf(this.week, Number(f))].name })),
+    };
+  }
+  /** Starts a run at floor 1 of this week's corridor. */
+  enterAbyss() {
+    const why = this.abyssBlocker();
+    if (why) {
+      this.msg(why, `warn`);
+      return false;
+    }
+    this.abyssRun = { week: this.week, floor: 1 };
+    this.pendingExit = { to: `abyss` };
+    return true;
+  }
+  /** Floor reward and the weekly record (design/gdd/endgame-abyss.md). */
+  abyssFloorCleared() {
+    const { week, floor } = this.map.abyss;
+    const R = ABYSS.reward;
+    const coins = R.coinsPerFloor * floor;
+    this.player.coins += coins;
+    const got = [`동전 ${coins}`];
+    const rec = this.stats.abyss;
+    if (rec.week !== week) Object.assign(rec, { week, best: 0 });
+    // item rewards come once per floor per week, so the corridor is not a scroll farm
+    if (floor > rec.best)
+      for (const r of R.items)
+        if (floor >= r.from) {
+          this.give(r.item, r.count);
+          got.push(`${ITEMS[r.item].name} ${r.count}`);
+        }
+    if (floor >= ABYSS.floors && rec.best < ABYSS.floors) {
+      this.player.coins += R.weeklyClearCoins;
+      got.push(`이번 주 첫 완주 동전 ${R.weeklyClearCoins}`);
+    }
+    if (floor >= ABYSS.floors) rec.clears++;
+    rec.best = Math.max(rec.best, floor);
+    rec.bestEver = Math.max(rec.bestEver, floor);
+    this.msg(`${floor}층을 정화했다! ${got.join(`, `)}. ${floor >= ABYSS.floors ? `출구가 열렸다.` : `아래층 계단이 열렸다.`}`, `quest`);
+    this.emit({ type: `abyssclear`, floor });
+    this.checkAchievements();
+  }
+  /** Unlocks every achievement whose condition now holds (assets/data/achievements.json). */
+  checkAchievements() {
+    const p = this.player;
+    const st = this.stats;
+    const met = (a) =>
+      (a.level && p.level >= a.level) ||
+      (a.cls && p.cls) ||
+      (a.kill && st.bossKills[a.kill] > 0) ||
+      (a.kills && st.kills >= a.kills) ||
+      (a.plus && Object.values(p.equipPlus).some((v) => v >= a.plus)) ||
+      (a.allQuests && QUESTS.every((q) => this.quests[q.id].state === `done`)) ||
+      (a.abyss && st.abyss.bestEver >= a.abyss);
+    for (const a of ACHIEVEMENTS) {
+      if (st.ach.includes(a.id) || !met(a)) continue;
+      st.ach.push(a.id);
+      this.msg(`업적 달성: ${a.name} — ${a.desc}`, `quest`);
+      this.emit({ type: `achieve`, id: a.id, name: a.name });
+    }
+  }
   loadMap(e, t, n) {
-    this.map = this.maps[e]();
+    if (e !== `abyss`) this.abyssRun = null;
+    else this.abyssRun ??= { week: this.week, floor: 1 };
+    this.map = this.maps[e](e === `abyss` ? this.abyssRun : undefined);
     this.occ.clear();
     this.monsters = [];
     this.npcs = [];
@@ -360,7 +450,8 @@ class World {
   }
   spawnMonster(e, t = false) {
     let n = this.map.spawns[e];
-    let r = MONSTERS[n.kind];
+    // abyss spawns carry their own depth-scaled copy of the monster
+    let r = n.def ?? MONSTERS[n.kind];
     if (n.nightOnly && !this.isNight()) {
       return null;
     }
@@ -457,11 +548,14 @@ class World {
       return t.x === e.x && t.y === e.y;
     });
 
-    if (t) {
+    if (t && t.locked && this.abyssLeft() > 0) {
+      this.msg(`심연의 기운이 계단을 막고 있다. 남은 적 ${this.abyssLeft()}`, `warn`);
+    } else if (t) {
       this.pendingExit = {
         to: t.to,
         tx: t.tx,
         ty: t.ty,
+        floor: t.floor,
       };
 
       e.path = [];
@@ -1006,6 +1100,7 @@ class World {
     }
 
     this.stats.kills++;
+    if (e.def.named) this.stats.bossKills[e.def.id] = (this.stats.bossKills[e.def.id] ?? 0) + 1;
     r.lawful = Math.min(32767, r.lawful + (e.def.lawful ?? 1));
     let i = e.def.xp;
 
@@ -1035,6 +1130,7 @@ class World {
           this.msg(`[${t.name}] 목표 달성! 의뢰인에게 돌아가자.`, `quest`));
       }
     }
+    if (this.map.abyss && this.abyssLeft() === 0) this.abyssFloorCleared();
     let a = randInt(this.rng, e.def.coins[0], e.def.coins[1]);
     let o = this.dropSpots(e.x, e.y);
     let s = 0;
@@ -2153,6 +2249,7 @@ class World {
     this.updateStatus();
     this.updateNight();
     this.updateRespawn();
+    if (Math.floor(this.time) !== Math.floor(this.time - t)) this.checkAchievements();
 
     if (this.drops.length) {
       this.drops = this.drops.filter((e) => {
@@ -2163,6 +2260,7 @@ class World {
     if (this.pendingExit && !this.player.moving) {
       let e = this.pendingExit;
       this.pendingExit = null;
+      if (e.floor) this.abyssRun = { week: this.abyssRun?.week ?? this.week, floor: e.floor };
       this.loadMap(e.to, e.tx, e.ty);
     }
   }

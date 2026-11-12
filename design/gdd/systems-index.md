@@ -30,7 +30,7 @@
 | 2막 무너진 감시탑 | `act2-ruined-watchtower.md` | In Review (수정 완료) | 20–24 |
 | 2막 얼어붙은 고개 | `act2-frozen-pass.md` | Approved | 24–28 |
 | 2막 고대 수로 | `act2-ancient-aqueduct.md` | In Review (신규) | 28–30 |
-| 엔드게임 「심연 회랑」 | — | Planned | 30 |
+| 엔드게임 「심연 회랑」(주간 시드 던전·메아리 보스·업적) | `endgame-abyss.md` | In Review (신규) | 30 |
 
 ## 표현·플랫폼
 

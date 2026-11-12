@@ -333,10 +333,12 @@ function applySave(e, t) {
   e.recalc();
   n.hp = Math.min(n.maxHp, Math.max(1, t.hp));
   n.mp = Math.min(n.maxMp, t.mp);
-  e.loadMap(t.map, t.x, t.y);
+  // a run in the abyss is not resumed: the player wakes by the gatekeeper (design/gdd/endgame-abyss.md)
+  if (t.map === `abyss`) e.loadMap(`aqueduct`, 6, 27);
+  else e.loadMap(t.map, t.x, t.y);
   applyTimed(e, t.timed);
 
-  if (!e.map.walkable(t.x, t.y)) {
+  if (t.map !== `abyss` && !e.map.walkable(t.x, t.y)) {
     e.loadMap(t.map);
   }
 

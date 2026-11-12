@@ -83,6 +83,8 @@ function buildAqueduct() {
     m.ground[m.idx(e.x + 1, e.y)] = `road`;
   }
   addCamp(m, { x: 5, y: 25, ground: `plaza`, npc: { id: `camp_aqueduct`, name: `수로 야영지 상인 네라`, x: 6, y: 24 } });
+  // the gatekeeper of the endgame dungeon stands by the camp (design/gdd/endgame-abyss.md)
+  m.npcs.push({ id: `abyss_gate`, name: `회랑 문지기 오르넬`, kind: `npc_priest`, x: 4, y: 28, facing: `SE`, role: `abyss` });
   m.spawns.push(...SPAWNS);
   m.start = { x: 2, y: 25 };
   randomizeVariants(m, rng);

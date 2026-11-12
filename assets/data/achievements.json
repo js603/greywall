@@ -1,0 +1,18 @@
+[
+  { "id": "lv10", "name": "첫 번째 고비", "desc": "레벨 10 달성", "level": 10 },
+  { "id": "lv20", "name": "성벽 너머로", "desc": "레벨 20 달성", "level": 20 },
+  { "id": "lv30", "name": "정점", "desc": "레벨 30 달성", "level": 30 },
+  { "id": "class", "name": "나의 길", "desc": "전직", "cls": true },
+  { "id": "k_orc_chief", "name": "붉은엄니의 몰락", "desc": "오크 족장 처치", "kill": "orc_chief" },
+  { "id": "k_lich", "name": "은광의 정화", "desc": "리치 처치", "kill": "lich" },
+  { "id": "k_fog_witch", "name": "안개를 걷다", "desc": "안개 마녀 처치", "kill": "fog_witch" },
+  { "id": "k_fallen_captain", "name": "마지막 경계", "desc": "타락한 감시대장 처치", "kill": "fallen_captain" },
+  { "id": "k_glacier_titan", "name": "빙하를 깨다", "desc": "빙하 거인 처치", "kill": "glacier_titan" },
+  { "id": "k_naga_queen", "name": "물속 왕좌", "desc": "심연의 나가 여왕 처치", "kill": "naga_queen" },
+  { "id": "kills1000", "name": "천 번의 일격", "desc": "몬스터 1,000마리 처치", "kills": 1000 },
+  { "id": "plus7", "name": "빛나는 칼날", "desc": "장비 하나를 +7까지 강화", "plus": 7 },
+  { "id": "plus9", "name": "대장장이의 경외", "desc": "장비 하나를 +9까지 강화", "plus": 9 },
+  { "id": "quests", "name": "그레이월의 은인", "desc": "모든 의뢰 완료", "allQuests": true },
+  { "id": "abyss5", "name": "메아리를 듣다", "desc": "심연 회랑 5층 돌파", "abyss": 5 },
+  { "id": "abyss10", "name": "심연의 끝", "desc": "심연 회랑 10층 돌파", "abyss": 10 }
+]

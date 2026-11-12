@@ -14,6 +14,7 @@ import { ENCHANT_SAFE } from "../sim/constants.js";
 import { escapeHtml, qs } from "./dom.js";
 import { iconHtml } from "./icons.js";
 import { Minimap } from "./Minimap.js";
+import { ACHIEVEMENTS } from "../data/abyss.js";
 
 const DEFAULT_QUICKSLOTS = [
   {
@@ -481,6 +482,10 @@ class UI {
         this.openDialog(e.npc);
         break;
       }
+      case `achieve`: {
+        this.toast(`업적 달성: ${e.name}`);
+        break;
+      }
       case `pdeath`: {
         clearTimeout(this.deathTimer);
 
@@ -925,6 +930,10 @@ class UI {
           n.priestHeal();
           return this.render();
         }
+        case `abyss`: {
+          if (n.enterAbyss()) return this.close();
+          return this.render();
+        }
         case `fullscreen`: {
           pwa.toggleFullscreen().then(() => {
             return setTimeout(() => {
@@ -1298,6 +1307,10 @@ class UI {
   /** HUD line for the first quest in progress (UX review: current goal at a glance). */
   objectiveLine() {
     const w = this.w;
+    if (w.map.abyss) {
+      const left = w.abyssLeft();
+      return `<div class="goal">▸ ${escapeHtml(w.map.name)}: ${left ? `남은 적 ${left}` : `<span class="good">계단이 열렸다</span>`}</div>`;
+    }
     const q = QUESTS.find((x) => w.quests[x.id]?.state === `ready` || w.quests[x.id]?.state === `active`);
     if (!q) return ``;
     const st = w.quests[q.id];
@@ -1400,9 +1413,13 @@ class UI {
     );
     const done = QUESTS.filter((q) => this.w.quests[q.id].state === `done`).length;
     const head = `<div class="dim">진행 중 ${list.length} · 완료 ${done} / ${QUESTS.length}</div>`;
-    return list.length
+    const got = this.w.stats.ach;
+    const ach = `<details class="ach"><summary>업적 ${got.length} / ${ACHIEVEMENTS.length}</summary>${ACHIEVEMENTS.map(
+      (a) => `<div class="${got.includes(a.id) ? `good` : `dim`}">${got.includes(a.id) ? `★` : `☆`} <b>${escapeHtml(a.name)}</b> — ${escapeHtml(a.desc)}</div>`
+    ).join(``)}</details>`;
+    return (list.length
       ? head + list.map((q) => this.questBlock(q.id, false)).join(``)
-      : head + `<p class="dim">진행 중인 의뢰가 없습니다. 머리 위에 <b class="gold-t">!</b> 표시가 있는 주민에게 말을 걸어 의뢰를 받으세요. <b class="gold-t">?</b>는 완료 보고를 기다리는 주민입니다.</p>`;
+      : head + `<p class="dim">진행 중인 의뢰가 없습니다. 머리 위에 <b class="gold-t">!</b> 표시가 있는 주민에게 말을 걸어 의뢰를 받으세요. <b class="gold-t">?</b>는 완료 보고를 기다리는 주민입니다.</p>`) + ach;
   }
   r_dialog() {
     let e = this.w;
@@ -1442,6 +1459,15 @@ class UI {
               .join(` · `)}</div></div><button class="btn gold" data-cls="${c.id}">${c.name}(으)로 전직</button></div>`
         )
         .join(``)}</div>`;
+    } else if (t === `abyss_gate`) {
+      const a = e.abyssInfo();
+      const why = e.abyssBlocker();
+      i = `<div class="item"><div class="grow"><b class="gold-t">이번 주 심연 회랑</b> <span class="dim">(${a.week}주차 · 매주 월요일 바뀜)</span>
+        <div>${a.echoes.map((x) => `${x.floor}층 메아리: <b>${escapeHtml(x.name)}</b>`).join(` · `)}</div>
+        <div class="dim">이번 주 기록 ${a.best}층 · 최고 기록 ${a.bestEver}층 · 완주 ${a.clears}회</div>
+        <div class="dim">층마다 적을 모두 쓰러뜨리면 아래층 계단이 열린다. 쓰러지거나 귀환하면 다음엔 1층부터.</div>
+        ${why ? `<div class="warn">${escapeHtml(why)}</div>` : ``}</div>
+        <button class="btn gold" data-act="abyss"${why ? ` disabled` : ``}>회랑에 들어선다</button></div>`;
     } else if (t === `trainer` && e.quests.q_strike.state === `locked`) {
       i = `<div class="dim">하르덴: "숲의 늑대 정도는 상대해 보고(경비병 브람의 의뢰), 레벨 4는 되어서 오게."</div>`;
     }

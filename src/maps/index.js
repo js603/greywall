@@ -7,6 +7,7 @@ import { buildMarsh } from "./marsh.js";
 import { buildRuins } from "./ruins.js";
 import { buildPass } from "./pass.js";
 import { buildAqueduct } from "./aqueduct.js";
+import { buildAbyss } from "./abyss.js";
 
 const MAP_BUILDERS = {
   town: buildTown,
@@ -18,6 +19,7 @@ const MAP_BUILDERS = {
   ruins: buildRuins,
   pass: buildPass,
   aqueduct: buildAqueduct,
+  abyss: buildAbyss,
 };
 
 /** Display names for the start screen and save labels, without building the maps. */
@@ -31,6 +33,7 @@ const MAP_NAMES = {
   ruins: `무너진 감시탑`,
   pass: `얼어붙은 고개`,
   aqueduct: `고대 수로`,
+  abyss: `심연 회랑`,
 };
 
 export { MAP_BUILDERS, MAP_NAMES };

@@ -4,6 +4,7 @@ import { audio } from "./audio.js";
 import { createBotDriver } from "./bot/Bot.js";
 import { ITEMS } from "./data/items.js";
 import { MAP_BUILDERS, MAP_NAMES } from "./maps/index.js";
+import { weekOf } from "./data/abyss.js";
 import { initPwa, pwa } from "./pwa.js";
 import { WorldScene } from "./render/WorldScene.js";
 import { applySave, exportSave, importSave, parseSave, saveFileName, saveKeys, writeSave } from "./save.js";
@@ -18,6 +19,7 @@ const DEV = params.get(`dev`) === `1`;
 const BOT = params.get(`bot`) === `1`;
 let botDriver = null;
 let world = new World(MAP_BUILDERS, Date.now() & 2147483647 || 1);
+world.week = weekOf(Date.now());
 world.dev = DEV;
 let scene = null;
 let game = null;
@@ -229,6 +231,7 @@ function showRecovery(e) {
 }
 function startGame(e) {
   world = new World(MAP_BUILDERS, Date.now() & 2147483647 || 1);
+  world.week = weekOf(Date.now());
   world.dev = DEV;
 
   if (e === `continue`) {

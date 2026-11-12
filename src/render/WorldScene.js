@@ -602,6 +602,9 @@ class WorldScene extends Phaser.Scene {
       n.spr.setTintFill(16777215);
     } else if (this.hover === e.id && e.kind !== `player`) {
       n.spr.setTint(16770736);
+    } else if (e.def?.tint) {
+      // abyss echoes (design/gdd/endgame-abyss.md): the named boss's sprite, tinted
+      n.spr.setTint(e.def.tint);
     } else {
       n.spr.clearTint();
     }

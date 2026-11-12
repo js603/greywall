@@ -10,7 +10,8 @@ import { findPath } from '../src/core/pathfind.js';
 // marsh was 'bd7063ba' before the north road to the ruins was added; ruins 'c8c78717' before the north postern to the pass
 // re-pinned 2026-11-12: hunters' camps at the entrances, marsh entrance cleared, fence in the ruins camp (design/gdd/camps.md)
 // pass re-pinned for the sluice gate to the aqueduct; aqueduct pinned on creation (act2-ancient-aqueduct.md)
-const PINNED = { marsh: '204f7087', ruins: 'f8ede561', pass: 'cb035154', aqueduct: 'daa9bcb2' };
+// aqueduct re-pinned for the abyss gatekeeper by the camp (endgame-abyss.md); it was 'daa9bcb2'
+const PINNED = { marsh: '204f7087', ruins: 'f8ede561', pass: 'cb035154', aqueduct: '4d4873db' };
 
 test('act 2 maps are deterministic and pinned', () => {
   for (const [id, hash] of Object.entries(PINNED)) {
@@ -23,6 +24,8 @@ test('every exit of every map leads to a walkable tile of a built map, and back'
   for (const [id, build] of Object.entries(MAP_BUILDERS)) {
     const m = build();
     for (const e of m.exits) {
+      // the abyss is entered through its gatekeeper and goes floor to floor (tests/abyss.test.js)
+      if (id === 'abyss') continue;
       assert.ok(MAP_BUILDERS[e.to], `${id} -> ${e.to}`);
       const dst = MAP_BUILDERS[e.to]();
       assert.ok(dst.walkable(e.tx, e.ty), `${id} -> ${e.to} lands on ${e.tx},${e.ty}`);

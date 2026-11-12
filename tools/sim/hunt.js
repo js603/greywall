@@ -18,6 +18,8 @@ export const fnv = (s) => {
  * @param {number} ticks  30 ticks = 1 s of game time
  * @param {{map?: string, level?: number, gear?: string[], cls?: string, onTick?: (w: World, i: number) => void}} [opt]
  *   cls: change class before hunting and use the class skills (attack skill on cooldown, buff below 70% HP)
+ *   retarget: turn on the nearest monster that is attacking when the target is out of reach
+ *   setup: called before every (re)load of the hunting map, e.g. to set the abyss floor
  */
 export function huntRun(seed = 4242, ticks = 20000, opt = {}) {
   const map = opt.map ?? 'forest';
@@ -30,11 +32,19 @@ export function huntRun(seed = 4242, ticks = 20000, opt = {}) {
     w.quests.q_class.state = 'done';
     w.chooseClass(opt.cls);
   }
+  opt.setup?.(w);
   w.loadMap(map);
   const skills = opt.cls ? w.player.skills.map((id) => SKILLS[id]) : [];
   const trace = [];
   for (let i = 0; i < ticks; i++) {
-    if (w.map.id !== map) w.loadMap(map);
+    if (w.map.id !== map) { opt.setup?.(w); w.loadMap(map); }
+    // retarget: a player turns on whatever is hitting them instead of pushing on to an unreachable target
+    if (opt.retarget && i % 40 === 20 && w.player.target !== null && !w.player.dead && !w.player.swing) {
+      const t = w.monsters.find((m) => m.id === w.player.target);
+      const near = (m) => Math.max(Math.abs(m.x - w.player.x), Math.abs(m.y - w.player.y));
+      const hitter = w.monsters.filter((m) => !m.dead && m.state === 'attack').sort((a, b) => near(a) - near(b))[0];
+      if (hitter && (!t || t.dead || near(t) > 1) && hitter !== t) w.commandAttack(hitter.id);
+    }
     if (i % 40 === 0 && !w.player.target && !w.player.dead) {
       let best = null, bd = 1e9;
       for (const m of w.monsters) if (!m.dead) { const d = Math.hypot(m.x - w.player.x, m.y - w.player.y); if (d < bd) { bd = d; best = m; } }
